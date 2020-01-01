@@ -9,6 +9,10 @@ server:
 
 #spring boot admin
 spring: 
+  mvc: 
+    static-path-pattern: /css/**,/js/**,/**/*.html,/images/**
+  resources: 
+    static-locations: classpath:/static/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
   application:
     name: cqzqjg-web-admin
 # DataSource

@@ -12,10 +12,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date Oct 29, 2018
  */
 @SpringBootApplication(scanBasePackages = { "cn.roilat.cqzqjg" })
-public class AdminApplication implements WebMvcConfigurer {
+public class WechatSiteApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AdminApplication.class, args);
+		SpringApplication.run(WechatSiteApplication.class, args);
 	}
 
 	@Override

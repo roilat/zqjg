@@ -49,6 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/druid/**").permitAll()
             // 首页和登录页面
             .antMatchers("/").permitAll()
+            .antMatchers("/index.html").permitAll()
+            .antMatchers("/static/css/**").permitAll()
+            .antMatchers("/static/js/**").permitAll()
+            .antMatchers("/static/img/**").permitAll()
+            .antMatchers("/static/fonts/**").permitAll()
+            .antMatchers("/upload/**").permitAll()
             .antMatchers("/login").permitAll()
             // swagger
             .antMatchers("/swagger-ui.html").permitAll()

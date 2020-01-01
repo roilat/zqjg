@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.roilat.cqzqjg.services.biz.dao.BizPropertiesHistoryMapper">
+
+  <resultMap id="BaseResultMap" type="cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="propery_id" jdbcType="BIGINT" property="properyId" />
+	<result column="new_name" jdbcType="VARCHAR" property="newName" />
+	<result column="old_name" jdbcType="VARCHAR" property="oldName" />
+	<result column="new_cover" jdbcType="VARCHAR" property="newCover" />
+	<result column="old_cover" jdbcType="VARCHAR" property="oldCover" />
+	<result column="new_type" jdbcType="VARCHAR" property="newType" />
+	<result column="old_type" jdbcType="VARCHAR" property="oldType" />
+	<result column="new_unit" jdbcType="VARCHAR" property="newUnit" />
+	<result column="old_unit" jdbcType="VARCHAR" property="oldUnit" />
+	<result column="new_quantity" jdbcType="INTEGER" property="newQuantity" />
+	<result column="old_quantity" jdbcType="INTEGER" property="oldQuantity" />
+	<result column="new_address" jdbcType="VARCHAR" property="newAddress" />
+	<result column="old_address" jdbcType="VARCHAR" property="oldAddress" />
+	<result column="new_content" jdbcType="VARCHAR" property="newContent" />
+	<result column="old_content" jdbcType="VARCHAR" property="oldContent" />
+	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  
+  <insert id="add" parameterType="cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory">
+    insert into biz_properties_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="properyId != null">
+        propery_id,
+      </if>
+      <if test="newName != null">
+        new_name,
+      </if>
+      <if test="oldName != null">
+        old_name,
+      </if>
+      <if test="newCover != null">
+        new_cover,
+      </if>
+      <if test="oldCover != null">
+        old_cover,
+      </if>
+      <if test="newType != null">
+        new_type,
+      </if>
+      <if test="oldType != null">
+        old_type,
+      </if>
+      <if test="newUnit != null">
+        new_unit,
+      </if>
+      <if test="oldUnit != null">
+        old_unit,
+      </if>
+      <if test="newQuantity != null">
+        new_quantity,
+      </if>
+      <if test="oldQuantity != null">
+        old_quantity,
+      </if>
+      <if test="newAddress != null">
+        new_address,
+      </if>
+      <if test="oldAddress != null">
+        old_address,
+      </if>
+      <if test="newContent != null">
+        new_content,
+      </if>
+      <if test="oldContent != null">
+        old_content,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="properyId != null">
+        #{properyId,jdbcType=BIGINT},
+      </if>
+      <if test="newName != null">
+        #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldName != null">
+        #{oldName,jdbcType=VARCHAR},
+      </if>
+      <if test="newCover != null">
+        #{newCover,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCover != null">
+        #{oldCover,jdbcType=VARCHAR},
+      </if>
+      <if test="newType != null">
+        #{newType,jdbcType=VARCHAR},
+      </if>
+      <if test="oldType != null">
+        #{oldType,jdbcType=VARCHAR},
+      </if>
+      <if test="newUnit != null">
+        #{newUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="oldUnit != null">
+        #{oldUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="newQuantity != null">
+        #{newQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="oldQuantity != null">
+        #{oldQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="newAddress != null">
+        #{newAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAddress != null">
+        #{oldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="newContent != null">
+        #{newContent,jdbcType=VARCHAR},
+      </if>
+      <if test="oldContent != null">
+        #{oldContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from biz_properties_history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory">
+    update biz_properties_history
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="properyId != null">
+        propery_id = #{properyId,jdbcType=BIGINT},
+      </if>
+      <if test="newName != null">
+        new_name = #{newName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldName != null">
+        old_name = #{oldName,jdbcType=VARCHAR},
+      </if>
+      <if test="newCover != null">
+        new_cover = #{newCover,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCover != null">
+        old_cover = #{oldCover,jdbcType=VARCHAR},
+      </if>
+      <if test="newType != null">
+        new_type = #{newType,jdbcType=VARCHAR},
+      </if>
+      <if test="oldType != null">
+        old_type = #{oldType,jdbcType=VARCHAR},
+      </if>
+      <if test="newUnit != null">
+        new_unit = #{newUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="oldUnit != null">
+        old_unit = #{oldUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="newQuantity != null">
+        new_quantity = #{newQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="oldQuantity != null">
+        old_quantity = #{oldQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="newAddress != null">
+        new_address = #{newAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAddress != null">
+        old_address = #{oldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="newContent != null">
+        new_content = #{newContent,jdbcType=VARCHAR},
+      </if>
+      <if test="oldContent != null">
+        old_content = #{oldContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from biz_properties_history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from biz_properties_history
+  </select>
+  
+</mapper>

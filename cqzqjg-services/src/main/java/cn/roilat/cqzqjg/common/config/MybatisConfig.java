@@ -17,7 +17,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  */
 @Configuration
 //@MapperScan("cn.roilat.cqzqjg.services.*.dao")	// 扫描DAO
-@MapperScan("cn.roilat.cqzqjg.services.system.dao")	// 扫描DAO
+@MapperScan("cn.roilat.cqzqjg.services.*.dao")	// 扫描DAO
 public class MybatisConfig {
   @Autowired
   private DataSource dataSource;
