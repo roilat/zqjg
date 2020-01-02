@@ -10,7 +10,7 @@ public class HttpResult {
 	private int code = 200;
 	private String msg;
 	private Object data;
-	
+	private boolean success = true;
 	public static HttpResult error() {
 		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
 	}
@@ -23,6 +23,7 @@ public class HttpResult {
 		HttpResult r = new HttpResult();
 		r.setCode(code);
 		r.setMsg(msg);
+		r.setSuccess(false);
 		return r;
 	}
 
@@ -64,6 +65,14 @@ public class HttpResult {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public boolean setSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
 	
 }

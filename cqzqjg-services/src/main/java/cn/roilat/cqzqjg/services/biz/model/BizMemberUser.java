@@ -1,13 +1,9 @@
 package cn.roilat.cqzqjg.services.biz.model;
 
 /**
- * ---------------------------
- * 会员单位e用户信息表 (BizMemberUser)         
- * ---------------------------
- * 作者：  kitty-generator
- * 时间：  2020-01-01 23:34:40
- * 说明：  我是由代码生成器生生成的
- * ---------------------------
+ * --------------------------- 会员单位e用户信息表 (BizMemberUser)
+ * --------------------------- 作者： kitty-generator 时间： 2020-01-01 23:34:40 说明：
+ * 我是由代码生成器生生成的 ---------------------------
  */
 public class BizMemberUser {
 
@@ -23,6 +19,8 @@ public class BizMemberUser {
 	private String nickName;
 	/** 密码 */
 	private String password;
+	/** 盐 */
+	private String salt;
 	/** 头像 */
 	private String avatar;
 	/** 微信号 */
@@ -41,7 +39,7 @@ public class BizMemberUser {
 	private String lastUpdateBy;
 	/** 更新时间 */
 	private java.util.Date lastUpdateTime;
-	/** 是否删除  -1：已删除  0：正常 */
+	/** 是否删除 -1：已删除 0：正常 */
 	private Integer delFlag;
 
 	public Long getId() {
@@ -90,6 +88,14 @@ public class BizMemberUser {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String getAvatar() {

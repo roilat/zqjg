@@ -62,6 +62,7 @@ create table BIZ_MEMBER_USER
    login_name           varchar(20) comment '登录名',
    nick_name            varchar(20) comment '昵称',
    password             varchar(32) comment '密码',
+   salt             varchar(40) comment '盐',
    avatar               varchar(100) comment '头像',
    wechat               varchar(32) comment '微信号',
    if_wechat_login      char(1) comment '是否绑定微信',
@@ -106,12 +107,19 @@ alter table BIZ_PORTAL_INFO comment '首页的显示信息表';
 create table BIZ_PORTAL_INFO_CATEGORY
 (
    type_code            varchar(20) not null comment 'main顶部信息,aboutUs关于我们,news消息资讯,dealScene成交现场,chooseUs选择我们,culture企业文化',
-   content_type         char(1) comment '内容类型：1多个图片2图片文字3只有文字',
+   content_type         char(1) comment '内容类型：1多个封面及相应标题,2多个图片配一段文字,3多个封面配相应描述,4一个图片配一段文字,5多个封面配图文内容',
    del_flag             tinyint(4) default 0 comment '是否删除  -1：已删除  0：正常',
    primary key (type_code)
 );
 
 alter table BIZ_PORTAL_INFO_CATEGORY comment '首页信息分类表';
+
+INSERT INTO `biz_portal_info_category` VALUES ('aboutUs', '4', '0');
+INSERT INTO `biz_portal_info_category` VALUES ('chooseUs', '4', '0');
+INSERT INTO `biz_portal_info_category` VALUES ('culture', '4', '0');
+INSERT INTO `biz_portal_info_category` VALUES ('dealScene', '3', '0');
+INSERT INTO `biz_portal_info_category` VALUES ('main', '1', '0');
+INSERT INTO `biz_portal_info_category` VALUES ('news', '2', '0');
 
 /*==============================================================*/
 /* Table: BIZ_PROPERTIES                                        */

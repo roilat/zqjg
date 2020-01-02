@@ -58,5 +58,10 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, bizMemberUserMapper);
 	}
+
+	@Override
+	public BizMemberUser findByLoginName(String loginName) {
+		return bizMemberUserMapper.findByLoginName(loginName);
+	}
 	
 }

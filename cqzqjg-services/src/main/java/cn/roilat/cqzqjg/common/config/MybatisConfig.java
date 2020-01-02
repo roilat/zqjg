@@ -27,10 +27,10 @@ public class MybatisConfig {
     SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
     sessionFactory.setDataSource(dataSource);
     //sessionFactory.setTypeAliasesPackage("cn.roilat.cqzqjg.services.*.model");	// 扫描Model
-    sessionFactory.setTypeAliasesPackage("cn.roilat.cqzqjg.services.system.model");	// 扫描Model
+    sessionFactory.setTypeAliasesPackage("cn.roilat.cqzqjg.services.*.model");	// 扫描Model
     
 	PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-	sessionFactory.setMapperLocations(resolver.getResources("classpath*:/cn/roilat/cqzqjg/services/system/sqlmap/*.xml"));	// 扫描映射文件
+	sessionFactory.setMapperLocations(resolver.getResources("classpath*:/cn/roilat/cqzqjg/services/*/sqlmap/*.xml"));	// 扫描映射文件
     return sessionFactory.getObject();
   }
 }

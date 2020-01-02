@@ -9,6 +9,7 @@
 	<result column="login_name" jdbcType="VARCHAR" property="loginName" />
 	<result column="nick_name" jdbcType="VARCHAR" property="nickName" />
 	<result column="password" jdbcType="VARCHAR" property="password" />
+	<result column="salt" jdbcType="VARCHAR" property="salt" />
 	<result column="avatar" jdbcType="VARCHAR" property="avatar" />
 	<result column="wechat" jdbcType="VARCHAR" property="wechat" />
 	<result column="if_wechat_login" jdbcType="CHAR" property="ifWechatLogin" />
@@ -41,6 +42,9 @@
       </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="salt != null">
+        salt,
       </if>
       <if test="avatar != null">
         avatar,
@@ -92,6 +96,9 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
       </if>
@@ -126,7 +133,7 @@
   </insert>
 
   <delete id="delete" parameterType="java.lang.Long">
-    delete from biz_member_user
+    update biz_member_user set del_flag=1,last_update_time=SYSDATE()
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
@@ -150,6 +157,9 @@
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
       </if>
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
@@ -187,7 +197,11 @@
 
   <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select * from biz_member_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT} and del_flag=0
+  </select>
+  <select id="findByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from biz_member_user
+    where login_name = #{loginName,jdbcType=VARCHAR} and del_flag=0
   </select>
   
   <select id="findPage" resultMap="BaseResultMap">

@@ -119,6 +119,11 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
+		</dependency>
 	</dependencies>
 
 	<!--srping cloud -->
@@ -135,7 +140,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>cqzqjg-service</finalName>
+		<finalName>cqzqjg-services</finalName>
 		<!-- 打包时拷贝MyBatis的映射文件 -->
 		<resources>
 			<resource>

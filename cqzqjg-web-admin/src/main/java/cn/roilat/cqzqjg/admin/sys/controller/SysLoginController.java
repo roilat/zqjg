@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Constants;
@@ -23,6 +24,7 @@ import cn.roilat.cqzqjg.common.security.JwtAuthenticatioToken;
 import cn.roilat.cqzqjg.common.util.PasswordUtils;
 import cn.roilat.cqzqjg.common.util.SecurityUtils;
 import cn.roilat.cqzqjg.common.utils.IOUtils;
+import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.common.vo.LoginBean;
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.services.system.model.SysUser;
@@ -30,10 +32,12 @@ import cn.roilat.cqzqjg.services.system.sevice.SysUserService;
 
 /**
  * 登录控制器
+ * 
  * @author Louis
  * @date Oct 29, 2018
  */
 @RestController
+@RequestMapping("/admin/auth")
 public class SysLoginController {
 
 	@Autowired
@@ -56,7 +60,7 @@ public class SysLoginController {
 		request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, text);
 
 		ServletOutputStream out = response.getOutputStream();
-		ImageIO.write(image, "jpg", out);	
+		ImageIO.write(image, "jpg", out);
 		IOUtils.closeQuietly(out);
 	}
 
@@ -65,19 +69,26 @@ public class SysLoginController {
 	 */
 	@PostMapping(value = "/login")
 	public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request) throws IOException {
+		if (loginBean == null) {
+			return HttpResult.error("输入参数错误！");
+		}
 		String username = loginBean.getAccount();
 		String password = loginBean.getPassword();
-		//String captcha = loginBean.getCaptcha();
-		
+		String captcha = loginBean.getCaptcha();
+
+		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+			return HttpResult.error("用户名或密码为空！");
+		}
+
 		// 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
 		Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		if(kaptcha == null){
-			return HttpResult.error("验证码已失效");
-		}
-//		if(!captcha.equals(kaptcha)){
+//		if (kaptcha == null) {
+//			return HttpResult.error("验证码已失效");
+//		}
+//		if (!kaptcha.equals(captcha)) {
 //			return HttpResult.error("验证码不正确");
 //		}
-		
+
 		// 用户信息
 		SysUser user = sysUserService.findByName(username);
 
@@ -85,7 +96,7 @@ public class SysLoginController {
 		if (user == null) {
 			return HttpResult.error("账号不存在");
 		}
-		
+
 		if (!PasswordUtils.matches(user.getSalt(), password, user.getPassword())) {
 			return HttpResult.error("密码不正确");
 		}
@@ -97,7 +108,7 @@ public class SysLoginController {
 
 		// 系统登录认证
 		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-				
+
 		return HttpResult.ok(token);
 	}
 

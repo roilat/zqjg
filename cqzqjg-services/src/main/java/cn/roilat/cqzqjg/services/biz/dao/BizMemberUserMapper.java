@@ -49,5 +49,12 @@ public interface BizMemberUserMapper {
      * @return
      */    
     List<BizMemberUser> findPage();
+
+    /**
+     * 根据登录名查询
+     * @param loginName
+     * @return
+     */
+	BizMemberUser findByLoginName(String loginName);
     
 }

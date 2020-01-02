@@ -14,4 +14,5 @@ import cn.roilat.cqzqjg.core.service.CurdService;
  */
 public interface BizMemberUserService extends CurdService<BizMemberUser> {
 
+	BizMemberUser findByLoginName(String loginName);
 }
