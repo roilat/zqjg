@@ -41,6 +41,8 @@ import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
 @RequestMapping("auth")
 public class MemberUserLoginController {
 
+	//test
+
 	@Autowired
 	private Producer producer;
 	@Autowired
