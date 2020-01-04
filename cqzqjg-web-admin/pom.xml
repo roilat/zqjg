@@ -7,7 +7,8 @@
 		<groupId>cn.roilat</groupId>
 		<artifactId>cqzqjg</artifactId>
 		<version>1.0</version>
-		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+<!--		<relativePath>../pom.xml</relativePath> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<artifactId>cqzqjg-admin</artifactId>

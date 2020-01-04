@@ -2,77 +2,94 @@ package cn.roilat.cqzqjg.core.http;
 
 /**
  * HTTP结果封装
+ *
  * @author Louis
  * @date Oct 29, 2018
  */
 public class HttpResult {
 
-	private int code = 200;
-	private String msg;
-	private Object data;
-	private boolean success = true;
-	public static HttpResult error() {
-		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
-	}
-	
-	public static HttpResult error(String msg) {
-		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
-	}
-	
-	public static HttpResult error(int code, String msg) {
-		HttpResult r = new HttpResult();
-		r.setCode(code);
-		r.setMsg(msg);
-		r.setSuccess(false);
-		return r;
-	}
+    private int code = 200;
+    private String msg;
+    private Object data;
+    private boolean success = true;
 
-	public static HttpResult ok(String msg) {
-		HttpResult r = new HttpResult();
-		r.setMsg(msg);
-		return r;
-	}
-	
-	public static HttpResult ok(Object data) {
-		HttpResult r = new HttpResult();
-		r.setData(data);
-		return r;
-	}
-	
-	public static HttpResult ok() {
-		return new HttpResult();
-	}
+    public static HttpResult error() {
+        return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
+    }
 
-	public int getCode() {
-		return code;
-	}
+    public static HttpResult error(String msg) {
+        return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public static HttpResult error(int code, String msg) {
+        HttpResult r = new HttpResult();
+        r.setCode(code);
+        r.setMsg(msg);
+        r.setSuccess(false);
+        return r;
+    }
 
-	public String getMsg() {
-		return msg;
-	}
+    public static HttpResult ok(String msg) {
+        HttpResult r = new HttpResult();
+        r.setMsg(msg);
+        return r;
+    }
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    public static HttpResult ok(Object data) {
+        HttpResult r = new HttpResult();
+        r.setData(data);
+        return r;
+    }
 
-	public Object getData() {
-		return data;
-	}
+    public static HttpResult ok(String msg, Object data) {
+        HttpResult r = new HttpResult();
+        r.setMsg(msg);
+        r.setData(data);
+        return r;
+    }
 
-	public void setData(Object data) {
-		this.data = data;
-	}
+    public static HttpResult ok(String msg, String data) {
+        HttpResult r = new HttpResult();
+        r.setMsg(msg);
+        r.setData(data);
+        return r;
+    }
 
-	public boolean setSuccess() {
-		return success;
-	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-	
+    public static HttpResult ok() {
+        return new HttpResult();
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public boolean setSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
 }

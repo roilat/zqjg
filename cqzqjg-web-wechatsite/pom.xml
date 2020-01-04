@@ -7,8 +7,9 @@
 	<parent>
 		<groupId>cn.roilat</groupId>
 		<artifactId>cqzqjg</artifactId>
-		<version>${project.version}</version>
-		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+		<version>1.0</version>
+<!--		<relativePath>../pom.xml</relativePath> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>cqzqjg-web-wechatsite</artifactId>
 	<name>cqzqjg-web-wechatsite</name>

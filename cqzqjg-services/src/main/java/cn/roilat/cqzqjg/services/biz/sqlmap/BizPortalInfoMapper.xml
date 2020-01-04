@@ -149,6 +149,11 @@
     select * from biz_portal_info
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+
+  <select id="findAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from biz_portal_info
+  </select>
   
   <select id="findPage" resultMap="BaseResultMap">
     select * from biz_portal_info
