@@ -107,8 +107,9 @@ public class MemberUserLoginController {
 		}
 
 		// 系统登录认证
-		JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
-
+		user.setPassword(password);
+		JwtAuthenticatioToken token = SecurityUtils.login(request, user, authenticationManager);
+		token.eraseCredentials();
 		return HttpResult.ok(token);
 	}
 
