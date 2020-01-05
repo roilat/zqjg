@@ -1,7 +1,5 @@
 package cn.roilat.cqzqjg.services.biz.vo;
 
-import lombok.Data;
-
 import java.util.List;
 
 /**
@@ -10,9 +8,27 @@ import java.util.List;
  * @author: liujing
  * @create: 2020-01-04 22:09
  **/
-@Data
 public class DealScene {
     private List<String> picturePath;
     private String title;
     private String mainDesc;
+	public List<String> getPicturePath() {
+		return picturePath;
+	}
+	public void setPicturePath(List<String> picturePath) {
+		this.picturePath = picturePath;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getMainDesc() {
+		return mainDesc;
+	}
+	public void setMainDesc(String mainDesc) {
+		this.mainDesc = mainDesc;
+	}
+    
 }

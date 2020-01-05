@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import cn.roilat.cqzqjg.common.security.JwtAuthenticatioToken;
+import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 
 /**
  * Security相关操作
@@ -34,6 +35,25 @@ public class SecurityUtils {
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 		// 生成令牌并返回给客户端
 	    token.setToken(JwtTokenUtils.generateToken(authentication));
+		return token;
+	}
+	/**
+	 * 系统登录认证
+	 * @param request
+	 * @param username
+	 * @param password
+	 * @param authenticationManager
+	 * @return
+	 */
+	public static JwtAuthenticatioToken login(HttpServletRequest request, BizMemberUser bizMemberUser, AuthenticationManager authenticationManager) {
+		JwtAuthenticatioToken token = new JwtAuthenticatioToken(bizMemberUser);
+		token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+		// 执行登录认证过程
+		Authentication authentication = authenticationManager.authenticate(token);
+		// 认证成功存储认证信息到上下文
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		// 生成令牌并返回给客户端
+		token.setToken(JwtTokenUtils.generateToken(authentication));
 		return token;
 	}
 

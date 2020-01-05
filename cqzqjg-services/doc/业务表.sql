@@ -79,6 +79,9 @@ create table BIZ_MEMBER_USER
 
 alter table BIZ_MEMBER_USER comment '会员单位e用户信息表';
 
+INSERT INTO `biz_member_user` VALUES ('1', '测试单位', '1', 'admin', '花和尚', 'bd1718f058d8a02468134432b8656a86', null, null, '0', '2', '0', 'admin', '2020-01-02 23:00:56', 'admin', '2020-01-02 23:23:09', '0', 'YzcmCZNvbXocrsz9dm8e');
+
+
 /*==============================================================*/
 /* Table: BIZ_PORTAL_INFO                                       */
 /*==============================================================*/

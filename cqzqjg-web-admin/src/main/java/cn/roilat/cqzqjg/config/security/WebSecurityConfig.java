@@ -1,4 +1,4 @@
-package cn.roilat.cqzqjg.common.config;
+package cn.roilat.cqzqjg.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,14 +22,14 @@ import cn.roilat.cqzqjg.common.security.JwtAuthenticationProvider;
  * @author Louis
  * @date Nov 20, 2018
  */
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
-
+    
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 使用自定义身份验证组件
@@ -79,5 +79,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManager() throws Exception {
     	return super.authenticationManager();
     }
-
+    
 }

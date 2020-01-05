@@ -287,6 +287,30 @@ INSERT INTO `sys_role_menu` VALUES ('441', '8', '31', 'admin', '2018-09-23 19:55
 INSERT INTO `sys_role_menu` VALUES ('442', '8', '8', 'admin', '2018-09-23 19:55:08', null, null);
 INSERT INTO `sys_role_menu` VALUES ('443', '8', '6', 'admin', '2018-09-23 19:55:08', null, null);
 INSERT INTO `sys_role_menu` VALUES ('444', '8', '35', 'admin', '2018-09-23 19:55:08', null, null);
+INSERT INTO `sys_role_menu` VALUES ('630', '1', '1', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('631', '1', '2', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('632', '1', '3', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('633', '1', '4', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('634', '1', '5', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('635', '1', '6', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('636', '1', '7', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('637', '1', '8', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('638', '1', '9', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('639', '1', '10', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('640', '1', '11', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('641', '1', '12', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('642', '1', '13', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('643', '1', '14', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('644', '1', '15', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('645', '1', '16', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('646', '1', '17', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('647', '1', '18', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('648', '1', '19', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('649', '1', '20', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('650', '1', '21', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('651', '1', '22', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('652', '1', '23', 'admin', '2020-01-02 00:58:26', null, null);
+INSERT INTO `sys_role_menu` VALUES ('653', '1', '24', 'admin', '2020-01-02 00:58:26', null, null);
 
 -- ----------------------------
 -- Table structure for sys_user
