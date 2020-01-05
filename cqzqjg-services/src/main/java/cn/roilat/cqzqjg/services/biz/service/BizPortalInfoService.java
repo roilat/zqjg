@@ -1,7 +1,8 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
-import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
+import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
 
 /**
  * ---------------------------
@@ -13,5 +14,9 @@ import cn.roilat.cqzqjg.core.service.CurdService;
  * ---------------------------
  */
 public interface BizPortalInfoService extends CurdService<BizPortalInfo> {
-
+    /**
+     * 查找首页数据
+     * @return
+     */
+    HomePageVo findHomePage();
 }

@@ -45,7 +45,6 @@ public interface BizPortalInfoMapper {
 
     /**
      * 基础分页查询
-     * @param record
      * @return
      */    
     List<BizPortalInfo> findPage();

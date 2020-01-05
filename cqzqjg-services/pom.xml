@@ -7,7 +7,8 @@
 		<groupId>cn.roilat</groupId>
 		<artifactId>cqzqjg</artifactId>
 		<version>1.0</version>
-		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+<!--		<relativePath>../pom.xml</relativePath> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+		<relativePath/>
 	</parent>
 
 	<artifactId>cqzqjg-services</artifactId>
@@ -123,6 +124,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional> <!-- 这个需要为 true 热部署才有效 -->
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.18</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
