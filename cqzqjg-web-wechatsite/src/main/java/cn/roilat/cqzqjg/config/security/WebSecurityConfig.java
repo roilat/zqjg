@@ -1,4 +1,4 @@
-package cn.roilat.cqzqjg.common.config;
+package cn.roilat.cqzqjg.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,9 +22,9 @@ import cn.roilat.cqzqjg.common.security.JwtAuthenticationProvider;
  * @author Louis
  * @date Nov 20, 2018
  */
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -55,8 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/static/img/**").permitAll()
             .antMatchers("/static/fonts/**").permitAll()
             .antMatchers("/upload/**").permitAll()
-            .antMatchers("/auth/**").permitAll()
-            .antMatchers("/admin/auth/**").permitAll()
+            .antMatchers("/auth/login").permitAll()
+            .antMatchers("/home/**").permitAll()
             // swagger
             .antMatchers("/swagger-ui.html").permitAll()
             .antMatchers("/swagger-resources").permitAll()

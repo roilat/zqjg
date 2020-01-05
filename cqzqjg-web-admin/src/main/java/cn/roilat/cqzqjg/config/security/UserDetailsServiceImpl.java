@@ -1,4 +1,4 @@
-package cn.roilat.cqzqjg.common.security;
+package cn.roilat.cqzqjg.config.security;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import cn.roilat.cqzqjg.common.security.GrantedAuthorityImpl;
+import cn.roilat.cqzqjg.common.security.JwtUserDetails;
 import cn.roilat.cqzqjg.services.system.model.SysUser;
 import cn.roilat.cqzqjg.services.system.sevice.SysUserService;
 
