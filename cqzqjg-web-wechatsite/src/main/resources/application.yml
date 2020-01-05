@@ -1,31 +1,29 @@
 server:
-  tomcat:
-    uri-encoding: UTF-8
-    max-threads: 1000
-    min-spare-threads: 30
-  port: 8080
-    #context-path: /cqzqjg-admin
+tomcat:
+  uri-encoding: UTF-8
+  max-threads: 1000
+  min-spare-threads: 30
+port: 8002
+#context-path: /cqzqjg-admin
 
 
 #spring boot admin
-spring: 
-  mvc: 
+spring:
+  mvc:
     static-path-pattern: /css/**,/js/**,/**/*.html,/images/**
-  resources: 
+  resources:
     static-locations: classpath:/static/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
   application:
     name: cqzqjg-web-wechatsite
-# DataSource
+  # DataSource
   datasource:
     name: druidDataSource
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/cqzqjg?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-#      username: test
-#      password: test
-      username: root
-      password: 123
+      username: test
+      password: test
       filters: stat,wall,log4j,config
       max-active: 100
       initial-size: 1
@@ -43,8 +41,7 @@ spring:
 
 # pagehelper   
 pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
-    
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
