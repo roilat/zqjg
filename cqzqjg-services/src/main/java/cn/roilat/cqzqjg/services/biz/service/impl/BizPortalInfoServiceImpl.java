@@ -1,6 +1,9 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.roilat.cqzqjg.services.biz.vo.*;
@@ -65,9 +68,9 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
     public HomePageVo findHomePage() {
         List<BizPortalInfo> bizPortalInfos = bizPortalInfoMapper.findPage();
         HomePageVo homePageVo = new HomePageVo();
-        List<AboutUs> aboutUsList = new ArrayList<>();
-        List<ChooseUs> chooseUsList = new ArrayList<>();
-        List<Culture> cultureList = new ArrayList<>();
+//        List<AboutUs> aboutUsList = new ArrayList<>();
+//        List<ChooseUs> chooseUsList = new ArrayList<>();
+//        List<Culture> cultureList = new ArrayList<>();
         List<DealScene> dealSceneList = new ArrayList<>();
         List<Main> mainList = new ArrayList<>();
         List<News> newsList = new ArrayList<>();
@@ -97,7 +100,8 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                         }
                         aboutUs.setContent(bizPortalInfo.getContent());
                         aboutUs.setPicturePath(picPathAbout);
-                        aboutUsList.add(aboutUs);
+                        //aboutUsList.add(aboutUs);
+                        homePageVo.setAboutUs(aboutUs);
                         break;
                     case "chooseUs":
                         ChooseUs chooseUs = new ChooseUs();
@@ -108,7 +112,8 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                         }
                         chooseUs.setContent(bizPortalInfo.getContent());
                         chooseUs.setPicturePath(picPathChooseUs);
-                        chooseUsList.add(chooseUs);
+                        //chooseUsList.add(chooseUs);
+                        homePageVo.setChooseUs(chooseUs);
                         break;
                     case "culture":
                         Culture culture = new Culture();
@@ -120,7 +125,8 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                         culture.setContent(bizPortalInfo.getContent());
                         culture.setPicturePath(picPathCulture);
                         culture.setTitle(bizPortalInfo.getTitle());
-                        cultureList.add(culture);
+                        //cultureList.add(culture);
+                        homePageVo.setCulture(culture);
                         break;
                     case "news":
                         News news = new News();
@@ -133,16 +139,74 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                         news.setPicturePath(picPathNews);
                         newsList.add(news);
                         break;
+                    case "dealScene":
+                        DealScene dealScene = new DealScene();
+                        List<String> picPathdealScene = new ArrayList<>();
+                        String[] picsdealScene = bizPortalInfo.getPicturePath().split(",");
+                        for (String s : picsdealScene) {
+                            picPathdealScene.add(s);
+                        }
+                        dealScene.setTitle(bizPortalInfo.getTitle());
+                        dealScene.setMainDesc(bizPortalInfo.getMainDesc());
+                        dealScene.setPicturePath(picPathdealScene);
+                        dealSceneList.add(dealScene);
+                        break;
                     default:
                 }
             }
         }
-        homePageVo.setAboutUs(aboutUsList);
-        homePageVo.setChooseUs(chooseUsList);
-        homePageVo.setCulture(cultureList);
+//        homePageVo.setAboutUs(aboutUsList);
+//        homePageVo.setChooseUs(chooseUsList);
+//        homePageVo.setCulture(cultureList);
         homePageVo.setDealScene(dealSceneList);
         homePageVo.setMain(mainList);
         homePageVo.setNews(newsList);
+        return homePageVo;
+    }
+
+    @Override
+    public HomePageVo findNews(String begTime, String endTime) {
+        HomePageVo homePageVo = new HomePageVo();
+
+        Date begDate = null;
+        Date endDate = null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            //开始时间
+            if (null != begTime && !"".equals(begTime)) {
+                begTime = begTime + " 00:00:00";
+                begDate = simpleDateFormat.parse(begTime);
+            }
+            //结束时间
+            if (null != endTime && !"".equals(endTime)) {
+                endTime = endTime + " 23:59:59";
+                endDate = simpleDateFormat.parse(endTime);
+            }
+            List<BizPortalInfo> bizPortalInfos = bizPortalInfoMapper.findNewsByTime(begDate, endDate);
+            List<News> newsList = new ArrayList<>();
+            for (BizPortalInfo bizPortalInfo : bizPortalInfos) {
+                String typeCode = bizPortalInfo.getTypeCode();
+                if (null != typeCode && !typeCode.equals("")) {
+                    News news = new News();
+                    List<String> picPathNews = new ArrayList<>();
+                    String[] picsNews = bizPortalInfo.getPicturePath().split(",");
+                    for (String s : picsNews) {
+                        picPathNews.add(s);
+                    }
+                    news.setContent(bizPortalInfo.getContent());
+                    news.setPicturePath(picPathNews);
+                    Date updateTIme = bizPortalInfo.getLastUpdateTime();
+                    if (null != updateTIme) {
+                        String updateTimeStr = simpleDateFormat.format(updateTIme);
+                        news.setUpdateTime(updateTimeStr.substring(0, updateTimeStr.indexOf(" ")));
+                    }
+                    newsList.add(news);
+                }
+            }
+            homePageVo.setNews(newsList);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return homePageVo;
     }
 }

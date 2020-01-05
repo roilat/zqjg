@@ -12,9 +12,12 @@ import java.util.List;
  **/
 @Data
 public class HomePageVo {
-    private List<AboutUs> aboutUs;
-    private List<ChooseUs> chooseUs;
-    private List<Culture> culture;
+    //private List<AboutUs> aboutUs;
+    private AboutUs aboutUs;
+    //private List<ChooseUs> chooseUs;
+    private ChooseUs chooseUs;
+    //private List<Culture> culture;
+    private Culture culture;
     private List<DealScene> dealScene;
     private List<HomePageVo> homePageVo;
     private List<Main> main;

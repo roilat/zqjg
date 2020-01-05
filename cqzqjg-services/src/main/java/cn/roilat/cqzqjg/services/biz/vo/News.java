@@ -14,6 +14,7 @@ import java.util.List;
 public class News {
     private List<String> picturePath;
     private String content;
+    private String updateTime;
 
 
 }

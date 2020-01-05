@@ -2,6 +2,7 @@ package cn.roilat.cqzqjg.services.biz.service.impl;
 
 import java.util.List;
 
+import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import cn.roilat.cqzqjg.services.biz.service.BizPropertiesService;
 
 /**
  * ---------------------------
- * 资产信息表 (BizPropertiesServiceImpl)         
+ * 资产信息表 (BizPropertiesServiceImpl)
  * ---------------------------
  * 作者：  kitty-generator
  * 时间：  2020-01-01 23:34:40
@@ -25,38 +26,42 @@ import cn.roilat.cqzqjg.services.biz.service.BizPropertiesService;
 @Service
 public class BizPropertiesServiceImpl implements BizPropertiesService {
 
-	@Autowired
-	private BizPropertiesMapper bizPropertiesMapper;
+    @Autowired
+    private BizPropertiesMapper bizPropertiesMapper;
 
-	@Override
-	public int save(BizProperties record) {
-		if(record.getId() == null || record.getId() == 0) {
-			return bizPropertiesMapper.add(record);
-		}
-		return bizPropertiesMapper.update(record);
-	}
+    @Override
+    public int save(BizProperties record) {
+        if (record.getId() == null || record.getId() == 0) {
+            return bizPropertiesMapper.add(record);
+        }
+        return bizPropertiesMapper.update(record);
+    }
 
-	@Override
-	public int delete(BizProperties record) {
-		return bizPropertiesMapper.delete(record.getId());
-	}
+    @Override
+    public int delete(BizProperties record) {
+        return bizPropertiesMapper.delete(record.getId());
+    }
 
-	@Override
-	public int delete(List<BizProperties> records) {
-		for(BizProperties record:records) {
-			delete(record);
-		}
-		return 1;
-	}
+    @Override
+    public int delete(List<BizProperties> records) {
+        for (BizProperties record : records) {
+            delete(record);
+        }
+        return 1;
+    }
 
-	@Override
-	public BizProperties findById(Long id) {
-		return bizPropertiesMapper.findById(id);
-	}
+    @Override
+    public BizProperties findById(Long id) {
+        return bizPropertiesMapper.findById(id);
+    }
 
-	@Override
-	public PageResult findPage(PageRequest pageRequest) {
-		return MybatisPageHelper.findPage(pageRequest, bizPropertiesMapper);
-	}
-	
+    @Override
+    public PageResult findPage(PageRequest pageRequest) {
+        return MybatisPageHelper.findPage(pageRequest, bizPropertiesMapper);
+    }
+
+    @Override
+    public List<BizProperties> findByName(String name) {
+        return bizPropertiesMapper.findByName(name);
+    }
 }
