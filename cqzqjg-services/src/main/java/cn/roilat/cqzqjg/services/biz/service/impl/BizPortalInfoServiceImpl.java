@@ -137,6 +137,8 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                         }
                         news.setContent(bizPortalInfo.getContent());
                         news.setPicturePath(picPathNews);
+                        news.setTitle(bizPortalInfo.getTitle());
+                        news.setId(bizPortalInfo.getId());
                         newsList.add(news);
                         break;
                     case "dealScene":
@@ -189,7 +191,7 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                 consultationVo.setEndDate(endDate);
             }
 
-            pageResult = MybatisPageHelper.findPage(consultationVo, bizPortalInfoMapper, "findNewsByTime",begDate,endDate);
+            pageResult = MybatisPageHelper.findPage(consultationVo, bizPortalInfoMapper, "findNewsByTime", begDate, endDate);
             List<BizPortalInfo> bizPortalInfos = (List<BizPortalInfo>) pageResult.getContent();
             List<News> newsList = new ArrayList<>();
             for (BizPortalInfo bizPortalInfo : bizPortalInfos) {
@@ -203,6 +205,8 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                     }
                     news.setContent(bizPortalInfo.getContent());
                     news.setPicturePath(picPathNews);
+                    news.setTitle(bizPortalInfo.getTitle());
+                    news.setId(bizPortalInfo.getId());
                     Date updateTIme = bizPortalInfo.getLastUpdateTime();
                     if (null != updateTIme) {
                         String updateTimeStr = simpleDateFormat.format(updateTIme);
@@ -219,5 +223,42 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
             e.printStackTrace();
         }
         return pageResult;
+    }
+
+    @Override
+    public BizPortalInfoRespVo findByIdResp(Long id) {
+        BizPortalInfo bizPortalInfo = findById(id);
+        BizPortalInfoRespVo bizPortalInfoRespVo = castVo(bizPortalInfo);
+        return bizPortalInfoRespVo;
+    }
+
+    private BizPortalInfoRespVo castVo(BizPortalInfo bizPortalInfo) {
+        BizPortalInfoRespVo bizPortalInfoRespVo = new BizPortalInfoRespVo();
+        List<String> picPathList = new ArrayList<>();
+        String picPath = bizPortalInfo.getPicturePath();
+        String[] picsAboutUs = bizPortalInfo.getPicturePath().split(",");
+        for (String s : picsAboutUs) {
+            picPathList.add(s);
+        }
+        bizPortalInfoRespVo.setContent(bizPortalInfo.getContent());
+        bizPortalInfoRespVo.setCreateBy(bizPortalInfo.getCreateBy());
+        bizPortalInfoRespVo.setCreateTime(bizPortalInfo.getCreateTime());
+        bizPortalInfoRespVo.setDelFlag(bizPortalInfo.getDelFlag());
+        bizPortalInfoRespVo.setId(bizPortalInfo.getId());
+        bizPortalInfoRespVo.setCreateTime(bizPortalInfo.getCreateTime());
+        Date lastUpTime = bizPortalInfo.getLastUpdateTime();
+        if (null != lastUpTime) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String lastUpTimeStr = simpleDateFormat.format(lastUpTime);
+            bizPortalInfoRespVo.setLastUpdateTime(lastUpTimeStr);
+        }
+
+        bizPortalInfoRespVo.setLastUpdateBy(bizPortalInfo.getLastUpdateBy());
+        bizPortalInfoRespVo.setMainDesc(bizPortalInfo.getMainDesc());
+        bizPortalInfoRespVo.setSubDesc(bizPortalInfo.getSubDesc());
+        bizPortalInfoRespVo.setPicturePath(picPathList);
+        bizPortalInfoRespVo.setTitle(bizPortalInfo.getTitle());
+        bizPortalInfoRespVo.setTypeCode(bizPortalInfo.getTypeCode());
+        return bizPortalInfoRespVo;
     }
 }

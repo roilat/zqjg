@@ -13,6 +13,15 @@ public class News {
 	private String content;
     private String updateTime;
 	private Long id;
+	private String title;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public List<String> getPicturePath() {
 		return picturePath;

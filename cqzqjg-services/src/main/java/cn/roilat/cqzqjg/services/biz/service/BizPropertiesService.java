@@ -1,12 +1,10 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
 import cn.roilat.cqzqjg.core.page.PageResult;
-import cn.roilat.cqzqjg.services.biz.model.BizProperties;
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.model.BizProperties;
 import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
-import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
-
-import java.util.List;
+import cn.roilat.cqzqjg.services.biz.vo.BizPropertiesRespVo;
 
 /**
  * ---------------------------
@@ -26,5 +24,12 @@ public interface BizPropertiesService extends CurdService<BizProperties> {
      * @return
      */
     PageResult findByName(AssetsReqVo assetsReqVo);
+
+    /**
+     * 资产详情
+     *
+     * @return
+     */
+    BizPropertiesRespVo findDetailById(Long id);
 
 }

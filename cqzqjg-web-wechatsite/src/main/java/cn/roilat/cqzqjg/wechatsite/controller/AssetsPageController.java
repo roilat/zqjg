@@ -2,9 +2,9 @@ package cn.roilat.cqzqjg.wechatsite.controller;
 
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageResult;
-import cn.roilat.cqzqjg.services.biz.model.BizProperties;
 import cn.roilat.cqzqjg.services.biz.service.BizPropertiesService;
 import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
+import cn.roilat.cqzqjg.services.biz.vo.BizPropertiesRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,8 +37,8 @@ public class AssetsPageController {
      */
     @GetMapping(value = {"/getById/{id}"})
     public HttpResult assetsById(@PathVariable Long id) throws IOException {
-        BizProperties bizProperties = bizPropertiesService.findById(id);
-        return HttpResult.ok("请求成功", bizProperties);
+        BizPropertiesRespVo bizPropertiesRespVo = bizPropertiesService.findDetailById(id);
+        return HttpResult.ok("请求成功", bizPropertiesRespVo);
     }
 
 

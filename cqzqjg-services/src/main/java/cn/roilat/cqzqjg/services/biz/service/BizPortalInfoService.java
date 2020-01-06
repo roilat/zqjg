@@ -3,11 +3,9 @@ package cn.roilat.cqzqjg.services.biz.service;
 import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
+import cn.roilat.cqzqjg.services.biz.vo.BizPortalInfoRespVo;
 import cn.roilat.cqzqjg.services.biz.vo.ConsultationVo;
 import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
-import cn.roilat.cqzqjg.services.biz.vo.News;
-
-import java.util.List;
 
 /**
  * ---------------------------
@@ -32,4 +30,7 @@ public interface BizPortalInfoService extends CurdService<BizPortalInfo> {
      * @return
      */
     PageResult findNews(ConsultationVo consultationVo);
+
+    BizPortalInfoRespVo findByIdResp(Long id);
+
 }

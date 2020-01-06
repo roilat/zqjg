@@ -2,9 +2,8 @@ package cn.roilat.cqzqjg.wechatsite.controller;
 
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageResult;
-import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
 import cn.roilat.cqzqjg.services.biz.service.BizPortalInfoService;
-import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
+import cn.roilat.cqzqjg.services.biz.vo.BizPortalInfoRespVo;
 import cn.roilat.cqzqjg.services.biz.vo.ConsultationVo;
 import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +50,8 @@ public class HomePageController {
      */
     @GetMapping(value = "/getById/{id}")
     public HttpResult consultationById(@PathVariable Long id) throws IOException {
-        BizPortalInfo bizPortalInfo = bizPortalInfoService.findById(id);
-        return HttpResult.ok("请求成功", bizPortalInfo);
+        BizPortalInfoRespVo bizPortalInfoRespVo = bizPortalInfoService.findByIdResp(id);
+        return HttpResult.ok("请求成功", bizPortalInfoRespVo);
     }
 
 
