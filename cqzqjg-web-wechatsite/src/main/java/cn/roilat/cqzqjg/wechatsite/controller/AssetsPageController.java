@@ -1,15 +1,14 @@
 package cn.roilat.cqzqjg.wechatsite.controller;
 
 import cn.roilat.cqzqjg.core.http.HttpResult;
+import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.services.biz.model.BizProperties;
 import cn.roilat.cqzqjg.services.biz.service.BizPropertiesService;
+import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @program: zqjg
@@ -25,13 +24,21 @@ public class AssetsPageController {
     BizPropertiesService bizPropertiesService;
 
     /**
-     * 资产接口
+     * 资产接口列表
      */
-    @GetMapping(value = "/getPage")
-    public HttpResult homePage(@RequestParam(required = false) String name, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        System.out.println("hello");
-        List<BizProperties> bizPropertiesList = bizPropertiesService.findByName(name);
-        return HttpResult.ok("请求成功", bizPropertiesList);
+    @PostMapping(value = {"/getPage"})
+    public HttpResult assets(@RequestBody AssetsReqVo assetsReqVo) throws IOException {
+        PageResult pageResult = bizPropertiesService.findByName(assetsReqVo);
+        return HttpResult.ok("请求成功", pageResult);
+    }
+
+    /**
+     * 资产详情接口
+     */
+    @GetMapping(value = {"/getById/{id}"})
+    public HttpResult assetsById(@PathVariable Long id) throws IOException {
+        BizProperties bizProperties = bizPropertiesService.findById(id);
+        return HttpResult.ok("请求成功", bizProperties);
     }
 
 

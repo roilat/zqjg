@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Main {
 
+	private Long id;
     private List<String> picturePath;
     private String title;
     private String mainDesc;
@@ -40,5 +41,11 @@ public class Main {
 		this.subDesc = subDesc;
 	}
 
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

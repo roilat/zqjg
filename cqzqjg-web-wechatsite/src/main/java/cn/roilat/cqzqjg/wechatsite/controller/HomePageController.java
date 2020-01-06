@@ -1,13 +1,14 @@
 package cn.roilat.cqzqjg.wechatsite.controller;
 
 import cn.roilat.cqzqjg.core.http.HttpResult;
+import cn.roilat.cqzqjg.core.page.PageResult;
+import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
 import cn.roilat.cqzqjg.services.biz.service.BizPortalInfoService;
+import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
+import cn.roilat.cqzqjg.services.biz.vo.ConsultationVo;
 import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,12 +37,22 @@ public class HomePageController {
     }
 
     /**
-     * 更多资讯
+     * 更多资讯列表
      */
-    @GetMapping(value = "/consultation")
-    public HttpResult consultation(@RequestParam(required = false) String begTime, @RequestParam(required = false) String endTime, HttpServletResponse response, HttpServletRequest request) throws IOException {
-        HomePageVo homePageVo = bizPortalInfoService.findNews(begTime,endTime);
-        return HttpResult.ok("请求成功", homePageVo);
+    @PostMapping(value = "/consultation")
+    public HttpResult consultation(@RequestBody ConsultationVo consultationVo) throws IOException {
+        PageResult pageResult = bizPortalInfoService.findNews(consultationVo);
+        return HttpResult.ok("请求成功", pageResult);
+    }
+
+
+    /**
+     * 资讯详情
+     */
+    @GetMapping(value = "/getById/{id}")
+    public HttpResult consultationById(@PathVariable Long id) throws IOException {
+        BizPortalInfo bizPortalInfo = bizPortalInfoService.findById(id);
+        return HttpResult.ok("请求成功", bizPortalInfo);
     }
 
 

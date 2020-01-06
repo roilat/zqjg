@@ -12,6 +12,7 @@ public class News {
 	private List<String> picturePath;
 	private String content;
     private String updateTime;
+	private Long id;
 
 	public List<String> getPicturePath() {
 		return picturePath;
@@ -35,5 +36,13 @@ public class News {
 
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

@@ -66,7 +66,7 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
 
     @Override
     public HomePageVo findHomePage() {
-        List<BizPortalInfo> bizPortalInfos = bizPortalInfoMapper.findPage();
+        List<BizPortalInfo> bizPortalInfos = bizPortalInfoMapper.findHomePage();
         HomePageVo homePageVo = new HomePageVo();
 //        List<AboutUs> aboutUsList = new ArrayList<>();
 //        List<ChooseUs> chooseUsList = new ArrayList<>();
@@ -165,24 +165,32 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
     }
 
     @Override
-    public HomePageVo findNews(String begTime, String endTime) {
+    public PageResult findNews(ConsultationVo consultationVo) {
         HomePageVo homePageVo = new HomePageVo();
-
-        Date begDate = null;
-        Date endDate = null;
+        PageResult pageResult = null;
+        String begTime = consultationVo.getBegTime();
+        String endTime = consultationVo.getEndTime();
+        Date begDate;
+        Date endDate;
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            begDate = simpleDateFormat.parse("1990-01-01 00:00:00");
+            endDate = simpleDateFormat.parse("2099-12-31 23:59:59");
             //开始时间
             if (null != begTime && !"".equals(begTime)) {
                 begTime = begTime + " 00:00:00";
                 begDate = simpleDateFormat.parse(begTime);
+                consultationVo.setBegDate(begDate);
             }
             //结束时间
             if (null != endTime && !"".equals(endTime)) {
                 endTime = endTime + " 23:59:59";
                 endDate = simpleDateFormat.parse(endTime);
+                consultationVo.setEndDate(endDate);
             }
-            List<BizPortalInfo> bizPortalInfos = bizPortalInfoMapper.findNewsByTime(begDate, endDate);
+
+            pageResult = MybatisPageHelper.findPage(consultationVo, bizPortalInfoMapper, "findNewsByTime",begDate,endDate);
+            List<BizPortalInfo> bizPortalInfos = (List<BizPortalInfo>) pageResult.getContent();
             List<News> newsList = new ArrayList<>();
             for (BizPortalInfo bizPortalInfo : bizPortalInfos) {
                 String typeCode = bizPortalInfo.getTypeCode();
@@ -204,9 +212,12 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
                 }
             }
             homePageVo.setNews(newsList);
+            List<HomePageVo> respList = new ArrayList<>();
+            respList.add(homePageVo);
+            pageResult.setContent(respList);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return homePageVo;
+        return pageResult;
     }
 }

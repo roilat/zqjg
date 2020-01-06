@@ -57,7 +57,7 @@ public interface BizPortalInfoMapper {
      *
      * @return
      */
-    List<BizPortalInfo> findNews();
+    List<BizPortalInfo> findHomePage();
 
     /**
      * 基础分页查询

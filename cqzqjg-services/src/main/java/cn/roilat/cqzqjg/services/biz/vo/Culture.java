@@ -9,6 +9,7 @@ import java.util.List;
  * @create: 2020-01-04 22:09
  **/
 public class Culture {
+	private Long id;
     private List<String> picturePath;
     private String content;
     private String title;
@@ -30,5 +31,12 @@ public class Culture {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-    
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

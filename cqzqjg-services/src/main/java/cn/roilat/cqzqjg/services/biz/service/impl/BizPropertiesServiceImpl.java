@@ -2,6 +2,7 @@ package cn.roilat.cqzqjg.services.biz.service.impl;
 
 import java.util.List;
 
+import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,7 +62,8 @@ public class BizPropertiesServiceImpl implements BizPropertiesService {
     }
 
     @Override
-    public List<BizProperties> findByName(String name) {
-        return bizPropertiesMapper.findByName(name);
+    public PageResult findByName(AssetsReqVo assetsReqVo) {
+        return MybatisPageHelper.findPage(assetsReqVo, bizPropertiesMapper, "findByName", assetsReqVo.getName());
     }
+
 }

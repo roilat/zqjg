@@ -1,7 +1,9 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
+import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
+import cn.roilat.cqzqjg.services.biz.vo.ConsultationVo;
 import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
 import cn.roilat.cqzqjg.services.biz.vo.News;
 
@@ -25,9 +27,9 @@ public interface BizPortalInfoService extends CurdService<BizPortalInfo> {
     HomePageVo findHomePage();
 
     /**
-     * 更多资讯
+     * 更多资讯列表
      *
      * @return
      */
-    HomePageVo findNews(String begTime,String endTime);
+    PageResult findNews(ConsultationVo consultationVo);
 }
