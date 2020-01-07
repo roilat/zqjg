@@ -56,5 +56,6 @@ public interface BizMemberUserMapper {
      * @return
      */
 	BizMemberUser findByLoginName(String loginName);
+
     
 }

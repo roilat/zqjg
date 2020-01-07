@@ -2,6 +2,7 @@ package cn.roilat.cqzqjg.services.biz.service;
 
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
 
 /**
  * ---------------------------
@@ -15,4 +16,8 @@ import cn.roilat.cqzqjg.core.service.CurdService;
 public interface BizMemberUserService extends CurdService<BizMemberUser> {
 
 	BizMemberUser findByLoginName(String loginName);
+
+
+	BizMemberUserRespVo findByNameMyPage(String loginName);
+
 }
