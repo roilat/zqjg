@@ -61,5 +61,4 @@ public class HomePageController {
         return HttpResult.ok("请求成功", bizPortalInfoRespVo);
     }
 
-
 }

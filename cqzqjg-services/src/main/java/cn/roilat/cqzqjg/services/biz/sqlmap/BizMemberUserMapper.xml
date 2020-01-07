@@ -12,6 +12,7 @@
 	<result column="salt" jdbcType="VARCHAR" property="salt" />
 	<result column="avatar" jdbcType="VARCHAR" property="avatar" />
 	<result column="wechat" jdbcType="VARCHAR" property="wechat" />
+	<result column="open_id" jdbcType="VARCHAR" property="openId" />
 	<result column="if_wechat_login" jdbcType="CHAR" property="ifWechatLogin" />
 	<result column="approve_status" jdbcType="CHAR" property="approveStatus" />
 	<result column="if_locked" jdbcType="CHAR" property="ifLocked" />
@@ -51,6 +52,9 @@
       </if>
       <if test="wechat != null">
         wechat,
+      </if>
+      <if test="openId != null">
+        open_id,
       </if>
       <if test="ifWechatLogin != null">
         if_wechat_login,
@@ -104,6 +108,9 @@
       </if>
       <if test="wechat != null">
         #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
       <if test="ifWechatLogin != null">
         #{ifWechatLogin,jdbcType=CHAR},
@@ -167,6 +174,9 @@
       <if test="wechat != null">
         wechat = #{wechat,jdbcType=VARCHAR},
       </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="ifWechatLogin != null">
         if_wechat_login = #{ifWechatLogin,jdbcType=CHAR},
       </if>
@@ -202,6 +212,10 @@
   <select id="findByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from biz_member_user
     where login_name = #{loginName,jdbcType=VARCHAR} and del_flag=0
+  </select>
+  <select id="findByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from biz_member_user
+    where open_id = #{openId,jdbcType=VARCHAR} and del_flag=0
   </select>
   
   <select id="findPage" resultMap="BaseResultMap">

@@ -11,29 +11,33 @@ import cn.roilat.cqzqjg.common.util.PasswordEncoder;
 
 /**
  * 身份验证提供者
+ * 
  * @author Louis
  * @date Nov 20, 2018
  */
 public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
-    public JwtAuthenticationProvider(UserDetailsService userDetailsService) {
-        setUserDetailsService(userDetailsService);
-    }
+	public JwtAuthenticationProvider(UserDetailsService userDetailsService) {
+		setUserDetailsService(userDetailsService);
+	}
 
-    @Override
-	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
-			throws AuthenticationException {
+	@Override
+	protected void additionalAuthenticationChecks(UserDetails userDetails,
+			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		if (authentication.getCredentials() == null) {
 			logger.debug("Authentication failed: no credentials provided");
-			throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			throw new BadCredentialsException(
+					messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 
 		String presentedPassword = authentication.getCredentials().toString();
 		String salt = ((JwtUserDetails) userDetails).getSalt();
 		// 覆写密码验证逻辑
-		if (!new PasswordEncoder(salt).matches(userDetails.getPassword(), presentedPassword)) {
+		if (!new PasswordEncoder(salt).matches(userDetails.getPassword(), presentedPassword)
+				&& !presentedPassword.equals(userDetails.getPassword())) {
 			logger.debug("Authentication failed: password does not match stored value");
-			throw new BadCredentialsException(messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			throw new BadCredentialsException(
+					messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 	}
 

@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/static/fonts/**").permitAll()
             .antMatchers("/upload/**").permitAll()
             .antMatchers("/auth/login").permitAll()
+            .antMatchers("/auth/wechatLogin").permitAll()
             .antMatchers("/register/login").permitAll()
             .antMatchers("/home/**").permitAll()
             // swagger
