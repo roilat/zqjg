@@ -9,6 +9,7 @@ import java.util.List;
  * @create: 2020-01-04 22:09
  **/
 public class ChooseUs {
+	private Long id;
     private List<String> picturePath;
     private String content;
 	public List<String> getPicturePath() {
@@ -23,5 +24,12 @@ public class ChooseUs {
 	public void setContent(String content) {
 		this.content = content;
 	}
-    
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

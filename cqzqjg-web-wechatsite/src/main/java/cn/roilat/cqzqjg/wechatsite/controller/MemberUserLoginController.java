@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +38,7 @@ import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
  * @author Louis
  * @date Oct 29, 2018
  */
-@RestController
+@Controller
 @RequestMapping("auth")
 public class MemberUserLoginController {
 
@@ -193,4 +194,6 @@ public class MemberUserLoginController {
 		user.setIfWechatLogin("1");
 		return HttpResult.ok(bizMemberUserService.save(user));
 	}
+	
+	
 }

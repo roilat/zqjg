@@ -20,11 +20,17 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 	private String token;
 	private String companyName;
 	private String wechat;
+	private String avatar;
+	private String openId;
+	private String nickName;
 
 	public JwtAuthenticatioToken(BizMemberUser memberUser) {
 		super(memberUser.getLoginName(), memberUser.getPassword());
 		wechat = memberUser.getWechat();
 		companyName = memberUser.getCompanyName();
+		avatar = memberUser.getAvatar();
+		nickName = memberUser.getNickName();
+		openId = memberUser.getOpenId();
 	}
 
 	public JwtAuthenticatioToken(Object principal, Object credentials) {
@@ -68,6 +74,30 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 
 	public void setWechat(String wechat) {
 		this.wechat = wechat;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 }

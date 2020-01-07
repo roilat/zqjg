@@ -16,6 +16,7 @@ import cn.roilat.cqzqjg.common.security.JwtAuthenticatioToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * JWT工具类
@@ -155,6 +156,9 @@ public class JwtTokenUtils implements Serializable {
 	 */
 	public static Boolean validateToken(String token, String username) {
 	    String userName = getUsernameFromToken(token);
+	    if(null==userName||"".equals(userName)){
+			throw new UsernameNotFoundException("登录超时，请重新登录");
+		}
 	    return (userName.equals(username) && !isTokenExpired(token));
 	}
 
