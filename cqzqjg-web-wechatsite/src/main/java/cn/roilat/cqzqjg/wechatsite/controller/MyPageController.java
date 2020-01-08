@@ -1,7 +1,9 @@
 package cn.roilat.cqzqjg.wechatsite.controller;
 
 import cn.roilat.cqzqjg.core.http.HttpResult;
+import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ public class MyPageController {
 
     @Autowired
     private BizMemberUserService bizMemberUserService;
+    @Autowired
+    private BizMemberCompanyService bizMemberCompanyService;
 
     @GetMapping(value = "/page/{username}")
     public HttpResult login(@PathVariable String username) throws IOException {
@@ -31,5 +35,14 @@ public class MyPageController {
             return HttpResult.error("用户不存在");
         }
         return HttpResult.ok("查询成功", user);
+    }
+
+    @GetMapping(value = "/company/{id}")
+    public HttpResult companyDetail(@PathVariable Long id) throws IOException {
+        BizMemberCompanyResp bizMemberCompanyResp = bizMemberCompanyService.findByIdResp(id);
+        if (null == bizMemberCompanyResp) {
+            return HttpResult.error("用户不存在");
+        }
+        return HttpResult.ok("查询成功", bizMemberCompanyResp);
     }
 }

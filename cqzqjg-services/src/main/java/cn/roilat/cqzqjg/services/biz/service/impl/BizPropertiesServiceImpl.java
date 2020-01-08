@@ -68,8 +68,12 @@ public class BizPropertiesServiceImpl implements BizPropertiesService {
         List<BizProperties> bizPropertiesList = (List<BizProperties>) pageResult.getContent();
         List<BizPropertiesRespVo> respVoList = new ArrayList<>();
         for (BizProperties bizProperties : bizPropertiesList) {
-            BizPropertiesRespVo bizPropertiesRespVo = castVo(bizProperties);
-            respVoList.add(bizPropertiesRespVo);
+            if (null == bizProperties) {
+                respVoList.add(new BizPropertiesRespVo());
+            } else {
+                BizPropertiesRespVo bizPropertiesRespVo = castVo(bizProperties);
+                respVoList.add(bizPropertiesRespVo);
+            }
         }
         pageResult.setContent(respVoList);
         return pageResult;
@@ -78,6 +82,9 @@ public class BizPropertiesServiceImpl implements BizPropertiesService {
     @Override
     public BizPropertiesRespVo findDetailById(Long id) {
         BizProperties bizProperties = findById(id);
+        if (null == bizProperties) {
+            return new BizPropertiesRespVo();
+        }
         BizPropertiesRespVo bizPropertiesRespVo = castVo(bizProperties);
         return bizPropertiesRespVo;
     }

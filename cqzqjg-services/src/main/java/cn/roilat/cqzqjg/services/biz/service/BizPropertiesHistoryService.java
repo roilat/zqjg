@@ -1,7 +1,7 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
-import cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory;
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory;
 
 /**
  * ---------------------------

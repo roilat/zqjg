@@ -1,22 +1,20 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
+import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
+import cn.roilat.cqzqjg.core.page.PageRequest;
+import cn.roilat.cqzqjg.core.page.PageResult;
+import cn.roilat.cqzqjg.services.biz.dao.BizPortalInfoMapper;
+import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
+import cn.roilat.cqzqjg.services.biz.service.BizPortalInfoService;
+import cn.roilat.cqzqjg.services.biz.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import cn.roilat.cqzqjg.services.biz.vo.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
-import cn.roilat.cqzqjg.core.page.PageRequest;
-import cn.roilat.cqzqjg.core.page.PageResult;
-
-import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
-import cn.roilat.cqzqjg.services.biz.dao.BizPortalInfoMapper;
-import cn.roilat.cqzqjg.services.biz.service.BizPortalInfoService;
 
 /**
  * ---------------------------
@@ -228,6 +226,9 @@ public class BizPortalInfoServiceImpl implements BizPortalInfoService {
     @Override
     public BizPortalInfoRespVo findByIdResp(Long id) {
         BizPortalInfo bizPortalInfo = findById(id);
+        if(null==bizPortalInfo){
+            return new BizPortalInfoRespVo();
+        }
         BizPortalInfoRespVo bizPortalInfoRespVo = castVo(bizPortalInfo);
         return bizPortalInfoRespVo;
     }

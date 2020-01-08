@@ -1,7 +1,8 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
-import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
 
 /**
  * ---------------------------
@@ -14,4 +15,5 @@ import cn.roilat.cqzqjg.core.service.CurdService;
  */
 public interface BizMemberCompanyService extends CurdService<BizMemberCompany> {
 
+    BizMemberCompanyResp findByIdResp(Long id);
 }

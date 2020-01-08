@@ -1,17 +1,15 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.core.page.PageResult;
-
-import cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory;
 import cn.roilat.cqzqjg.services.biz.dao.BizPropertiesHistoryMapper;
+import cn.roilat.cqzqjg.services.biz.model.BizPropertiesHistory;
 import cn.roilat.cqzqjg.services.biz.service.BizPropertiesHistoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * ---------------------------

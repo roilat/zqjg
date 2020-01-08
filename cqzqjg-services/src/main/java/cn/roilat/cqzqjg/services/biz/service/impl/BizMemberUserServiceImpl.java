@@ -1,21 +1,18 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
-import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
-import cn.roilat.cqzqjg.services.biz.vo.BizPortalInfoRespVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.core.page.PageResult;
-
-import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.dao.BizMemberUserMapper;
+import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * ---------------------------
@@ -71,6 +68,9 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
     @Override
     public BizMemberUserRespVo findByNameMyPage(String loginName) {
         BizMemberUser bizMemberUser = bizMemberUserMapper.findByLoginName(loginName);
+        if(null==bizMemberUser){
+            return new BizMemberUserRespVo();
+        }
         BizMemberUserRespVo bizMemberUserRespVo = castVo(bizMemberUser);
         return bizMemberUserRespVo;
     }
