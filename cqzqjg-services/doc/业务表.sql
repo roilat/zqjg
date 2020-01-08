@@ -63,7 +63,7 @@ create table BIZ_MEMBER_USER
    nick_name            varchar(20) comment '昵称',
    password             varchar(32) comment '密码',
    salt             varchar(40) comment '盐',
-   avatar               varchar(100) comment '头像',
+   avatar               varchar(500) comment '头像',
    wechat               varchar(32) comment '微信号',
    if_wechat_login      char(1) comment '是否绑定微信',
    approve_status       char(1) comment '审批状态(0待审核,1审核不通过2审核通过)',
@@ -78,8 +78,10 @@ create table BIZ_MEMBER_USER
 );
 
 alter table BIZ_MEMBER_USER comment '会员单位e用户信息表';
-
-INSERT INTO `biz_member_user` VALUES ('1', '测试单位', '1', 'admin', '花和尚', 'bd1718f058d8a02468134432b8656a86', null, null, '0', '2', '0', 'admin', '2020-01-02 23:00:56', 'admin', '2020-01-02 23:23:09', '0', 'YzcmCZNvbXocrsz9dm8e');
+alter table biz_member_user add column open_id varchar(40) comment 'openid';
+ALTER TABLE `biz_member_user`
+MODIFY COLUMN `avatar`  varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像' AFTER `password`;
+INSERT INTO `biz_member_user` VALUES ('1', '测试单位', '1', 'admin', '花和尚', 'bd1718f058d8a02468134432b8656a86', null, null, '0', '2', '0', 'admin', '2020-01-02 23:00:56', 'admin', '2020-01-02 23:23:09', '0', 'YzcmCZNvbXocrsz9dm8e','');
 
 
 /*==============================================================*/

@@ -7,8 +7,9 @@
 		<groupId>cn.roilat</groupId>
 		<artifactId>cqzqjg</artifactId>
 		<version>1.0</version>
-<!--		<relativePath>../pom.xml</relativePath> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-		<relativePath/>
+		<!-- <relativePath>../pom.xml</relativePath> &lt;!&ndash; lookup parent 
+			from repository &ndash;&gt; -->
+		<relativePath />
 	</parent>
 
 	<artifactId>cqzqjg-services</artifactId>
@@ -130,6 +131,11 @@
 			<artifactId>lombok</artifactId>
 			<version>1.16.18</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
 		</dependency>
 	</dependencies>
 

@@ -1,17 +1,24 @@
 package cn.roilat.cqzqjg.wechatsite.controller;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.services.biz.service.BizPortalInfoService;
 import cn.roilat.cqzqjg.services.biz.vo.BizPortalInfoRespVo;
 import cn.roilat.cqzqjg.services.biz.vo.ConsultationVo;
 import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @program: zqjg
@@ -53,6 +60,5 @@ public class HomePageController {
         BizPortalInfoRespVo bizPortalInfoRespVo = bizPortalInfoService.findByIdResp(id);
         return HttpResult.ok("请求成功", bizPortalInfoRespVo);
     }
-
 
 }

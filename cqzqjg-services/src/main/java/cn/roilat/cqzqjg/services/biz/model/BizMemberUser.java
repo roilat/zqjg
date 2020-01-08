@@ -41,6 +41,7 @@ public class BizMemberUser {
 	private java.util.Date lastUpdateTime;
 	/** 是否删除 -1：已删除 0：正常 */
 	private Integer delFlag;
+	private String openId;
 
 	public Long getId() {
 		return id;
@@ -176,6 +177,14 @@ public class BizMemberUser {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 }

@@ -55,7 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/static/img/**").permitAll()
             .antMatchers("/static/fonts/**").permitAll()
             .antMatchers("/upload/**").permitAll()
-            .antMatchers("/auth/**").permitAll()
             .antMatchers("/admin/auth/**").permitAll()
             // swagger
             .antMatchers("/swagger-ui.html").permitAll()
