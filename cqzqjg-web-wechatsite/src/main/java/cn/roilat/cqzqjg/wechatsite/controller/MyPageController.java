@@ -45,4 +45,15 @@ public class MyPageController {
         }
         return HttpResult.ok("查询成功", bizMemberCompanyResp);
     }
+
+    @GetMapping(value = "/removeWechat/{id}")
+    public HttpResult removeWechat(@PathVariable Long id) throws IOException {
+        Boolean result = bizMemberUserService.removeWechat(id);
+        if (result) {
+            return HttpResult.ok("解绑成功");
+        } else {
+            return HttpResult.ok("解绑失败");
+        }
+    }
+
 }

@@ -11,10 +11,11 @@ import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
  */
 public interface BizMemberUserService extends CurdService<BizMemberUser> {
 
-	BizMemberUser findByLoginName(String loginName);
+    BizMemberUser findByLoginName(String loginName);
 
-	BizMemberUserRespVo findByNameMyPage(String loginName);
+    BizMemberUserRespVo findByNameMyPage(String loginName);
 
-	BizMemberUser findByOpenId(String openId);
+    BizMemberUser findByOpenId(String openId);
 
+    Boolean removeWechat(Long id);
 }
