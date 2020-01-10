@@ -41,11 +41,10 @@ spring:
 
 # pagehelper   
 pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql
-
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 wechat:
     appId:
-    secretKey: 
+    secretKey:

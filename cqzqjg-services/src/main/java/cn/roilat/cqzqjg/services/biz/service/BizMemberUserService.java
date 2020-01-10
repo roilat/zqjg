@@ -4,6 +4,9 @@ import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * --------------------------- 会员单位e用户信息表 (BizMemberUserService)
  * --------------------------- 作者： kitty-generator 时间： 2020-01-01 23:34:40 说明：
@@ -18,4 +21,6 @@ public interface BizMemberUserService extends CurdService<BizMemberUser> {
     BizMemberUser findByOpenId(String openId);
 
     Boolean removeWechat(Long id);
+
+    int deleteById(List<Map<String, Object>> params);
 }

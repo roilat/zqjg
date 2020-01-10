@@ -7,10 +7,38 @@ package cn.roilat.cqzqjg.common.vo;
  * @create: 2020-01-07 09:38
  **/
 public class UserBean {
+    private Integer companyId;
     private String companyName;
     private String account;
     private String password;
     private String phoneNumber;
+    //当前登录管理员
+    private String adminUser;
+    private String nickName;
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getAdminUser() {
+        return adminUser;
+    }
+
+    public void setAdminUser(String adminUser) {
+        this.adminUser = adminUser;
+    }
 
     public String getCompanyName() {
         return companyName;

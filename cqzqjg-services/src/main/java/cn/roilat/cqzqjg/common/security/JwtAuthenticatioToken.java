@@ -2,6 +2,7 @@ package cn.roilat.cqzqjg.common.security;
 
 import java.util.Collection;
 
+import cn.roilat.cqzqjg.services.system.model.SysUser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -37,6 +38,11 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 		userId = memberUser.getId();
 		ifWechatLogin = memberUser.getIfWechatLogin();
 	}
+
+	public JwtAuthenticatioToken(SysUser memberUser) {
+		super(memberUser.getName(), memberUser.getPassword());
+	}
+
 
 	public JwtAuthenticatioToken(Object principal, Object credentials) {
 		super(principal, credentials);

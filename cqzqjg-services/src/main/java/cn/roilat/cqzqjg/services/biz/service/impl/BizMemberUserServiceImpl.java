@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * --------------------------- 会员单位e用户信息表 (BizMemberUserServiceImpl)
@@ -45,6 +46,15 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         }
         return 1;
     }
+
+    @Override
+    public int deleteById(List<Map<String, Object>> params) {
+        for (Map<String, Object> map : params) {
+            bizMemberUserMapper.deleteById(map);
+        }
+        return 1;
+    }
+
 
     @Override
     public BizMemberUser findById(Long id) {
@@ -126,5 +136,6 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         }
         return result;
     }
+
 
 }

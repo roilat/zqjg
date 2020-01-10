@@ -2,6 +2,7 @@ package cn.roilat.cqzqjg.common.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import cn.roilat.cqzqjg.services.system.model.SysUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,6 +63,30 @@ public class SecurityUtils {
 		token.setToken(JwtTokenUtils.generateToken(authentication));
 		return token;
 	}
+
+
+	/**
+	 * 系统登录认证
+	 *
+	 * @param request
+	 * @param username
+	 * @param password
+	 * @param authenticationManager
+	 * @return
+	 */
+	public static JwtAuthenticatioToken loginWechat(HttpServletRequest request, SysUser bizMemberUser,
+													AuthenticationManager authenticationManager) {
+		JwtAuthenticatioToken token = new JwtAuthenticatioToken(bizMemberUser);
+		token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+		// 执行登录认证过程
+		Authentication authentication = authenticationManager.authenticate(token);
+		// 认证成功存储认证信息到上下文
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		// 生成令牌并返回给客户端
+		token.setToken(JwtTokenUtils.generateToken(authentication));
+		return token;
+	}
+
 
 	/**
 	 * 获取令牌进行认证
