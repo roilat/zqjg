@@ -22,10 +22,10 @@ public class WechatSiteApplication implements WebMvcConfigurer {
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// 静态资源放行
-		registry.addResourceHandler("/static/css/**").addResourceLocations("classpath:/static/css/");
-		registry.addResourceHandler("/static/js/**").addResourceLocations("classpath:/static/js/");
-		registry.addResourceHandler("/static/fonts/**").addResourceLocations("classpath:/static/fonts/");
-		registry.addResourceHandler("/static/img/**").addResourceLocations("classpath:/static/img/");
+		registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
+		registry.addResourceHandler("/fonts/**").addResourceLocations("classpath:/static/fonts/");
+		registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
 		registry.addResourceHandler("/index.html").addResourceLocations("classpath:/static/index.html");
 	}
 }

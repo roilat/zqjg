@@ -64,32 +64,36 @@ public class HttpResult {
         return code;
     }
 
-    public void setCode(int code) {
+    public HttpResult setCode(int code) {
         this.code = code;
+        return this;
     }
 
     public String getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public HttpResult setMsg(String msg) {
         this.msg = msg;
+        return this;
     }
 
     public Object getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public HttpResult setData(Object data) {
         this.data = data;
+        return this;
     }
 
-    public boolean setSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public HttpResult setSuccess(boolean success) {
         this.success = success;
+        return this;
     }
 
 }

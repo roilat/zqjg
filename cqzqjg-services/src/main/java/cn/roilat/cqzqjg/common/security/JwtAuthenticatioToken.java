@@ -25,6 +25,7 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 	private String nickName;
 	private Long userId;
 	private String ifWechatLogin;
+	private String accountAppStatus;
 
 	public JwtAuthenticatioToken(BizMemberUser memberUser) {
 		super(memberUser.getLoginName(), memberUser.getPassword());
@@ -119,4 +120,13 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 	public void setIfWechatLogin(String ifWechatLogin) {
 		this.ifWechatLogin = ifWechatLogin;
 	}
+
+	public String getAccountAppStatus() {
+		return accountAppStatus;
+	}
+
+	public void setAccountAppStatus(String accountAppStatus) {
+		this.accountAppStatus = accountAppStatus;
+	}
+
 }

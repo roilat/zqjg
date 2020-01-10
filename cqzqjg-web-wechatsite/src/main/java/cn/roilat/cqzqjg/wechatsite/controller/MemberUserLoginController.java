@@ -3,6 +3,7 @@ package cn.roilat.cqzqjg.wechatsite.controller;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -33,6 +34,7 @@ import cn.roilat.cqzqjg.common.utils.IOUtils;
 import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.common.vo.LoginBean;
 import cn.roilat.cqzqjg.common.vo.ModifyPasswordBean;
+import cn.roilat.cqzqjg.common.vo.UserBean;
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
@@ -79,7 +81,7 @@ public class MemberUserLoginController {
 		IOUtils.closeQuietly(out);
 	}
 
-	@PostMapping(value = "/wechatLogin")
+	@RequestMapping(value = "/wechatLogin")
 	public HttpResult wechatLogin(HttpServletRequest request, HttpServletResponse response) {
 		String code = request.getParameter("code");
 		if (!StringUtils.isBlank(code)) {
@@ -102,9 +104,18 @@ public class MemberUserLoginController {
 						if (user.getIfLocked() == "1") {
 							return HttpResult.error("账号已被锁定,请联系管理员");
 						}
+						
+						//账号不是审核已通过
+						if(!"2".equals(user.getApproveStatus())) {
+							JwtAuthenticatioToken result = new JwtAuthenticatioToken(null, null);
+							result.setAccountAppStatus(user.getApproveStatus());
+							return HttpResult.error().setData(result);
+						}
+						
 						// 系统登录认证
 						JwtAuthenticatioToken token = SecurityUtils.loginWechat(request, user, authenticationManager);
 						token.eraseCredentials();
+						token.setAccountAppStatus(user.getApproveStatus());
 						return HttpResult.ok(token);
 					}
 				}
@@ -112,6 +123,7 @@ public class MemberUserLoginController {
 				log.error("登录失败！", e);
 			}
 		}
+
 		return HttpResult.error("登录失败！");
 	}
 
@@ -166,135 +178,44 @@ public class MemberUserLoginController {
 		return HttpResult.ok(token);
 	}
 
-	/**
-	 * 修改密码接口
-	 */
-	@PostMapping(value = "/modifyPassword")
-	public HttpResult modifyPassword(@RequestBody ModifyPasswordBean modifyPasswordBean, HttpServletRequest request) {
-		if (modifyPasswordBean == null) {
-			return HttpResult.error("输入参数错误！");
+	@PostMapping(value = "/newUser")
+	public HttpResult login(@RequestBody UserBean userBean, HttpServletRequest request) throws IOException {
+		log.info("收到注册用户请求： " + userBean.toString());
+		if (StringUtils.isBlank(userBean.getAccount())) {
+			return HttpResult.error("用户名不能为空");
 		}
-		String username = modifyPasswordBean.getAccount();
-		String oldPassword = modifyPasswordBean.getOldPassword();
-		String newPassword = modifyPasswordBean.getNewPassword();
-		String newPasswordConfirm = modifyPasswordBean.getNewPasswordConfirm();
-		if (StringUtils.isBlank(username)) {
-			return HttpResult.error("用户必须登录后，才能进行该操作！");
+		if (StringUtils.isBlank(userBean.getCompanyName())) {
+			return HttpResult.error("公司名不能为空");
 		}
-		if (StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword)
-				|| StringUtils.isBlank(newPasswordConfirm)) {
-			return HttpResult.error("原密码和新密码输入不能为空！");
+		if (StringUtils.isBlank(userBean.getPassword())) {
+			return HttpResult.error("密码不能为空");
 		}
-		if (!newPassword.equals(newPasswordConfirm)) {
-			return HttpResult.error("新输入的密码不一致！");
+		if (StringUtils.isBlank(userBean.getPhoneNumber())) {
+			return HttpResult.error("手机号不能为空");
 		}
-		// 用户信息
-		BizMemberUser user = bizMemberUserService.findByLoginName(username);
+		BizMemberUser user = bizMemberUserService.findByLoginName(userBean.getAccount());
+		if (null != user) {
+			return HttpResult.error("登录账号重复");
+		}
 
-		// 账号不存在、密码错误
-		if (user == null) {
-			return HttpResult.error("账号不存在");
-		}
-		if (!PasswordUtils.matches(user.getSalt(), oldPassword, user.getPassword())) {
-			return HttpResult.error("原密码不正确");
-		}
-		String salt = user.getSalt();
-		String password = PasswordUtils.encode(newPassword, salt);
-		user.setPassword(password);
-		return HttpResult.ok(bizMemberUserService.save(user));
-	}
+		// 盐
+		String salt = PasswordUtils.getSalt();
+		// 密码加密
+		String password = PasswordUtils.encode(userBean.getPassword(), salt);
 
-	/**
-	 * 解除微信绑定接口
-	 */
-	@PostMapping(value = "/unbindWechatLogin")
-	public HttpResult unbindWechatLogin(@RequestBody LoginBean loginBean, HttpServletRequest request) {
-		if (loginBean == null) {
-			return HttpResult.error("输入参数错误！");
-		}
-		String username = loginBean.getAccount();
-		if (StringUtils.isBlank(username)) {
-			return HttpResult.error("用户必须登录后，才能进行该操作！");
-		}
-		// 用户信息
-		BizMemberUser user = bizMemberUserService.findByLoginName(username);
-		// 账号不存在、密码错误
-		if (user == null) {
-			return HttpResult.error("账号不存在");
-		}
-		user.setIfWechatLogin("0");
-		return HttpResult.ok(bizMemberUserService.save(user));
-	}
-
-	/**
-	 * 微信绑定接口
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/bindWechatLogin")
-	public HttpResult bindWechatLogin(HttpServletRequest request, HttpServletResponse response) {
-		String code = request.getParameter("code");
-		String userId = request.getParameter("userId");
-		String errorInfo = null;
-		if (!StringUtils.isBlank(code) && !StringUtils.isBlank(userId)) {
-			String accessToken = null;
-			String openId = null;
-			try {
-				JSONObject json = WechatUtils.getWechatPageAccessToken(wechatAppId, wechatSecretKey, code);
-				if (json != null) {
-					if (json.getString("errcode") != null) {
-						log.error("根据code获取openid和access_token错误：" + json.getString("errmsg"));
-					}
-					accessToken = json.getString("access_token");
-					openId = json.getString("openid");
-				}
-			} catch (Exception e) {
-				errorInfo = "根据code获取openid和access_token失败。";
-			}
-			if (!StringUtils.isBlank(openId) && !StringUtils.isBlank(accessToken)) {
-				try {
-					JSONObject json = WechatUtils.getWechatUserInfo(accessToken, openId);
-					if (json != null) {
-						if (json.getString("errcode") != null) {
-							log.error("根据openid和access_token获取用户信息错误：" + json.getString("errmsg"));
-						}
-						String nickname = json.getString("nickname");
-						String headimgurl = json.getString("headimgurl");
-						// 如果全部为空，则不行
-						if (StringUtils.isBlank(nickname) && StringUtils.isBlank(headimgurl)) {
-							errorInfo = "获取微信信息失败！";
-						} else {
-							BizMemberUser memberUser = new BizMemberUser();
-							memberUser.setId(Long.parseLong(userId));
-							memberUser.setAvatar(headimgurl);
-							memberUser.setNickName(nickname);
-							memberUser.setOpenId(openId);
-							memberUser.setIfWechatLogin("1");
-							int n = bizMemberUserService.save(memberUser);
-							if (n <= 0) {
-								errorInfo = "未查询到当前用户！";
-							}
-						}
-					} else {
-						errorInfo = "获取微信信息失败！";
-					}
-				} catch (Exception e) {
-					errorInfo = "根据code获取openid和access_token失败。";
-				}
-			} else {
-				errorInfo = "根据code获取openid和access_token失败。";
-			}
+		BizMemberUser bizMemberUser = new BizMemberUser();
+		bizMemberUser.setLoginName(userBean.getAccount());
+		bizMemberUser.setCompanyName(userBean.getCompanyName());
+		bizMemberUser.setPassword(password);
+		bizMemberUser.setSalt(salt);
+		bizMemberUser.setCreateTime(new Date());
+		// 保存用户
+		int i = bizMemberUserService.save(bizMemberUser);
+		if (i > 0) {
+			return HttpResult.ok("注册成功");
 		} else {
-			errorInfo = "code或者userId为空！";
+			return HttpResult.error("注册失败，请重试");
 		}
-		if (StringUtils.isBlank(errorInfo)) {
-			return HttpResult.ok("绑定成功！");
-		} else {
-			log.error(errorInfo);
-			return HttpResult.error(String.format("绑定失败【%s】！", errorInfo));
-		}
-
 	}
+
 }
