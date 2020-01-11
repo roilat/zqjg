@@ -27,22 +27,26 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 	private Long userId;
 	private String ifWechatLogin;
 	private String accountAppStatus;
+	private String approveDesc;
+	private String phoneNumber;
 
 	public JwtAuthenticatioToken(BizMemberUser memberUser) {
 		super(memberUser.getLoginName(), memberUser.getPassword());
-		wechat = memberUser.getWechat();
 		companyName = memberUser.getCompanyName();
+		wechat = memberUser.getWechat();
 		avatar = memberUser.getAvatar();
-		nickName = memberUser.getNickName();
 		openId = memberUser.getOpenId();
+		nickName = memberUser.getNickName();
 		userId = memberUser.getId();
 		ifWechatLogin = memberUser.getIfWechatLogin();
+		accountAppStatus = memberUser.getIfWechatLogin();
+		approveDesc = memberUser.getIfWechatLogin();
+		phoneNumber = memberUser.getPhoneNumber();
 	}
 
 	public JwtAuthenticatioToken(SysUser memberUser) {
 		super(memberUser.getName(), memberUser.getPassword());
 	}
-
 
 	public JwtAuthenticatioToken(Object principal, Object credentials) {
 		super(principal, credentials);
@@ -133,6 +137,22 @@ public class JwtAuthenticatioToken extends UsernamePasswordAuthenticationToken {
 
 	public void setAccountAppStatus(String accountAppStatus) {
 		this.accountAppStatus = accountAppStatus;
+	}
+
+	public String getApproveDesc() {
+		return approveDesc;
+	}
+
+	public void setApproveDesc(String approveDesc) {
+		this.approveDesc = approveDesc;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

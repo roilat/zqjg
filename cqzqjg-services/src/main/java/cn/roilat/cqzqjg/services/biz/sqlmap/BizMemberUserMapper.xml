@@ -15,12 +15,14 @@
         <result column="open_id" jdbcType="VARCHAR" property="openId"/>
         <result column="if_wechat_login" jdbcType="CHAR" property="ifWechatLogin"/>
         <result column="approve_status" jdbcType="CHAR" property="approveStatus"/>
+        <result column="approve_desc" jdbcType="VARCHAR" property="approveDesc"/>
         <result column="if_locked" jdbcType="CHAR" property="ifLocked"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
         <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
     </resultMap>
 
     <insert id="add" parameterType="cn.roilat.cqzqjg.services.biz.model.BizMemberUser">
@@ -62,6 +64,9 @@
             <if test="approveStatus != null">
                 approve_status,
             </if>
+            <if test="approveDesc != null">
+                approve_desc,
+            </if>
             <if test="ifLocked != null">
                 if_locked,
             </if>
@@ -79,6 +84,9 @@
             </if>
             <if test="delFlag != null">
                 del_flag,
+            </if>
+            <if test="phoneNumber != null">
+                phone_number,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -118,6 +126,9 @@
             <if test="approveStatus != null">
                 #{approveStatus,jdbcType=CHAR},
             </if>
+            <if test="approveDesc != null">
+                #{approveDesc,jdbcType=CHAR},
+            </if>
             <if test="ifLocked != null">
                 #{ifLocked,jdbcType=CHAR},
             </if>
@@ -135,6 +146,9 @@
             </if>
             <if test="delFlag != null">
                 #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -189,6 +203,9 @@
             <if test="approveStatus != null">
                 approve_status = #{approveStatus,jdbcType=CHAR},
             </if>
+            <if test="approveDesc != null">
+                approve_desc = #{approveDesc,jdbcType=CHAR},
+            </if>
             <if test="ifLocked != null">
                 if_locked = #{ifLocked,jdbcType=CHAR},
             </if>
@@ -206,6 +223,9 @@
             </if>
             <if test="delFlag != null">
                 del_flag = #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="phoneNumber != null">
+                phone_number = #{phoneNumber,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

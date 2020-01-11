@@ -29,6 +29,7 @@ public class BizMemberUser {
 	private String ifWechatLogin;
 	/** 审批状态(0待审核,1审核不通过2审核通过) */
 	private String approveStatus;
+	private String approveDesc;
 	/** 是否已锁定 */
 	private String ifLocked;
 	/** 创建人 */
@@ -42,6 +43,7 @@ public class BizMemberUser {
 	/** 是否删除 -1：已删除 0：正常 */
 	private Integer delFlag;
 	private String openId;
+	private String phoneNumber;
 
 	public Long getId() {
 		return id;
@@ -185,6 +187,22 @@ public class BizMemberUser {
 
 	public void setOpenId(String openId) {
 		this.openId = openId;
+	}
+
+	public String getApproveDesc() {
+		return approveDesc;
+	}
+
+	public void setApproveDesc(String approveDesc) {
+		this.approveDesc = approveDesc;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 }

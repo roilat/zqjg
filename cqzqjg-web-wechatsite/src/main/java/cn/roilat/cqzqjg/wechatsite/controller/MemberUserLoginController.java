@@ -92,23 +92,27 @@ public class MemberUserLoginController {
 					if (json.getString("errcode") != null) {
 						log.error("根据code获取openid和access_token错误：" + json.getString("errmsg"));
 					}
+					JwtAuthenticatioToken result = new JwtAuthenticatioToken(null, null);
 					openId = json.getString("openid");
 					if (!StringUtils.isBlank(openId)) {
+						result.setOpenId(openId);
 						BizMemberUser user = bizMemberUserService.findByOpenId(openId);
 						// 账号不存在、密码错误
 						if (user == null) {
-							return HttpResult.error("账号不存在");
+							return HttpResult.error("账号不存在").setData(result);
 						}
-
+						result = new JwtAuthenticatioToken(user);
+						result.eraseCredentials();
+						
 						// 账号锁定
 						if (user.getIfLocked() == "1") {
-							return HttpResult.error("账号已被锁定,请联系管理员");
+							return HttpResult.error("账号已被锁定,请联系管理员").setData(result);
 						}
 						
 						//账号不是审核已通过
 						if(!"2".equals(user.getApproveStatus())) {
-							JwtAuthenticatioToken result = new JwtAuthenticatioToken(null, null);
 							result.setAccountAppStatus(user.getApproveStatus());
+							result.setApproveDesc(user.getApproveDesc());
 							return HttpResult.error().setData(result);
 						}
 						
@@ -179,7 +183,7 @@ public class MemberUserLoginController {
 	}
 
 	@PostMapping(value = "/newUser")
-	public HttpResult login(@RequestBody UserBean userBean, HttpServletRequest request) throws IOException {
+	public HttpResult newUser(@RequestBody UserBean userBean, HttpServletRequest request) throws IOException {
 		log.info("收到注册用户请求： " + userBean.toString());
 		if (StringUtils.isBlank(userBean.getAccount())) {
 			return HttpResult.error("用户名不能为空");
@@ -204,17 +208,29 @@ public class MemberUserLoginController {
 		String password = PasswordUtils.encode(userBean.getPassword(), salt);
 
 		BizMemberUser bizMemberUser = new BizMemberUser();
+		if(userBean.getUserId() != null) {
+			try {
+				bizMemberUser.setId(Long.parseLong(userBean.getUserId()));
+			} catch (NumberFormatException e) {
+			}
+		}
 		bizMemberUser.setLoginName(userBean.getAccount());
 		bizMemberUser.setCompanyName(userBean.getCompanyName());
 		bizMemberUser.setPassword(password);
+		bizMemberUser.setPhoneNumber(userBean.getPhoneNumber());
+		bizMemberUser.setApproveStatus("0");
+		bizMemberUser.setIfLocked("0");
+		bizMemberUser.setIfWechatLogin("0");
 		bizMemberUser.setSalt(salt);
+		bizMemberUser.setOpenId(userBean.getOpenId());
 		bizMemberUser.setCreateTime(new Date());
 		// 保存用户
 		int i = bizMemberUserService.save(bizMemberUser);
 		if (i > 0) {
-			return HttpResult.ok("注册成功");
+			return HttpResult.ok("账号申请已发送成功，请等待后台管理员复核。");
 		} else {
-			return HttpResult.error("注册失败，请重试");
+			log.error("数据保存失败");
+			return HttpResult.error("申请失败，请重试");
 		}
 	}
 
