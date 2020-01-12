@@ -1,13 +1,9 @@
 package cn.roilat.cqzqjg.services.biz.dao;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.roilat.cqzqjg.services.biz.model.BizPortalInfo;
-import cn.roilat.cqzqjg.services.biz.vo.HomePageVo;
-import cn.roilat.cqzqjg.services.biz.vo.News;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * ---------------------------
@@ -64,7 +60,7 @@ public interface BizPortalInfoMapper {
      *
      * @return
      */
-    List<BizPortalInfo> findNewsByTime(@Param("begDate") Date begDate, @Param("endDate") Date endDate);
+    List<BizPortalInfo> findNewsByTime(HashMap<String, Object> map);
 
     /**
      * 基础分页查询
