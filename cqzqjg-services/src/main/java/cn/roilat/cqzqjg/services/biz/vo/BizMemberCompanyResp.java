@@ -8,22 +8,62 @@ package cn.roilat.cqzqjg.services.biz.vo;
  **/
 public class BizMemberCompanyResp {
 
-    /** 主键 */
+    /**
+     * 主键
+     */
     private Long id;
-    /** 单位名称 */
+    /**
+     * 单位名称
+     */
     private String companyName;
-    /** 企业统一信用代码 */
+    /**
+     * 企业统一信用代码
+     */
     private String companyCode;
-    /** 企业法人 */
+    /**
+     * 企业法人
+     */
     private String legalPerson;
-    /** 联系电话 */
+    /**
+     * 联系电话
+     */
     private String companyPhone;
-    /** 传真 */
+    /**
+     * 传真
+     */
     private String companyFax;
-    /** 邮箱 */
+    /**
+     * 邮箱
+     */
     private String companyEmail;
-    /** 联系地址 */
+    /**
+     * 联系地址
+     */
     private String companyAddress;
+    /**
+     * 更新时间
+     */
+    private String lastUpdateTime;
+    /**
+     * 创建时间
+     */
+    private String createTime;
+
+    public String getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(String lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
     public Long getId() {
         return id;

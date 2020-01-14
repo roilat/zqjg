@@ -1,8 +1,10 @@
 package cn.roilat.cqzqjg.services.biz.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * ---------------------------
@@ -45,9 +47,21 @@ public interface BizMemberCompanyMapper {
 
     /**
      * 基础分页查询
-     * @param record
      * @return
      */    
     List<BizMemberCompany> findPage();
+
+    /**
+     * 按公司名，企业统一信用代码查询
+     * @return
+     */
+    List<BizMemberCompany> findPageByNameAndCode(@Param("params") Map<String, Object> map);
+
+    /**
+     * 根据id删除
+     *
+     * @return
+     */
+    Integer deleteById(@Param("params") Map<String, Object> map);
     
 }
