@@ -8,7 +8,6 @@ import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -102,7 +101,7 @@ public class WxBizMemberUserController {
     }
 
     /**
-     * 删除会员单位e用户信息表
+     * 更新会员单位e用户信息表
      *
      * @param records
      * @return
@@ -179,7 +178,7 @@ public class WxBizMemberUserController {
      */
     @PostMapping(value = "/findPage")
     public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-        return HttpResult.ok(bizMemberUserService.findPage(pageRequest));
+        return HttpResult.ok("请求成功", bizMemberUserService.findPageResp(pageRequest));
     }
 
     /**

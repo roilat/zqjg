@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -48,11 +49,26 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
     }
 
     @Override
-    public int deleteById(List<Map<String, Object>> params) {
+    public Integer deleteById(List<Map<String, Object>> params) {
         for (Map<String, Object> map : params) {
             bizMemberUserMapper.deleteById(map);
         }
         return 1;
+    }
+
+    @Override
+    public List<BizMemberUserRespVo> findPageResp(PageRequest pageRequest) {
+        List<BizMemberUserRespVo> respList = new ArrayList<>();
+        List<BizMemberUser> bizMemberUsers = bizMemberUserMapper.findPage();
+        if (null == bizMemberUsers || bizMemberUsers.size() == 0) {
+            return respList;
+        }
+        for (BizMemberUser bizMemberUser : bizMemberUsers) {
+            BizMemberUserRespVo bizMemberUserRespVo = castVo(bizMemberUser);
+            respList.add(bizMemberUserRespVo);
+
+        }
+        return respList;
     }
 
 
