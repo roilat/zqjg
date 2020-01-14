@@ -2,6 +2,7 @@ package cn.roilat.cqzqjg.wechatsite.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 
@@ -33,7 +34,6 @@ import cn.roilat.cqzqjg.common.util.WechatUtils;
 import cn.roilat.cqzqjg.common.utils.IOUtils;
 import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.common.vo.LoginBean;
-import cn.roilat.cqzqjg.common.vo.ModifyPasswordBean;
 import cn.roilat.cqzqjg.common.vo.UserBean;
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
@@ -50,11 +50,17 @@ import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
 public class MemberUserLoginController {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
-	@Value("wechat.appId")
+	private static final String WECHAT_PAGE_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=123";
+	private static final String WECHAT_AUTHORIZE_TYPE_BASE = "snsapi_base";
+	private static final String WECHAT_AUTHORIZE_TYPE_USERINFO = "snsapi_userinfo";
+	@Value("${wechat.appId}")
 	private String wechatAppId;
-	@Value("wechat.secretKey")
+	@Value("${wechat.secretKey}")
 	private String wechatSecretKey;
-
+	@Value("${system.host}")
+	private String hostUrl;
+	@Value("${system.webPort}")
+	private String webPort;
 	// test
 
 	@Autowired
@@ -75,6 +81,7 @@ public class MemberUserLoginController {
 		BufferedImage image = producer.createImage(text);
 		// 保存到验证码到 session
 		request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, text);
+		System.out.println("captcha.jpg---"+request.getSession().getId());
 
 		ServletOutputStream out = response.getOutputStream();
 		ImageIO.write(image, "jpg", out);
@@ -103,19 +110,19 @@ public class MemberUserLoginController {
 						}
 						result = new JwtAuthenticatioToken(user);
 						result.eraseCredentials();
-						
+
 						// 账号锁定
 						if (user.getIfLocked() == "1") {
 							return HttpResult.error("账号已被锁定,请联系管理员").setData(result);
 						}
-						
-						//账号不是审核已通过
-						if(!"2".equals(user.getApproveStatus())) {
+
+						// 账号不是审核已通过
+						if (!"2".equals(user.getApproveStatus())) {
 							result.setAccountAppStatus(user.getApproveStatus());
 							result.setApproveDesc(user.getApproveDesc());
 							return HttpResult.error().setData(result);
 						}
-						
+
 						// 系统登录认证
 						JwtAuthenticatioToken token = SecurityUtils.loginWechat(request, user, authenticationManager);
 						token.eraseCredentials();
@@ -153,10 +160,13 @@ public class MemberUserLoginController {
 		}
 		// 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
 		Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		/*
-		 * if (kaptcha == null) { return HttpResult.error("验证码已失效"); } if
-		 * (!kaptcha.equals(captcha)) { return HttpResult.error("验证码不正确"); }
-		 */
+		System.out.println(request.getSession().getId());
+		if (kaptcha == null) {
+			return HttpResult.error("验证码已失效");
+		}
+		if (!kaptcha.equals(captcha)) {
+			return HttpResult.error("验证码不正确");
+		}
 
 		// 用户信息
 		BizMemberUser user = bizMemberUserService.findByLoginName(username);
@@ -208,7 +218,7 @@ public class MemberUserLoginController {
 		String password = PasswordUtils.encode(userBean.getPassword(), salt);
 
 		BizMemberUser bizMemberUser = new BizMemberUser();
-		if(userBean.getUserId() != null) {
+		if (userBean.getUserId() != null) {
 			try {
 				bizMemberUser.setId(Long.parseLong(userBean.getUserId()));
 			} catch (NumberFormatException e) {
@@ -233,5 +243,17 @@ public class MemberUserLoginController {
 			return HttpResult.error("申请失败，请重试");
 		}
 	}
+	@RequestMapping("toWechatLogin")
+	public void toWechatLogin(HttpServletResponse response) throws UnsupportedEncodingException, IOException {
+		String redirectUrl = "http://%s:%s/index.html#/wxAuth";
+		String url = String.format(redirectUrl, hostUrl,webPort);
+		response.sendRedirect(String.format(WECHAT_PAGE_AUTHORIZE_URL, wechatAppId,URLEncoder.encode(url, "utf-8"),WECHAT_AUTHORIZE_TYPE_BASE));
+	}
 
+	@RequestMapping("toBindWechat")
+    public void toBindWechat(HttpServletResponse response) throws UnsupportedEncodingException, IOException {
+		String redirectUrl = "http://%s:%s/index.html#/wxAuth";
+		String url = String.format(redirectUrl, hostUrl,webPort);
+    	response.sendRedirect(String.format(WECHAT_PAGE_AUTHORIZE_URL, wechatAppId,URLEncoder.encode(url, "utf-8"),WECHAT_AUTHORIZE_TYPE_USERINFO));
+    }
 }
