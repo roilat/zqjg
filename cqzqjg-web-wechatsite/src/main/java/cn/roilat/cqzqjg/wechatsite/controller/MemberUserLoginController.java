@@ -81,8 +81,7 @@ public class MemberUserLoginController {
 		BufferedImage image = producer.createImage(text);
 		// 保存到验证码到 session
 		request.getSession().setAttribute(Constants.KAPTCHA_SESSION_KEY, text);
-		System.out.println("captcha.jpg---"+request.getSession().getId());
-
+		log.info(text);
 		ServletOutputStream out = response.getOutputStream();
 		ImageIO.write(image, "jpg", out);
 		IOUtils.closeQuietly(out);
@@ -160,7 +159,6 @@ public class MemberUserLoginController {
 		}
 		// 从session中获取之前保存的验证码跟前台传来的验证码进行匹配
 		Object kaptcha = request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		System.out.println(request.getSession().getId());
 		if (kaptcha == null) {
 			return HttpResult.error("验证码已失效");
 		}
