@@ -23,9 +23,9 @@ public class WechatUtils {
 		if (StringUtils.isBlank(resultString)) {
 			return null;
 		}
-		// JSONObject json = JSONObject.parseObject(resultString);
-		JSONObject json = JSONObject.parseObject(
-				"{	\"access_token\": \"ACCESS_TOKEN\",	\"expires_in\": 7200,	\"refresh_token\": \"REFRESH_TOKEN\",	\"openid\": \"OPENID\",	\"scope\": \"SCOPE\"}");
+		 JSONObject json = JSONObject.parseObject(resultString);
+//		JSONObject json = JSONObject.parseObject(
+//				"{	\"access_token\": \"ACCESS_TOKEN\",	\"expires_in\": 7200,	\"refresh_token\": \"REFRESH_TOKEN\",	\"openid\": \"OPENID\",	\"scope\": \"SCOPE\"}");
 		return json;
 	}
 
@@ -43,9 +43,9 @@ public class WechatUtils {
 		if (StringUtils.isBlank(resultString)) {
 			return null;
 		}
-//		JSONObject json = JSONObject.parseObject(resultString);
-		JSONObject json = JSONObject.parseObject(
-				"{\"openid\": \" OPENID\",\"nickname\": \"NICKNAME\",\"headimgurl\": \"http://thirdwx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46\"}");
+		JSONObject json = JSONObject.parseObject(resultString);
+//		JSONObject json = JSONObject.parseObject(
+//				"{\"openid\": \" OPENID\",\"nickname\": \"NICKNAME\",\"headimgurl\": \"http://thirdwx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46\"}");
 		return json;
 	}
 //	{   
