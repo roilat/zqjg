@@ -1,7 +1,9 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
+import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
 
 import java.util.List;
@@ -25,4 +27,6 @@ public interface BizMemberCompanyService extends CurdService<BizMemberCompany> {
     Integer update(BizMemberCompany bizMemberCompany);
 
     Integer deleteById(List<Map<String, Object>> params);
+
+    PageResult findPageByName(BizMemberCompanyReqVo bizMemberCompanyReqVo);
 }

@@ -7,93 +7,121 @@ package cn.roilat.cqzqjg.common.vo;
  * @create: 2020-01-07 09:38
  **/
 public class UserBean {
-	private Integer companyId;
-	private String companyName;
-	private String account;
-	private String password;
-	private String phoneNumber;
-	// 当前登录管理员
-	private String adminUser;
-	private String nickName;
-	private String openId;
-	private String userId;
+    private Integer companyId;
+    private String companyName;
+    private String loginName;
+    private String password;
+    private String phoneNumber;
+    // 当前登录管理员
+    private String adminUser;
+    private String nickName;
+    private String openId;
+    private String userId;
+    /**
+     * 是否绑定微信
+     */
+    private String ifWechatLogin;
+    //头像
+    private String avatar;
+    //微信号
+    private String wechat;
 
-	public Integer getCompanyId() {
-		return companyId;
-	}
+    public String getWechat() {
+        return wechat;
+    }
 
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
-	}
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
 
-	public String getNickName() {
-		return nickName;
-	}
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
-	public String getAdminUser() {
-		return adminUser;
-	}
+    public String getIfWechatLogin() {
+        return ifWechatLogin;
+    }
 
-	public void setAdminUser(String adminUser) {
-		this.adminUser = adminUser;
-	}
+    public void setIfWechatLogin(String ifWechatLogin) {
+        this.ifWechatLogin = ifWechatLogin;
+    }
 
-	public String getCompanyName() {
-		return companyName;
-	}
+    public Integer getCompanyId() {
+        return companyId;
+    }
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
 
-	public String getAccount() {
-		return account;
-	}
+    public String getNickName() {
+        return nickName;
+    }
 
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getAdminUser() {
+        return adminUser;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setAdminUser(String adminUser) {
+        this.adminUser = adminUser;
+    }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public String getCompanyName() {
+        return companyName;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
-	public String getOpenId() {
-		return openId;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-	
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-	@Override
-	public String toString() {
-		return "UserBean{" + "companyName='" + companyName + '\'' + ", account='" + account + '\'' + ", password='"
-				+ password + '\'' + ", phoneNumber='" + phoneNumber + '\'' + '}';
-	}
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+
 }

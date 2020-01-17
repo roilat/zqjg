@@ -5,6 +5,7 @@ import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -91,12 +92,12 @@ public class WxBizMemberCompanyController {
     /**
      * 基础分页查询
      *
-     * @param pageRequest
+     * @param bizMemberCompanyReqVo
      * @return
      */
     @PostMapping(value = "/findPage")
-    public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-        return HttpResult.ok(bizMemberCompanyService.findPage(pageRequest));
+    public HttpResult findPage(@RequestBody BizMemberCompanyReqVo bizMemberCompanyReqVo) {
+        return HttpResult.ok(bizMemberCompanyService.findPageByName(bizMemberCompanyReqVo));
     }
 
     /**
@@ -162,7 +163,6 @@ public class WxBizMemberCompanyController {
     public HttpResult deleteById(@RequestBody List<Map<String, Object>> records) {
         return HttpResult.ok("删除成功", bizMemberCompanyService.deleteById(records));
     }
-
 
 
     public static void main(String[] args) {

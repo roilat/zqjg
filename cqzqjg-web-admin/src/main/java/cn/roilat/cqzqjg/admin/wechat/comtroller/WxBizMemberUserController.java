@@ -7,6 +7,9 @@ import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
+import cn.roilat.cqzqjg.services.biz.vo.VerifyReqVo;
+import cn.roilat.cqzqjg.services.system.sevice.SysDictService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +31,17 @@ public class WxBizMemberUserController {
 
     @Autowired
     private BizMemberUserService bizMemberUserService;
+    @Autowired
+    private SysDictService sysDictService;
+    /**
+     * 已绑定微信
+     */
+    private static final String HAVE_WECHAT = "1";
+    /**
+     * 未绑定微信
+     */
+    private static final String NO_WECHAT = "0";
+
 
     /**
      * 保存会员单位e用户信息表
@@ -37,34 +51,44 @@ public class WxBizMemberUserController {
      */
     @PostMapping(value = "/save")
     public HttpResult save(@RequestBody UserBean userBean) {
-        if (StringUtils.isBlank(userBean.getAccount())) {
+        BizMemberUser bizMemberUser = new BizMemberUser();
+        bizMemberUser.setIfWechatLogin(NO_WECHAT);
+        if (StringUtils.isBlank(userBean.getLoginName())) {
             return HttpResult.error("用户名不能为空");
         }
         if (StringUtils.isBlank(userBean.getAdminUser())) {
             return HttpResult.error("创建人不能为空");
         }
-        if (StringUtils.isBlank(userBean.getPassword())) {
-            return HttpResult.error("密码不能为空");
+        if (!StringUtils.isBlank(userBean.getIfWechatLogin())) {
+            if (HAVE_WECHAT.equals(userBean.getIfWechatLogin().replaceAll(" ", ""))) {
+                //绑定微信
+                if (StringUtils.isBlank(userBean.getOpenId()) || StringUtils.isBlank(userBean.getWechat())) {
+                    return HttpResult.error("绑定微信时请传入openId和微信号");
+                } else {
+                    bizMemberUser.setOpenId(userBean.getOpenId());
+                    bizMemberUser.setIfWechatLogin(HAVE_WECHAT);
+                    bizMemberUser.setWechat(userBean.getWechat());
+                }
+            }
         }
-        BizMemberUser user = bizMemberUserService.findByLoginName(userBean.getAccount());
+        BizMemberUser user = bizMemberUserService.findByLoginName(userBean.getLoginName());
         if (null != user) {
             return HttpResult.error("登录账号重复");
         }
-
         //盐
         String salt = PasswordUtils.getSalt();
-        //密码加密
-        String password = PasswordUtils.encode(userBean.getPassword(), salt);
+        //密码加密,后台默认密码Abc@123
+        String password = PasswordUtils.encode("Abc@123", salt);
 
-        BizMemberUser bizMemberUser = new BizMemberUser();
-        bizMemberUser.setLoginName(userBean.getAccount());
-        bizMemberUser.setCompanyId(userBean.getCompanyId());
+        bizMemberUser.setLoginName(userBean.getLoginName());
         bizMemberUser.setCompanyName(userBean.getCompanyName());
         bizMemberUser.setPassword(password);
         bizMemberUser.setSalt(salt);
         bizMemberUser.setCreateTime(new Date());
         bizMemberUser.setCreateBy(userBean.getAdminUser());
         bizMemberUser.setNickName(userBean.getNickName());
+        bizMemberUser.setAvatar(userBean.getAvatar());
+        bizMemberUser.setPhoneNumber(userBean.getPhoneNumber());
         //管理员新建用户默认不删除
         bizMemberUser.setDelFlag(0);
 
@@ -173,13 +197,48 @@ public class WxBizMemberUserController {
     /**
      * 基础分页查询
      *
-     * @param pageRequest
+     * @param bizMemberReqVo
      * @return
      */
     @PostMapping(value = "/findPage")
-    public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-        return HttpResult.ok("请求成功", bizMemberUserService.findPageResp(pageRequest));
+    public HttpResult findPage(@RequestBody BizMemberReqVo bizMemberReqVo) {
+        return HttpResult.ok("请求成功", bizMemberUserService.findPageResp(bizMemberReqVo));
     }
+
+    /**
+     * 会员类型
+     *
+     * @return
+     */
+    @GetMapping(value = "/companyType")
+    public HttpResult getCompanyType() {
+        return HttpResult.ok("请求成功", sysDictService.findCompanyType());
+    }
+
+    /**
+     * 会员审核
+     *
+     * @return
+     */
+    @PostMapping(value = "/verifyUser")
+    public HttpResult verifyUser(@RequestBody VerifyReqVo records) {
+        if (StringUtils.isBlank(records.getApproveStatus())) {
+            return HttpResult.error("审核状态不能为空");
+        }
+        if (StringUtils.isBlank(records.getApproveDesc())) {
+            return HttpResult.error("审核意见不能为空");
+        }
+        if (StringUtils.isBlank(records.getId())) {
+            return HttpResult.error("用户id不能为空");
+        }
+        Boolean resultFlag = bizMemberUserService.verifyUser(records);
+        if (resultFlag) {
+            return HttpResult.ok("审核成功");
+        } else {
+            return HttpResult.error("审核失败");
+        }
+    }
+
 
     /**
      * 根据主键查询

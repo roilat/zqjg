@@ -1,9 +1,11 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
-import cn.roilat.cqzqjg.core.page.PageRequest;
-import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
+import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
+import cn.roilat.cqzqjg.services.biz.vo.VerifyReqVo;
 
 import java.util.List;
 import java.util.Map;
@@ -25,5 +27,8 @@ public interface BizMemberUserService extends CurdService<BizMemberUser> {
 
     Integer deleteById(List<Map<String, Object>> params);
 
-    List<BizMemberUserRespVo> findPageResp(PageRequest pageRequest);
+    PageResult findPageResp(BizMemberReqVo bizMemberReqVo);
+
+    Boolean verifyUser(VerifyReqVo verifyReqVo);
+
 }
