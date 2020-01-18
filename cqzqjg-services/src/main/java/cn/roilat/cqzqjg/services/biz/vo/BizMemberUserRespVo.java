@@ -7,32 +7,70 @@ package cn.roilat.cqzqjg.services.biz.vo;
  * @create: 2020-01-07 17:00
  **/
 public class BizMemberUserRespVo {
-    /** 主键 */
+    /**
+     * 主键
+     */
     private Long id;
-    /** 会员单位名称 */
+    /**
+     * 会员单位名称
+     */
     private String companyName;
-    /** 会员单位ID */
+    /**
+     * 会员单位ID
+     */
     private Integer companyId;
-    /** 登录名 */
+    /**
+     * 登录名
+     */
     private String loginName;
-    /** 昵称 */
+    /**
+     * 昵称
+     */
     private String nickName;
-    /** 头像 */
+    /**
+     * 头像
+     */
     private String avatar;
-    /** 微信号 */
+    /**
+     * 微信号
+     */
     private String wechat;
-    /** 是否绑定微信 */
+    /**
+     * 是否绑定微信
+     */
     private String ifWechatLogin;
-    /** 审批状态(0待审核,1审核不通过2审核通过) */
+    /**
+     * 审批状态(0待审核,1审核不通过2审核通过)
+     */
     private String approveStatus;
-    /** 是否已锁定 */
+    /**
+     * 是否已锁定
+     */
     private String ifLocked;
-    /** 创建时间 */
+    /**
+     * 创建时间
+     */
     private String createTime;
-    /** 更新时间 */
+    /**
+     * 更新时间
+     */
     private String lastUpdateTime;
-    /** 是否删除 -1：已删除 0：正常 */
+    /**
+     * 是否删除 -1：已删除 0：正常
+     */
     private Integer delFlag;
+    /**
+     * 电话号码
+     */
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public Long getId() {
         return id;

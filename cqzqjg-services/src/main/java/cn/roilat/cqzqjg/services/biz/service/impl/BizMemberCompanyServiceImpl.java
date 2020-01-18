@@ -1,21 +1,20 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
+import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.services.biz.dao.BizMemberCompanyMapper;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * ---------------------------
@@ -98,6 +97,28 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
         return 1;
     }
 
+    @Override
+    public PageResult findPageByName(BizMemberCompanyReqVo bizMemberCompanyReqVo) {
+        Map<String, Object> map = new HashMap<>();
+        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getCompanyName())) {
+            map.put("companyName", bizMemberCompanyReqVo.getCompanyName());
+        }
+        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getPrimaryContactPerson())) {
+            map.put("primaryContactPerson", bizMemberCompanyReqVo.getPrimaryContactPerson());
+        }
+        PageResult pageResult = MybatisPageHelper.findPage(bizMemberCompanyReqVo, bizMemberCompanyMapper, "findPageByName", map);
+        List<BizMemberCompany> list = (List<BizMemberCompany>) pageResult.getContent();
+        List<BizMemberCompanyResp> respList = new ArrayList<>();
+        if (null != list && list.size() > 0) {
+            for (BizMemberCompany bizMemberCompany : list) {
+                BizMemberCompanyResp bizMemberCompanyResp = castVo(bizMemberCompany);
+                respList.add(bizMemberCompanyResp);
+            }
+            pageResult.setContent(respList);
+        }
+        return pageResult;
+    }
+
     private BizMemberCompanyResp castVo(BizMemberCompany bizMemberCompany) {
         BizMemberCompanyResp bizMemberCompanyResp = new BizMemberCompanyResp();
         bizMemberCompanyResp.setId(bizMemberCompany.getId());
@@ -108,6 +129,12 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
         bizMemberCompanyResp.setCompanyName(bizMemberCompany.getCompanyName());
         bizMemberCompanyResp.setLegalPerson(bizMemberCompany.getLegalPerson());
         bizMemberCompanyResp.setCompanyPhone(bizMemberCompany.getCompanyPhone());
+        bizMemberCompanyResp.setPrimaryContactPerson(bizMemberCompany.getPrimaryContactPerson());
+        bizMemberCompanyResp.setPrimaryContactInfo(bizMemberCompany.getPrimaryContactInfo());
+        bizMemberCompanyResp.setOwnershipPattern(bizMemberCompany.getOwnershipPattern());
+        bizMemberCompanyResp.setCompanyPlace(bizMemberCompany.getCompanyPlace());
+        bizMemberCompanyResp.setRegistrationAssets(bizMemberCompany.getRegistrationAssets());
+
         Date lastUpTime = bizMemberCompany.getLastUpdateTime();
         if (null != lastUpTime) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -119,6 +146,24 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String createTimeStr = simpleDateFormat.format(createTime);
             bizMemberCompanyResp.setCreateTime(createTimeStr);
+        }
+        Date joinDate = bizMemberCompany.getJoinDate();
+        if (null != joinDate) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String joinDateStr = simpleDateFormat.format(joinDate);
+            bizMemberCompanyResp.setJoinDate(joinDateStr);
+        }
+        Date quiteDate = bizMemberCompany.getQuitDate();
+        if (null != quiteDate) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String quiteDateStr = simpleDateFormat.format(quiteDate);
+            bizMemberCompanyResp.setQuiteDate(quiteDateStr);
+        }
+        Date registrationDate = bizMemberCompany.getRegistrationDate();
+        if (null != registrationDate) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String registrationDateStr = simpleDateFormat.format(registrationDate);
+            bizMemberCompanyResp.setRegistrationDate(registrationDateStr);
         }
 
         return bizMemberCompanyResp;

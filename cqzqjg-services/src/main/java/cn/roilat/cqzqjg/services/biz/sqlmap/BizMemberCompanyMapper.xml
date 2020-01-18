@@ -211,6 +211,21 @@
         from biz_member_company
     </select>
 
+    <select id="findPageByName"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from biz_member_company
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="companyName !=null">
+                AND company_name like CONCAT('%',#{companyName},'%')
+            </if>
+            <if test="primaryContactPerson !=null">
+                AND primary_contact_person like CONCAT('%',#{primaryContactPerson},'%')
+            </if>
+        </trim>
+    </select>
+
+
     <update id="update" parameterType="cn.roilat.cqzqjg.services.biz.model.BizMemberCompany">
         update biz_member_company
         <set>

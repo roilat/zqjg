@@ -1,8 +1,10 @@
 package cn.roilat.cqzqjg.services.system.sevice;
 
 import java.util.List;
+import java.util.Map;
 
 import cn.roilat.cqzqjg.core.service.CurdService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import cn.roilat.cqzqjg.services.system.model.SysDict;
 
 /**
@@ -18,4 +20,11 @@ public interface SysDictService extends CurdService<SysDict> {
 	 * @return
 	 */
 	List<SysDict> findByLable(String lable);
+
+
+	/**
+	 * 查询会员类型
+	 * @return
+	 */
+	List<Map<String, String>> findCompanyType();
 }

@@ -1,8 +1,10 @@
 package cn.roilat.cqzqjg.services.biz.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -48,10 +50,16 @@ public interface BizMemberUserMapper {
     /**
      * 基础分页查询
      *
-     * @param record
      * @return
      */
     List<BizMemberUser> findPage();
+
+    /**
+     * 条件分页查询
+     *
+     * @return
+     */
+    List<BizMemberCompany> findPageByCondition(HashMap<String, Object> map);
 
     /**
      * 根据登录名查询

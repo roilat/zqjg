@@ -49,6 +49,100 @@ public class BizMemberCompanyResp {
      */
     private String createTime;
 
+    /**
+     * 主要联系人
+     */
+    private String primaryContactPerson;
+
+    /**
+     * 加入时间
+     */
+    private String joinDate;
+
+    /**
+     * 退出时间
+     */
+    private String quiteDate;
+
+    /** 所有制类型 */
+    private String ownershipPattern;
+
+    /** 场所 */
+    private String companyPlace;
+
+    /** 注册时间 */
+    private String registrationDate;
+
+    /** 注册资本 */
+    private String registrationAssets;
+
+    public String getRegistrationAssets() {
+        return registrationAssets;
+    }
+
+    public void setRegistrationAssets(String registrationAssets) {
+        this.registrationAssets = registrationAssets;
+    }
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getCompanyPlace() {
+        return companyPlace;
+    }
+
+    public void setCompanyPlace(String companyPlace) {
+        this.companyPlace = companyPlace;
+    }
+
+    public String getOwnershipPattern() {
+        return ownershipPattern;
+    }
+
+    public void setOwnershipPattern(String ownershipPattern) {
+        this.ownershipPattern = ownershipPattern;
+    }
+
+    public String getQuiteDate() {
+        return quiteDate;
+    }
+
+    public void setQuiteDate(String quiteDate) {
+        this.quiteDate = quiteDate;
+    }
+
+    /** 主要联系人联系方式 */
+    private String primaryContactInfo;
+
+    public String getPrimaryContactInfo() {
+        return primaryContactInfo;
+    }
+
+    public void setPrimaryContactInfo(String primaryContactInfo) {
+        this.primaryContactInfo = primaryContactInfo;
+    }
+
+    public String getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(String joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public String getPrimaryContactPerson() {
+        return primaryContactPerson;
+    }
+
+    public void setPrimaryContactPerson(String primaryContactPerson) {
+        this.primaryContactPerson = primaryContactPerson;
+    }
+
     public String getLastUpdateTime() {
         return lastUpdateTime;
     }

@@ -1,20 +1,20 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
+import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.services.biz.dao.BizMemberUserMapper;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
+import cn.roilat.cqzqjg.services.biz.vo.VerifyReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * --------------------------- 会员单位e用户信息表 (BizMemberUserServiceImpl)
@@ -26,6 +26,7 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
 
     @Autowired
     private BizMemberUserMapper bizMemberUserMapper;
+
 
     @Override
     public int save(BizMemberUser record) {
@@ -57,18 +58,69 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
     }
 
     @Override
-    public List<BizMemberUserRespVo> findPageResp(PageRequest pageRequest) {
-        List<BizMemberUserRespVo> respList = new ArrayList<>();
-        List<BizMemberUser> bizMemberUsers = bizMemberUserMapper.findPage();
-        if (null == bizMemberUsers || bizMemberUsers.size() == 0) {
-            return respList;
+    public PageResult findPageResp(BizMemberReqVo bizMemberReqVo) {
+        Map<String, Object> map = new HashMap<>();
+        if (!StringUtils.isBlank(bizMemberReqVo.getCompanyName())) {
+            map.put("companyName", bizMemberReqVo.getCompanyName());
         }
-        for (BizMemberUser bizMemberUser : bizMemberUsers) {
-            BizMemberUserRespVo bizMemberUserRespVo = castVo(bizMemberUser);
-            respList.add(bizMemberUserRespVo);
+        if (!StringUtils.isBlank(bizMemberReqVo.getLoginName())) {
+            map.put("loginName", bizMemberReqVo.getLoginName());
+        }
+        if (!StringUtils.isBlank(bizMemberReqVo.getNickName())) {
+            map.put("nickName", bizMemberReqVo.getNickName());
+        }
+        if (!StringUtils.isBlank(bizMemberReqVo.getPhoneNumber())) {
+            map.put("phoneNumber", bizMemberReqVo.getPhoneNumber());
+        }
 
+        if (null != bizMemberReqVo.getApproveStatus()) {
+            map.put("approveStatus", bizMemberReqVo.getApproveStatus());
         }
-        return respList;
+
+        PageResult pageResult = MybatisPageHelper.findPage(bizMemberReqVo, bizMemberUserMapper, "findPageByCondition", map);
+        List<BizMemberUser> list = (List<BizMemberUser>) pageResult.getContent();
+        List<BizMemberUserRespVo> respList = new ArrayList<>();
+        if (null != list && list.size() > 0) {
+            for (BizMemberUser bizMemberUser : list) {
+                BizMemberUserRespVo bizMemberUserRespVo = castVo(bizMemberUser);
+                respList.add(bizMemberUserRespVo);
+
+            }
+            pageResult.setContent(respList);
+        }
+
+        return pageResult;
+    }
+
+    @Override
+    public Boolean verifyUser(VerifyReqVo verifyReqVo) {
+        Map<String, Object> map = new HashMap<>();
+        //用户id
+        Long id = null;
+        if (!StringUtils.isBlank(verifyReqVo.getApproveStatus())) {
+            map.put("approveStatus", verifyReqVo.getApproveStatus());
+        }
+        if (!StringUtils.isBlank(verifyReqVo.getApproveDesc())) {
+            map.put("approveDesc", verifyReqVo.getApproveDesc());
+        }
+        if (!StringUtils.isBlank(verifyReqVo.getId())) {
+            map.put("id", verifyReqVo.getId());
+            id = Long.valueOf(verifyReqVo.getId());
+        }
+        BizMemberUser bizMemberUser = findById(id);
+        if (null == bizMemberUser) {
+            return false;
+        }
+        bizMemberUser.setApproveDesc(verifyReqVo.getApproveDesc());
+        bizMemberUser.setApproveStatus(verifyReqVo.getApproveStatus());
+        bizMemberUser.setCompanyId(Integer.valueOf(verifyReqVo.getCompanyId()));
+        bizMemberUser.setCompanyName(verifyReqVo.getCompanyName());
+        Integer i = save(bizMemberUser);
+        if (i > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -109,6 +161,7 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         bizMemberUserRespVo.setApproveStatus(bizMemberUser.getApproveStatus());
         bizMemberUserRespVo.setIfLocked(bizMemberUser.getIfLocked());
         bizMemberUserRespVo.setDelFlag(bizMemberUser.getDelFlag());
+        bizMemberUserRespVo.setPhoneNumber(bizMemberUser.getPhoneNumber());
         Date lastUpTime = bizMemberUser.getLastUpdateTime();
         if (null != lastUpTime) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

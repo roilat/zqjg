@@ -24,4 +24,7 @@ public interface SysDictMapper {
     List<SysDict> findPageByLabel(@Param(value="label") String label);
 
     List<SysDict> findByLable(@Param(value="label") String label);
+
+    List<SysDict> findCompanyType();
+
 }

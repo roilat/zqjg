@@ -248,4 +248,26 @@
     select * from biz_member_user
   </select>
 
+    <select id="findPageByCondition" resultMap="BaseResultMap">
+        select * from biz_member_user
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="companyName !=null">
+                AND company_name like CONCAT('%',#{companyName},'%')
+            </if>
+            <if test="nickName !=null">
+                AND nick_name like CONCAT('%',#{nickName},'%')
+            </if>
+            <if test="loginName !=null">
+                AND login_name like CONCAT('%',#{loginName},'%')
+            </if>
+            <if test="phoneNumber !=null">
+                AND phone_number like CONCAT('%',#{phoneNumber},'%')
+            </if>
+            <if test="approveStatus !=null">
+                AND approve_status like CONCAT('%',#{approveStatus},'%')
+            </if>
+
+        </trim>
+    </select>
+
 </mapper>

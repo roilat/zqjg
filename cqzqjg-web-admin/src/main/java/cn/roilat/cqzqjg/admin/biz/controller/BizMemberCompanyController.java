@@ -1,8 +1,9 @@
 package cn.roilat.cqzqjg.admin.biz.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+import cn.roilat.cqzqjg.common.utils.StringUtils;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,43 @@ public class BizMemberCompanyController {
 	@PostMapping(value="/save")
 	@PreAuthorize("hasAuthority('biz:memberCompany:add') AND hasAuthority('biz:memberCompany:edit')")
 	public HttpResult save(@RequestBody BizMemberCompany record) {
-		return HttpResult.ok(bizMemberCompanyService.save(record));
+		if (StringUtils.isBlank(record.getPrimaryContactPerson())) {
+			return HttpResult.error("主要联系人不能为空");
+		}
+		if (StringUtils.isBlank(record.getPrimaryContactInfo())) {
+			return HttpResult.error("主要联系方式不能为空");
+		}
+		if (StringUtils.isBlank(record.getCompanyName())) {
+			return HttpResult.error("单位名称不能为空");
+		}
+		if (StringUtils.isBlank(record.getCompanyCode())) {
+			return HttpResult.error("企业统一信用代码不能为空");
+		}
+		if (null == record.getRegistrationDate()) {
+			return HttpResult.error("企业注册时间不能为空");
+		}
+		if (StringUtils.isBlank(record.getCompanyPhone())) {
+			return HttpResult.error("企业联系电话不能为空");
+		}
+		if (StringUtils.isBlank(record.getCompanyAddress())) {
+			return HttpResult.error("企业注册地址不能为空");
+		}
+		if (StringUtils.isBlank(record.getCreateBy())) {
+			return HttpResult.error("创建人不能为空");
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("companyName", record.getCompanyName());
+		map.put("companyCode", record.getCompanyCode());
+		List<BizMemberCompany> list = bizMemberCompanyService.findByCondition(map);
+		if (null != list && list.size() > 0) {
+			return HttpResult.error("公司名或注册机构号重复");
+		}
+		Integer i = bizMemberCompanyService.save(record);
+		if (null != i && i > 0) {
+			return HttpResult.ok("保存成功");
+		} else {
+			return HttpResult.error("保存失败请稍后再试");
+		}
 	}
 
     /**
@@ -58,21 +95,22 @@ public class BizMemberCompanyController {
 
     /**
      * 基础分页查询
-     * @param pageRequest
+     * @param bizMemberCompanyReqVo
      * @return
      */    
 	@PreAuthorize("hasAuthority('biz:memberCompany:view')")
 	@PostMapping(value="/findPage")
-	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-		PageResult result = new PageResult();
-		result.setPageNum(pageRequest.getPageNum());
-		result.setPageSize(pageRequest.getPageSize());
-		result.setTotalSize(10);
-		result.setTotalPages(1);
-		List<BizMemberCompany> content= new ArrayList<BizMemberCompany>();
-		result.setContent(content);
-		return HttpResult.ok(result);
+	public HttpResult findPage(@RequestBody BizMemberCompanyReqVo bizMemberCompanyReqVo) {
+//		PageResult result = new PageResult();
+//		result.setPageNum(pageRequest.getPageNum());
+//		result.setPageSize(pageRequest.getPageSize());
+//		result.setTotalSize(10);
+//		result.setTotalPages(1);
+//		List<BizMemberCompany> content= new ArrayList<BizMemberCompany>();
+//		result.setContent(content);
+//		return HttpResult.ok(result);
 //		return HttpResult.ok(bizMemberCompanyService.findPage(pageRequest));
+		return HttpResult.ok(bizMemberCompanyService.findPageByName(bizMemberCompanyReqVo));
 	}
 	
     /**
@@ -83,6 +121,59 @@ public class BizMemberCompanyController {
 	@PreAuthorize("hasAuthority('biz:memberCompany:view')")
 	@GetMapping(value="/findById")
 	public HttpResult findById(@RequestParam Long id) {
-		return HttpResult.ok(bizMemberCompanyService.findById(id));
+		return HttpResult.ok(bizMemberCompanyService.findByIdResp(id));
+	}
+
+	/**
+	 * 更新会员单位e用户信息表
+	 *
+	 * @param records
+	 * @return
+	 */
+	@PostMapping(value = "/update")
+	public HttpResult update(@RequestBody BizMemberCompany records) {
+		Long id = records.getId();
+		if (null == id) {
+			return HttpResult.error("id不能为空！");
+		}
+		// 用户信息
+		BizMemberCompany company = bizMemberCompanyService.findById(id);
+		// 账号不存在、密码错误
+		if (company == null) {
+			return HttpResult.error("公司不存在");
+		}
+		if (StringUtils.isBlank(records.getLastUpdateBy())) {
+			return HttpResult.error("更新人不能为空");
+		}
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("companyName", "");
+		map.put("companyCode", "");
+		if (!StringUtils.isBlank(records.getCompanyName())) {
+			//公司名
+			map.put("companyName", records.getCompanyName());
+		}
+		if (!StringUtils.isBlank(records.getCompanyName())) {
+			//信用机构号
+			map.put("companyCode", records.getCompanyCode());
+		}
+		List<BizMemberCompany> list = bizMemberCompanyService.findByCondition(map);
+		if (null != list && list.size() > 0) {
+			return HttpResult.error("公司名或注册机构号重复");
+		}
+		//更新时间
+		records.setLastUpdateTime(new Date());
+		return HttpResult.ok("更新成功", bizMemberCompanyService.update(records));
+	}
+
+	/**
+	 * 删除会员单位e用户信息表
+	 *
+	 * @param records
+	 * @return
+	 */
+	@PostMapping(value = "/deleteById")
+	public HttpResult deleteById(@RequestBody List<Map<String, Object>> records) {
+		return HttpResult.ok("删除成功", bizMemberCompanyService.deleteById(records));
 	}
 }
