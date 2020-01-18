@@ -185,7 +185,7 @@ public class MemberUserLoginController {
 	@PostMapping(value = "/newUser")
 	public HttpResult newUser(@RequestBody UserBean userBean, HttpServletRequest request) throws IOException {
 		log.info("收到注册用户请求： " + userBean.toString());
-		if (StringUtils.isBlank(userBean.getAccount())) {
+		if (StringUtils.isBlank(userBean.getLoginName())) {
 			return HttpResult.error("用户名不能为空");
 		}
 		if (StringUtils.isBlank(userBean.getCompanyName())) {
@@ -197,7 +197,7 @@ public class MemberUserLoginController {
 		if (StringUtils.isBlank(userBean.getPhoneNumber())) {
 			return HttpResult.error("手机号不能为空");
 		}
-		BizMemberUser user = bizMemberUserService.findByLoginName(userBean.getAccount());
+		BizMemberUser user = bizMemberUserService.findByLoginName(userBean.getLoginName());
 		if (null != user) {
 			return HttpResult.error("登录账号重复");
 		}
@@ -214,7 +214,7 @@ public class MemberUserLoginController {
 			} catch (NumberFormatException e) {
 			}
 		}
-		bizMemberUser.setLoginName(userBean.getAccount());
+		bizMemberUser.setLoginName(userBean.getLoginName());
 		bizMemberUser.setCompanyName(userBean.getCompanyName());
 		bizMemberUser.setPassword(password);
 		bizMemberUser.setPhoneNumber(userBean.getPhoneNumber());
