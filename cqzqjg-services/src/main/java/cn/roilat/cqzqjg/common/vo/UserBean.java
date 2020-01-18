@@ -17,7 +17,6 @@ public class UserBean {
     private String nickName;
     private String openId;
     private String userId;
-    private String account;
     /**
      * 是否绑定微信
      */
@@ -26,15 +25,6 @@ public class UserBean {
     private String avatar;
     //微信号
     private String wechat;
-
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
 
     public String getWechat() {
         return wechat;
