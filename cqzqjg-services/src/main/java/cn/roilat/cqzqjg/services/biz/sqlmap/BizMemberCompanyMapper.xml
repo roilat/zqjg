@@ -211,16 +211,14 @@
         from biz_member_company
     </select>
 
-    <select id="findPageByName"  resultMap="BaseResultMap">
+    <select id="findPageByName" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from biz_member_company
-        <trim prefix="where" prefixOverrides="and|or">
-            <if test="companyName !=null">
-                AND company_name like CONCAT('%',#{companyName},'%')
-            </if>
-            <if test="primaryContactPerson !=null">
-                AND primary_contact_person like CONCAT('%',#{primaryContactPerson},'%')
+        <trim prefix="where">
+            <if test="searchText !=null">
+                (company_name like CONCAT('%',#{searchText},'%') OR primary_contact_person like
+                CONCAT('%',#{searchText},'%'))
             </if>
         </trim>
     </select>

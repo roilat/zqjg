@@ -100,11 +100,8 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
     @Override
     public PageResult findPageByName(BizMemberCompanyReqVo bizMemberCompanyReqVo) {
         Map<String, Object> map = new HashMap<>();
-        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getCompanyName())) {
-            map.put("companyName", bizMemberCompanyReqVo.getCompanyName());
-        }
-        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getPrimaryContactPerson())) {
-            map.put("primaryContactPerson", bizMemberCompanyReqVo.getPrimaryContactPerson());
+        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getSearchText())) {
+            map.put("searchText", bizMemberCompanyReqVo.getSearchText());
         }
         PageResult pageResult = MybatisPageHelper.findPage(bizMemberCompanyReqVo, bizMemberCompanyMapper, "findPageByName", map);
         List<BizMemberCompany> list = (List<BizMemberCompany>) pageResult.getContent();
