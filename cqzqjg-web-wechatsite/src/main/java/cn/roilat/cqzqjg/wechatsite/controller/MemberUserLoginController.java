@@ -243,15 +243,15 @@ public class MemberUserLoginController {
 	}
 	@RequestMapping("toWechatLogin")
 	public void toWechatLogin(HttpServletResponse response) throws UnsupportedEncodingException, IOException {
-		String redirectUrl = "http://%s:%s/index.html#/wxAuth";
-		String url = String.format(redirectUrl, hostUrl,webPort);
+		String redirectUrl = "http://%s/index.html#/wxAuth";
+		String url = String.format(redirectUrl, hostUrl);
 		response.sendRedirect(String.format(WECHAT_PAGE_AUTHORIZE_URL, wechatAppId,URLEncoder.encode(url, "utf-8"),WECHAT_AUTHORIZE_TYPE_BASE));
 	}
 
 	@RequestMapping("toBindWechat")
     public void toBindWechat(HttpServletResponse response) throws UnsupportedEncodingException, IOException {
-		String redirectUrl = "http://%s:%s/index.html#/wxAuth";
-		String url = String.format(redirectUrl, hostUrl,webPort);
+		String redirectUrl = "http://%s/index.html#/wxAuth";
+		String url = String.format(redirectUrl, hostUrl);
     	response.sendRedirect(String.format(WECHAT_PAGE_AUTHORIZE_URL, wechatAppId,URLEncoder.encode(url, "utf-8"),WECHAT_AUTHORIZE_TYPE_USERINFO));
     }
 }

@@ -175,7 +175,7 @@ public class MyPageController {
 							BizMemberUser memberUser = new BizMemberUser();
 							memberUser.setId(Long.parseLong(userId));
 							memberUser.setAvatar(headimgurl);
-							memberUser.setNickName(nickname);
+							memberUser.setWechat(nickname);
 							memberUser.setOpenId(openId);
 							memberUser.setIfWechatLogin("1");
 							map.put("avatar", headimgurl);
