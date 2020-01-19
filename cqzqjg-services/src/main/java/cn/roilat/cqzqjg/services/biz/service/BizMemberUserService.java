@@ -1,5 +1,6 @@
 package cn.roilat.cqzqjg.services.biz.service;
 
+import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
@@ -26,6 +27,10 @@ public interface BizMemberUserService extends CurdService<BizMemberUser> {
     Boolean removeWechat(Long id);
 
     Integer deleteById(List<Map<String, Object>> params);
+
+    HttpResult forbiddenUserById(List<Map<String, Object>> params);
+
+    HttpResult resetPwdById(List<Map<String, Object>> params);
 
     PageResult findPageResp(BizMemberReqVo bizMemberReqVo);
 

@@ -10,27 +10,15 @@ import cn.roilat.cqzqjg.core.page.PageRequest;
  **/
 public class BizMemberCompanyReqVo extends PageRequest {
     /**
-     * 公司名称
+     * 公司名称&联系人
      */
-    private String companyName;
-    /**
-     * 联系人
-     */
-    private String primaryContactPerson;
+    private String searchText;
 
-    public String getCompanyName() {
-        return companyName;
+    public String getSearchText() {
+        return searchText;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getPrimaryContactPerson() {
-        return primaryContactPerson;
-    }
-
-    public void setPrimaryContactPerson(String primaryContactPerson) {
-        this.primaryContactPerson = primaryContactPerson;
+    public void setSearchText(String searchText) {
+        this.searchText = searchText;
     }
 }

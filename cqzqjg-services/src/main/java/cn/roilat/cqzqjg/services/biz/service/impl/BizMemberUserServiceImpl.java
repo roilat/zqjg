@@ -1,6 +1,8 @@
 package cn.roilat.cqzqjg.services.biz.service.impl;
 
+import cn.roilat.cqzqjg.common.util.PasswordUtils;
 import cn.roilat.cqzqjg.common.utils.StringUtils;
+import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.core.page.PageResult;
@@ -55,6 +57,50 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
             bizMemberUserMapper.deleteById(map);
         }
         return 1;
+    }
+
+    @Override
+    public HttpResult forbiddenUserById(List<Map<String, Object>> params) {
+        for (Map<String, Object> map : params) {
+            //用户id
+            Long id = (Long) map.get("id");
+            if (null == id) {
+                return HttpResult.error("id为空");
+            }
+            BizMemberUser bizMemberUser = findById(id);
+            if (null == bizMemberUser) {
+                return HttpResult.error("用户不存在");
+            }
+        }
+        for (Map<String, Object> map : params) {
+            bizMemberUserMapper.forbiddenUserById(map);
+        }
+        return HttpResult.ok("锁定或解锁用户成功");
+    }
+
+    @Override
+    public HttpResult resetPwdById(List<Map<String, Object>> params) {
+        for (Map<String, Object> map : params) {
+            //用户id
+            Integer id = (Integer) map.get("id");
+            if (null == id) {
+                return HttpResult.error("id为空");
+            }
+            BizMemberUser bizMemberUser = findById(Long.valueOf(id));
+            if (null == bizMemberUser) {
+                return HttpResult.error("用户不存在");
+            }
+        }
+        for (Map<String, Object> map : params) {
+            //盐
+            String salt = PasswordUtils.getSalt();
+            //密码加密,后台默认密码Abc@123
+            String password = PasswordUtils.encode("Abc@123", salt);
+            map.put("password", password);
+            map.put("salt", salt);
+            bizMemberUserMapper.resetPwdById(map);
+        }
+        return HttpResult.ok("密码重置成功");
     }
 
     @Override
