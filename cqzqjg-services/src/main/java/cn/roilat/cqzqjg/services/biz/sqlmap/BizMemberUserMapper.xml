@@ -163,6 +163,16 @@
     where id = #{params.id}
   </delete>
 
+    <delete id="forbiddenUserById" parameterType="java.util.Map">
+    update biz_member_user set if_locked=#{params.userStatus},last_update_time=SYSDATE(),last_update_by= #{params.lastUpdateBy}
+    where id = #{params.id}
+  </delete>
+
+    <delete id="resetPwdById" parameterType="java.util.Map">
+    update biz_member_user set password=#{params.password},salt=#{params.salt},last_update_time=SYSDATE(),last_update_by= #{params.lastUpdateBy}
+    where id = #{params.id}
+  </delete>
+
 
     <update id="update" parameterType="cn.roilat.cqzqjg.services.biz.model.BizMemberUser">
         update biz_member_user

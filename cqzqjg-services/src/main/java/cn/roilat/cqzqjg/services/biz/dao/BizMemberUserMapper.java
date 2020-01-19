@@ -84,4 +84,18 @@ public interface BizMemberUserMapper {
      */
     Integer deleteById(@Param("params") Map<String, Object> map);
 
+    /**
+     * 禁用用户
+     *
+     * @return
+     */
+    Integer forbiddenUserById(@Param("params") Map<String, Object> map);
+
+    /**
+     * 重置密码
+     *
+     * @return
+     */
+    Integer resetPwdById(@Param("params") Map<String, Object> map);
+
 }
