@@ -142,7 +142,7 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
             bizMemberCompanyResp.setLastUpdateTime(lastUpTimeStr);
         }
         Date createTime = bizMemberCompany.getCreateTime();
-        if (null != lastUpTime) {
+        if (null != createTime) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String createTimeStr = simpleDateFormat.format(createTime);
             bizMemberCompanyResp.setCreateTime(createTimeStr);

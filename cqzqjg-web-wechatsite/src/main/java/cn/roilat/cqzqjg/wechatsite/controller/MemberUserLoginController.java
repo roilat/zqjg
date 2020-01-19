@@ -107,6 +107,13 @@ public class MemberUserLoginController {
 						if (user == null) {
 							return HttpResult.error("账号不存在").setData(result);
 						}
+						// 账号不是审核已通过
+						if (!"2".equals(user.getApproveStatus())) {
+							result.setAccountAppStatus(user.getApproveStatus());
+							result.setApproveDesc(user.getApproveDesc());
+							return HttpResult.error().setData(result);
+						}
+						
 						result = new JwtAuthenticatioToken(user);
 						result.eraseCredentials();
 
@@ -115,12 +122,7 @@ public class MemberUserLoginController {
 							return HttpResult.error("账号已被锁定,请联系管理员").setData(result);
 						}
 
-						// 账号不是审核已通过
-						if (!"2".equals(user.getApproveStatus())) {
-							result.setAccountAppStatus(user.getApproveStatus());
-							result.setApproveDesc(user.getApproveDesc());
-							return HttpResult.error().setData(result);
-						}
+
 
 						// 系统登录认证
 						JwtAuthenticatioToken token = SecurityUtils.loginWechat(request, user, authenticationManager);
@@ -173,6 +175,10 @@ public class MemberUserLoginController {
 		if (user == null) {
 			return HttpResult.error("账号不存在");
 		}
+		// 账号不是审核已通过
+		if (!"2".equals(user.getApproveStatus())) {
+			return HttpResult.error("账号不存在");
+		}
 
 		if (!PasswordUtils.matches(user.getSalt(), password, user.getPassword())) {
 			return HttpResult.error("密码不正确");
@@ -183,6 +189,8 @@ public class MemberUserLoginController {
 			return HttpResult.error("账号已被锁定,请联系管理员");
 		}
 
+
+		
 		// 系统登录认证
 		user.setPassword(password);
 		JwtAuthenticatioToken token = SecurityUtils.loginWechat(request, user, authenticationManager);
