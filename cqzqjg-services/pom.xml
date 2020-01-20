@@ -34,7 +34,7 @@
 		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 		<docker.image.prefix>cqzqjg</docker.image.prefix>
 		<pagehelper.spring.version>1.2.5</pagehelper.spring.version>
-
+		<weixin-java-mp.version>3.6.0</weixin-java-mp.version>
 	</properties>
 
 	<dependencies>
@@ -137,6 +137,19 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.3</version>
 		</dependency>
+		<!--微信公众号sdk-->
+		<dependency>
+			<groupId>com.github.binarywang</groupId>
+			<artifactId>weixin-java-mp</artifactId>
+			<version>${weixin-java-mp.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 	</dependencies>
 
 	<!--srping cloud -->
