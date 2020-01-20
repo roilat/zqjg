@@ -44,10 +44,10 @@ public class BizMemberCompanyController {
 	@PreAuthorize("hasAuthority('biz:memberCompany:add') AND hasAuthority('biz:memberCompany:edit')")
 	public HttpResult save(@RequestBody BizMemberCompany record) {
 		if (StringUtils.isBlank(record.getPrimaryContactPerson())) {
-			return HttpResult.error("主要联系人不能为空");
+			return HttpResult.error("联系人不能为空");
 		}
 		if (StringUtils.isBlank(record.getPrimaryContactInfo())) {
-			return HttpResult.error("主要联系方式不能为空");
+			return HttpResult.error("联系方式不能为空");
 		}
 		if (StringUtils.isBlank(record.getCompanyName())) {
 			return HttpResult.error("单位名称不能为空");
@@ -55,15 +55,15 @@ public class BizMemberCompanyController {
 		if (StringUtils.isBlank(record.getCompanyCode())) {
 			return HttpResult.error("企业统一信用代码不能为空");
 		}
-		if (null == record.getRegistrationDate()) {
-			return HttpResult.error("企业注册时间不能为空");
-		}
-		if (StringUtils.isBlank(record.getCompanyPhone())) {
-			return HttpResult.error("企业联系电话不能为空");
-		}
-		if (StringUtils.isBlank(record.getCompanyAddress())) {
-			return HttpResult.error("企业注册地址不能为空");
-		}
+//		if (null == record.getRegistrationDate()) {
+//			return HttpResult.error("企业注册时间不能为空");
+//		}
+//		if (StringUtils.isBlank(record.getCompanyPhone())) {
+//			return HttpResult.error("企业联系电话不能为空");
+//		}
+//		if (StringUtils.isBlank(record.getCompanyAddress())) {
+//			return HttpResult.error("企业注册地址不能为空");
+//		}
 		if (StringUtils.isBlank(record.getCreateBy())) {
 			return HttpResult.error("创建人不能为空");
 		}

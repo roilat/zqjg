@@ -45,6 +45,10 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+system:
+  host: 'www.roilat.cn'
+  webPort: 80
 wechat:
-    appId:
-    secretKey:
+    appId: wx00d30ba6ef86fa42
+    secretKey: 
