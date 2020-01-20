@@ -41,7 +41,7 @@ public class BizMemberCompanyController {
 	 * @return
 	 */	
 	@PostMapping(value="/save")
-	@PreAuthorize("hasAuthority('biz:memberCompany:add') AND hasAuthority('biz:memberCompany:edit')")
+	@PreAuthorize("hasAuthority('biz:memberCompany:add') OR hasAuthority('biz:memberCompany:edit')")
 	public HttpResult save(@RequestBody BizMemberCompany record) {
 		if (StringUtils.isBlank(record.getPrimaryContactPerson())) {
 			return HttpResult.error("联系人不能为空");
@@ -130,6 +130,7 @@ public class BizMemberCompanyController {
 	 * @param records
 	 * @return
 	 */
+	@PreAuthorize("hasAuthority('biz:memberCompany:edit')")
 	@PostMapping(value = "/update")
 	public HttpResult update(@RequestBody BizMemberCompany records) {
 		Long id = records.getId();
@@ -172,6 +173,7 @@ public class BizMemberCompanyController {
 	 * @param records
 	 * @return
 	 */
+	@PreAuthorize("hasAuthority('biz:memberCompany:view')")
 	@PostMapping(value = "/deleteById")
 	public HttpResult deleteById(@RequestBody List<Map<String, Object>> records) {
 		return HttpResult.ok("删除成功", bizMemberCompanyService.deleteById(records));
