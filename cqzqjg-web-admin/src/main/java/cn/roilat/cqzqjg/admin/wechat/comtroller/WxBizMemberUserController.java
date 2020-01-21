@@ -59,22 +59,20 @@ public class WxBizMemberUserController {
         if (StringUtils.isBlank(userBean.getAdminUser())) {
             return HttpResult.error("创建人不能为空");
         }
-        if (!StringUtils.isBlank(userBean.getIfWechatLogin())) {
-            if (HAVE_WECHAT.equals(userBean.getIfWechatLogin().replaceAll(" ", ""))) {
-                //绑定微信
-                if (StringUtils.isBlank(userBean.getOpenId()) || StringUtils.isBlank(userBean.getWechat())) {
-                    return HttpResult.error("绑定微信时请传入openId和微信号");
-                } else {
-                    bizMemberUser.setOpenId(userBean.getOpenId());
-                    bizMemberUser.setIfWechatLogin(HAVE_WECHAT);
-                    bizMemberUser.setWechat(userBean.getWechat());
-                }
-            }
+        Map<String, Object> map = new HashMap();
+        map.put("loginName", null);
+        map.put("id", null);
+        if (!StringUtils.isBlank(userBean.getLoginName())) {
+            map.put("loginName", userBean.getLoginName());
         }
-        BizMemberUser user = bizMemberUserService.findByLoginName(userBean.getLoginName());
+        if (null != userBean.getId()) {
+            map.put("id", userBean.getId());
+        }
+        BizMemberUser user = bizMemberUserService.findByLoginNameAndId(map);
         if (null != user) {
             return HttpResult.error("登录账号重复");
         }
+
         //盐
         String salt = PasswordUtils.getSalt();
         //密码加密,后台默认密码Abc@123
@@ -145,12 +143,15 @@ public class WxBizMemberUserController {
         if (StringUtils.isBlank(records.getLastUpdateBy())) {
             return HttpResult.error("更新人不能为空");
         }
+        Map<String, Object> map = new HashMap();
+        map.put("loginName", null);
+        map.put("id", id);
         if (!StringUtils.isBlank(records.getLoginName())) {
-            //登录名
-            if (null != bizMemberUserService.findByLoginName(records.getLoginName())) {
-                return HttpResult.error("登录名称重复");
-            }
-            user.setLoginName(records.getLoginName());
+            map.put("loginName", records.getLoginName());
+        }
+        // 登录名
+        if (null != bizMemberUserService.findByLoginNameAndId(map)) {
+            return HttpResult.error("登录名称重复");
         }
         if (!StringUtils.isBlank(records.getCompanyName())) {
             //公司名

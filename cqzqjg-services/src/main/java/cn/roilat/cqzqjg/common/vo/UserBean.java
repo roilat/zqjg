@@ -7,6 +7,7 @@ package cn.roilat.cqzqjg.common.vo;
  * @create: 2020-01-07 09:38
  **/
 public class UserBean {
+    private Long id;
     private Integer companyId;
     private String companyName;
     private String loginName;
@@ -123,5 +124,11 @@ public class UserBean {
         this.loginName = loginName;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

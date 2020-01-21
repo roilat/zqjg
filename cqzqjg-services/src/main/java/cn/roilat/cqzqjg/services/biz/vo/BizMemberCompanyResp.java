@@ -12,6 +12,17 @@ public class BizMemberCompanyResp {
      * 主键
      */
     private Long id;
+
+    /**
+     * 类型
+     */
+    private String type;
+
+    /**
+     * 网址
+     */
+    private String companyUrl;
+
     /**
      * 单位名称
      */
@@ -64,16 +75,24 @@ public class BizMemberCompanyResp {
      */
     private String quiteDate;
 
-    /** 所有制类型 */
+    /**
+     * 所有制类型
+     */
     private String ownershipPattern;
 
-    /** 场所 */
+    /**
+     * 场所
+     */
     private String companyPlace;
 
-    /** 注册时间 */
+    /**
+     * 注册时间
+     */
     private String registrationDate;
 
-    /** 注册资本 */
+    /**
+     * 注册资本
+     */
     private String registrationAssets;
 
     public String getRegistrationAssets() {
@@ -116,7 +135,9 @@ public class BizMemberCompanyResp {
         this.quiteDate = quiteDate;
     }
 
-    /** 主要联系人联系方式 */
+    /**
+     * 主要联系人联系方式
+     */
     private String primaryContactInfo;
 
     public String getPrimaryContactInfo() {
@@ -221,5 +242,21 @@ public class BizMemberCompanyResp {
 
     public void setCompanyAddress(String companyAddress) {
         this.companyAddress = companyAddress;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCompanyUrl() {
+        return companyUrl;
+    }
+
+    public void setCompanyUrl(String companyUrl) {
+        this.companyUrl = companyUrl;
     }
 }

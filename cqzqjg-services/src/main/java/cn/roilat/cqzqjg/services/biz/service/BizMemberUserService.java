@@ -20,6 +20,8 @@ public interface BizMemberUserService extends CurdService<BizMemberUser> {
 
     BizMemberUser findByLoginName(String loginName);
 
+    BizMemberUser findByLoginNameAndId(Map<String,Object> map);
+
     BizMemberUserRespVo findByNameMyPage(String loginName);
 
     BizMemberUser findByOpenId(String openId);

@@ -70,6 +70,14 @@ public interface BizMemberUserMapper {
     BizMemberUser findByLoginName(String loginName);
 
     /**
+     * 根据登录名,id查询
+     *
+     * @param map
+     * @return
+     */
+    BizMemberUser findByLoginNameAndId(@Param("params") Map<String,Object> map);
+
+    /**
      * 根据openId查询
      *
      * @param openId

@@ -134,8 +134,9 @@ public class WxBizMemberCompanyController {
         }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("companyName", "");
-        map.put("companyCode", "");
+        map.put("companyName", null);
+        map.put("companyCode", null);
+        map.put("id",null);
         if (!StringUtils.isBlank(records.getCompanyName())) {
             //公司名
             map.put("companyName", records.getCompanyName());
