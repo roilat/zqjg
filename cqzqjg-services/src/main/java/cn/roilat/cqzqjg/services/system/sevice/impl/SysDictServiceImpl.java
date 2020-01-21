@@ -5,17 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.roilat.cqzqjg.services.system.dao.SysDictMapper;
-import cn.roilat.cqzqjg.services.system.model.SysDict;
-import cn.roilat.cqzqjg.services.system.sevice.SysDictService;
 import cn.roilat.cqzqjg.core.page.ColumnFilter;
 import cn.roilat.cqzqjg.core.page.MybatisPageHelper;
 import cn.roilat.cqzqjg.core.page.PageRequest;
 import cn.roilat.cqzqjg.core.page.PageResult;
+import cn.roilat.cqzqjg.services.system.dao.SysDictMapper;
+import cn.roilat.cqzqjg.services.system.model.SysDict;
+import cn.roilat.cqzqjg.services.system.sevice.SysDictService;
 
 @Service
 public class SysDictServiceImpl implements SysDictService {
@@ -59,8 +58,8 @@ public class SysDictServiceImpl implements SysDictService {
     }
 
     @Override
-    public List<SysDict> findByLable(String lable) {
-        return sysDictMapper.findByLable(lable);
+    public List<SysDict> findByLable(String label) {
+        return sysDictMapper.findByLable(label);
     }
 
     @Override
@@ -77,5 +76,10 @@ public class SysDictServiceImpl implements SysDictService {
         }
         return respList;
     }
+
+	@Override
+	public List<SysDict> findByType(String type) {
+        return sysDictMapper.findByType(type);
+	}
 
 }

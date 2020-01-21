@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.roilat.cqzqjg.core.service.CurdService;
-import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import cn.roilat.cqzqjg.services.system.model.SysDict;
 
 /**
@@ -19,7 +18,7 @@ public interface SysDictService extends CurdService<SysDict> {
 	 * @param lable
 	 * @return
 	 */
-	List<SysDict> findByLable(String lable);
+	List<SysDict> findByLable(String label);
 
 
 	/**
@@ -27,4 +26,11 @@ public interface SysDictService extends CurdService<SysDict> {
 	 * @return
 	 */
 	List<Map<String, String>> findCompanyType();
+
+
+	/**
+	 * @param type
+	 * @return
+	 */
+	List<SysDict> findByType(String type);
 }

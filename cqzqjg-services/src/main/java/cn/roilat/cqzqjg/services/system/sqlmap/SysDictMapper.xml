@@ -192,6 +192,12 @@
         from sys_dict
         where label = #{label,jdbcType=VARCHAR}
     </select>
+    <select id="findByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict
+        where type = #{type,jdbcType=VARCHAR}
+    </select>
 
     <select id="findCompanyType" resultMap="BaseResultMap">
         select
