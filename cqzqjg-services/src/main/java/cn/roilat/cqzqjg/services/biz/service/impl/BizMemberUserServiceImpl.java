@@ -186,6 +186,11 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
     }
 
     @Override
+    public BizMemberUser findByLoginNameAndId(Map<String,Object> map) {
+        return bizMemberUserMapper.findByLoginNameAndId(map);
+    }
+
+    @Override
     public BizMemberUserRespVo findByNameMyPage(String loginName) {
         BizMemberUser bizMemberUser = bizMemberUserMapper.findByLoginName(loginName);
         if (null == bizMemberUser) {
