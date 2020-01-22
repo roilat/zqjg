@@ -100,6 +100,7 @@ create table BIZ_PORTAL_INFO
    create_time          datetime comment '创建时间',
    last_update_by       national varchar(50) comment '更新人',
    last_update_time     datetime comment '更新时间',
+   publish				char(1)	comment '是否发布',
    del_flag             tinyint(4) default 0 comment '是否删除  -1：已删除  0：正常',
    primary key (id)
 );
@@ -145,6 +146,7 @@ create table BIZ_PROPERTIES
    create_time          datetime comment '创建时间',
    last_update_by       national varchar(50) comment '更新人',
    last_update_time     datetime comment '更新时间',
+   publish				char(1)	comment '是否发布',
    del_flag             tinyint(4) default 0 comment '是否删除  -1：已删除  0：正常',
    primary key (id)
 );

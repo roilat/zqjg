@@ -4,6 +4,7 @@ import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.biz.model.BizProperties;
 import cn.roilat.cqzqjg.services.biz.vo.AssetsReqVo;
+import cn.roilat.cqzqjg.services.biz.vo.BizPropertiesReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizPropertiesRespVo;
 
 /**
@@ -25,11 +26,26 @@ public interface BizPropertiesService extends CurdService<BizProperties> {
      */
     PageResult findByName(AssetsReqVo assetsReqVo);
 
+
+    /**
+     * 资产列表
+     *
+     * @return
+     */
+    PageResult findByNamePc(BizPropertiesReqVo bizPropertiesReqVo);
+
     /**
      * 资产详情
      *
      * @return
      */
     BizPropertiesRespVo findDetailById(Long id);
+
+    /**
+     * 资产详情
+     * @param id 资产id
+     * @return
+     */
+    BizPropertiesRespVo findDetailByIdPc(Long id);
 
 }

@@ -46,9 +46,15 @@ public class SysDictController {
 		return HttpResult.ok(sysDictService.findPage(pageRequest));
 	}
 	
-	@PreAuthorize("hasAuthority('sys:dict:view')")
-	@GetMapping(value="/findByLable")
-	public HttpResult findByLable(@RequestParam String lable) {
-		return HttpResult.ok(sysDictService.findByLable(lable));
+//	@PreAuthorize("hasAuthority('sys:dict:view')")
+	@GetMapping(value="/findByLabel")
+	public HttpResult findByLable(@RequestParam String label) {
+		return HttpResult.ok(sysDictService.findByLable(label));
+	}
+	
+//	@PreAuthorize("hasAuthority('sys:dict:view')")
+	@GetMapping(value="/findByType")
+	public HttpResult findByType(@RequestParam String type) {
+		return HttpResult.ok(sysDictService.findByType(type));
 	}
 }

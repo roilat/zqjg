@@ -27,4 +27,10 @@ public interface SysDictMapper {
 
     List<SysDict> findCompanyType();
 
+	/**
+	 * @param type
+	 * @return
+	 */
+	List<SysDict> findByType(@Param(value="type")String type);
+
 }

@@ -46,4 +46,11 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
-    
+
+wx:
+  mp:
+    configs:
+      - appId: wxc3c36c1cac4a2c4a
+        secret: 4935c773ff22ede941658685e61bb1c1
+        token: 123456abc
+        aesKey: 111

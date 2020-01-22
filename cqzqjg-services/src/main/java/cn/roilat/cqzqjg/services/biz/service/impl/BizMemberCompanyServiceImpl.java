@@ -9,7 +9,6 @@ import cn.roilat.cqzqjg.services.biz.model.BizMemberCompany;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
-import cn.roilat.cqzqjg.services.biz.vo.BizMemberUserRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -119,6 +118,8 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
     private BizMemberCompanyResp castVo(BizMemberCompany bizMemberCompany) {
         BizMemberCompanyResp bizMemberCompanyResp = new BizMemberCompanyResp();
         bizMemberCompanyResp.setId(bizMemberCompany.getId());
+        bizMemberCompanyResp.setType(bizMemberCompany.getType());
+        bizMemberCompanyResp.setCompanyUrl(bizMemberCompany.getCompanyUrl());
         bizMemberCompanyResp.setCompanyAddress(bizMemberCompany.getCompanyAddress());
         bizMemberCompanyResp.setCompanyCode(bizMemberCompany.getCompanyCode());
         bizMemberCompanyResp.setCompanyEmail(bizMemberCompany.getCompanyEmail());
