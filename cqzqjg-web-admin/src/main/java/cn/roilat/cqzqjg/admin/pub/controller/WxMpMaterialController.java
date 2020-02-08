@@ -48,7 +48,7 @@ public class WxMpMaterialController {
      * @throws WxErrorException
      * @throws IOException
      */
-    @GetMapping("/upload/{mediaType}")
+    @PostMapping("/upload/{mediaType}")
     public void uploadMaterial(HttpServletRequest httpServletRequest, @PathVariable String mediaType) {
         //1、设置文件到本地的文件夹位置
         String realPath = "";
@@ -69,7 +69,7 @@ public class WxMpMaterialController {
                 String path = realPath + filename;
                 uploadFile.transferTo(fileServer);
                 //TODO 保存图片到信息到数据库
-                logger.debug("文件路径: " + path + " 媒体文件类型: " + mediaType);
+                logger.info("文件路径: " + path + " 媒体文件类型: " + mediaType);
             }
         } catch (Exception e) {
             logger.error("上传文件时异常！", e);
@@ -83,7 +83,7 @@ public class WxMpMaterialController {
      * @throws WxErrorException
      * @throws IOException
      */
-    @GetMapping("/uploadtowx/{mediaType}")
+    @PostMapping("/uploadtowx/{mediaType}")
     public void uploadMaterialToWx(HttpServletRequest httpServletRequest, @PathVariable String mediaType) {
         try {
             List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("uploadFile");
@@ -109,17 +109,17 @@ public class WxMpMaterialController {
                 WxMpMaterialUploadResult res = wxMpService.getMaterialService().materialFileUpload(mediaType, wxMaterial);
                 if (WxConsts.MediaFileType.IMAGE.equals(mediaType) || WxConsts.MediaFileType.THUMB.equals(mediaType)) {
                     //TODO 保存腾讯图片url,mediaId到数据库
-                    logger.debug("上传图片: " + res.getUrl());
+                    logger.info("上传图片: " + res.getUrl());
                 }
                 if (WxConsts.MediaFileType.THUMB.equals(mediaType)) {
                     //TODO 保存腾讯图片url,mediaId到数据库
-                    logger.debug("上传图片: " + res.getUrl());
+                    logger.info("上传图片: " + res.getUrl());
                 }
                 Map<String, Object> materialInfo = new HashMap<>();
                 materialInfo.put("media_id", res.getMediaId());
                 materialInfo.put("length", fileServer.length());
                 materialInfo.put("filename", fileServer.getName());
-                logger.debug("上传素材收到微信响应: " + res.toString());
+                logger.info("上传素材收到微信响应: " + res.toString());
             }
         } catch (WxErrorException e) {
             logger.error("上传素材到腾讯失败: " + e.getMessage());
@@ -138,7 +138,7 @@ public class WxMpMaterialController {
      * @throws WxErrorException
      * @throws IOException
      */
-    @GetMapping("/mediaUpload/{mediaType}")
+    @PostMapping("/mediaUpload/{mediaType}")
     public void mediaUpload(HttpServletRequest httpServletRequest, @PathVariable String mediaType) {
         try {
             List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("uploadFile");
@@ -163,7 +163,7 @@ public class WxMpMaterialController {
                 materialInfo.put("thumbMediaId", res.getThumbMediaId());
                 materialInfo.put("createdAt", res.getCreatedAt());
 
-                logger.debug("上传临时素材收到微信响应: " + res.toString());
+                logger.info("上传临时素材收到微信响应: " + res.toString());
             }
         } catch (WxErrorException e) {
             logger.error("上传临时素材到腾讯失败: " + e.getMessage());
@@ -182,7 +182,7 @@ public class WxMpMaterialController {
      * @throws WxErrorException
      * @throws IOException
      */
-    @GetMapping("/mediaImgUpload")
+    @PostMapping("/mediaImgUpload")
     public void mediaImgUpload(HttpServletRequest httpServletRequest, @PathVariable String mediaType) {
         try {
             List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("uploadFile");
@@ -203,7 +203,7 @@ public class WxMpMaterialController {
                 Map<String, Object> materialInfo = new HashMap<>();
                 materialInfo.put("url", res.getUrl());
 
-                logger.debug("上传临时素材收到微信响应: " + res.toString());
+                logger.info("上传临时素材收到微信响应: " + res.toString());
             }
         } catch (WxErrorException e) {
             logger.error("上传临时素材收到到腾讯失败: " + e.getMessage());
@@ -225,9 +225,9 @@ public class WxMpMaterialController {
     public String getMaterial(@PathVariable Integer offset, @PathVariable Integer count) {
         try {
             WxMpMaterialNewsBatchGetResult wxMpMaterialNewsBatchGetResult = wxMpService.getMaterialService().materialNewsBatchGet(offset, count);
-            logger.debug("素材总数：" + wxMpMaterialNewsBatchGetResult.getTotalCount() + " 素材的该偏移位: " + wxMpMaterialNewsBatchGetResult.getItemCount());
+            logger.info("素材总数：" + wxMpMaterialNewsBatchGetResult.getTotalCount() + " 素材的该偏移位: " + wxMpMaterialNewsBatchGetResult.getItemCount());
             for (WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem wxMaterialNewsBatchGetNewsItem : wxMpMaterialNewsBatchGetResult.getItems()) {
-                logger.debug("mediaId: " + wxMaterialNewsBatchGetNewsItem.getMediaId() + " updateTime: " + wxMaterialNewsBatchGetNewsItem.getUpdateTime() + "content:" + wxMaterialNewsBatchGetNewsItem.getContent().toJson());
+                logger.info("mediaId: " + wxMaterialNewsBatchGetNewsItem.getMediaId() + " updateTime: " + wxMaterialNewsBatchGetNewsItem.getUpdateTime() + "content:" + wxMaterialNewsBatchGetNewsItem.getContent().toJson());
                 return wxMaterialNewsBatchGetNewsItem.toString();
             }
         } catch (WxErrorException e) {
@@ -248,9 +248,9 @@ public class WxMpMaterialController {
     public void materialFileBatchGet(@PathVariable String type, @PathVariable Integer offset, @PathVariable Integer count) {
         try {
             WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(type, offset, count);
-            logger.debug("素材总数：" + wxMpMaterialFileBatchGetResult.getTotalCount() + " 素材的该偏移位: " + wxMpMaterialFileBatchGetResult.getItemCount());
+            logger.info("素材总数：" + wxMpMaterialFileBatchGetResult.getTotalCount() + " 素材的该偏移位: " + wxMpMaterialFileBatchGetResult.getItemCount());
             for (WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem wxMaterialFileBatchGetNewsItem : wxMpMaterialFileBatchGetResult.getItems()) {
-                logger.debug("mediaId: " + wxMaterialFileBatchGetNewsItem.getMediaId() +
+                logger.info("mediaId: " + wxMaterialFileBatchGetNewsItem.getMediaId() +
                         " updateTime: " + wxMaterialFileBatchGetNewsItem.getUpdateTime() +
                         "name:" + wxMaterialFileBatchGetNewsItem.getName() +
                         "url: " + wxMaterialFileBatchGetNewsItem.getUrl());
@@ -267,9 +267,9 @@ public class WxMpMaterialController {
         try {
             flag = wxMpService.getMaterialService().materialDelete(mediaId);
             if (flag) {
-                logger.debug("mediaId: " + mediaId + " 删除成功!");
+                logger.info("mediaId: " + mediaId + " 删除成功!");
             } else {
-                logger.debug("mediaId: " + mediaId + " 删除失败!");
+                logger.info("mediaId: " + mediaId + " 删除失败!");
             }
         } catch (WxErrorException e) {
             e.printStackTrace();
@@ -282,7 +282,7 @@ public class WxMpMaterialController {
         WxMpMaterialCountResult wxMpMaterialCountResult = null;
         try {
             wxMpMaterialCountResult = wxMpService.getMaterialService().materialCount();
-            logger.debug("voiceCount: " + wxMpMaterialCountResult.getVoiceCount() +
+            logger.info("voiceCount: " + wxMpMaterialCountResult.getVoiceCount() +
                     "videoCount: " + wxMpMaterialCountResult.getVoiceCount() +
                     "imageCount: " + wxMpMaterialCountResult.getImageCount() +
                     "newsCount: " + wxMpMaterialCountResult.getNewsCount());
@@ -328,7 +328,7 @@ public class WxMpMaterialController {
         article2.setDigest("吃饭黄了");
         news.addArticle(article2);
 
-        logger.debug(JSON.toJSONString(news));
+        logger.info(JSON.toJSONString(news));
     }
 
 
