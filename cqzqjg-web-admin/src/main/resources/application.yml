@@ -4,13 +4,14 @@ server:
     max-threads: 1000
     min-spare-threads: 30
   port: 8001
-    #context-path: /cqzqjg-admin
+  servlet:
+    context-path: /admin-api
 
 
 #spring boot admin
 spring: 
   mvc: 
-    static-path-pattern: /css/**,/js/**,/**/*.html,/img/**,/upload/**
+    static-path-pattern: /admin-api/css/**,/admin-api/js/**,/admin-api/**/*.html,/admin-api/img/**,/admin-api/upload/**
   resources: 
     static-locations: classpath:/static/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
   application:
@@ -22,9 +23,9 @@ spring:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/cqzqjg?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
- #     url: jdbc:mysql://193.112.78.157:3306/cqzqjg?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-      username: test
-      password: test
+#      url: jdbc:mysql://193.112.78.157:3306/cqzqjg?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+      username: platform
+      password: platform
       filters: stat,wall,log4j,config
       max-active: 100
       initial-size: 1
