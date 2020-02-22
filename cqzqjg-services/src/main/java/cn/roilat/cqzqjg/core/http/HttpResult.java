@@ -13,6 +13,7 @@ public class HttpResult {
     private Object data;
     private boolean success = true;
 
+
     public static HttpResult error() {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
     }

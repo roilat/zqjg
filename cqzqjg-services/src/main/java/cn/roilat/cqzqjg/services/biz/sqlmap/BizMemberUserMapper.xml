@@ -253,14 +253,8 @@
     <select id="findByLoginNameAndId" parameterType="java.util.Map" resultMap="BaseResultMap">
         select * from biz_member_user
         where del_flag=0
-        <trim prefixOverrides="and|or">
-            <if test="loginName !=null">
-                AND login_name = #{loginName,jdbcType=VARCHAR}
-            </if>
-            <if test="id !=null">
-                AND id &lt;&gt; #{id,jdbcType=BIGINT}
-            </if>
-        </trim>
+                AND login_name = #{params.loginName}
+                AND id = #{params.id}
     </select>
 
 
@@ -275,6 +269,7 @@
 
     <select id="findPageByCondition" resultMap="BaseResultMap">
         select * from biz_member_user
+
         <trim prefix="where" prefixOverrides="and|or">
             <if test="companyName !=null">
                 AND company_name like CONCAT('%',#{companyName},'%')
@@ -291,7 +286,7 @@
             <if test="approveStatus !=null">
                 AND approve_status like CONCAT('%',#{approveStatus},'%')
             </if>
-
+            AND del_flag = 0
         </trim>
     </select>
 

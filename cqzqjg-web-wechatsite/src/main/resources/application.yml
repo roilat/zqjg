@@ -3,7 +3,7 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 8002
+  port: 8001
     #context-path: /cqzqjg-admin
 
 
@@ -21,9 +21,12 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://193.112.78.157:3306/cqzqjg?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-      username: root
-      password: root
+#      url: jdbc:mysql://193.112.78.157:3306/cqzqjg?useUnicode=true&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+#      username: root
+#      password: root
+      url: jdbc:mysql://47.98.221.19:3206/cqzqjg?useUnicode=true&autoReconnect=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+      username: zqjg
+      password: Zqjg@123
       filters: stat,wall,log4j,config
       max-active: 100
       initial-size: 1

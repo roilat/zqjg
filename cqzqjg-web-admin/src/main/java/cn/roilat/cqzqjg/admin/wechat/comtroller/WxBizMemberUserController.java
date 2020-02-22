@@ -5,6 +5,7 @@ import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.common.vo.UserBean;
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageRequest;
+import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
@@ -112,6 +113,18 @@ public class WxBizMemberUserController {
 
 
     /**
+     * 重置密码(手机端)
+     *
+     * @param records
+     * @return
+     */
+    @PostMapping(value = "/resetPwd")
+    public HttpResult resetPwdByIdMobile(@RequestBody List<Map<String, Object>> records) {
+        return bizMemberUserService.resetPwdById(records);
+    }
+
+
+    /**
      * 删除会员单位e用户信息表
      *
      * @param records
@@ -182,13 +195,22 @@ public class WxBizMemberUserController {
             user.setOpenId(records.getOpenId());
         }
         if (null != records.getDelFlag()) {
-            // 是否删除 -1：已删除 0：正常
+            // 是否删除 1：已删除 0：正常
             user.setDelFlag(records.getDelFlag());
         }
         if (!StringUtils.isBlank(records.getAvatar())) {
             //微信id
             user.setAvatar(records.getAvatar());
         }
+        if (!StringUtils.isBlank(records.getLoginName())) {
+            //登录名称
+            user.setLoginName(records.getLoginName());
+        }
+        if (!StringUtils.isBlank(records.getPhoneNumber())) {
+            //电话号码
+            user.setPhoneNumber(records.getPhoneNumber());
+        }
+
         //更新时间
         user.setLastUpdateTime(new Date());
         return HttpResult.ok("更新成功", bizMemberUserService.save(user));
