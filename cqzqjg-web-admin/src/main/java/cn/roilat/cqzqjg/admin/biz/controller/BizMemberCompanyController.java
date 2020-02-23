@@ -64,14 +64,15 @@ public class BizMemberCompanyController {
 //		if (StringUtils.isBlank(record.getCompanyAddress())) {
 //			return HttpResult.error("企业注册地址不能为空");
 //		}
-		if (StringUtils.isBlank(record.getCreateBy())) {
+		//新增时，才做此判断
+		if (StringUtils.isBlank(record.getCreateBy()) && record.getId() == null) {
 			return HttpResult.error("创建人不能为空");
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("companyName", record.getCompanyName());
 		map.put("companyCode", record.getCompanyCode());
 		List<BizMemberCompany> list = bizMemberCompanyService.findByCondition(map);
-		if (null != list && list.size() > 0) {
+		if (null != list && list.size() > 0 && !list.get(0).getId().equals(record.getId())) {
 			return HttpResult.error("公司名或注册机构号重复");
 		}
 		Integer i = bizMemberCompanyService.save(record);
