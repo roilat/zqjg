@@ -253,14 +253,8 @@
     <select id="findByLoginNameAndId" parameterType="java.util.Map" resultMap="BaseResultMap">
         select * from biz_member_user
         where del_flag=0
-        <trim prefixOverrides="and|or">
-            <if test="loginName !=null">
-                AND login_name = #{loginName,jdbcType=VARCHAR}
-            </if>
-            <if test="id !=null">
-                AND id &lt;&gt; #{id,jdbcType=BIGINT}
-            </if>
-        </trim>
+                AND login_name = #{params.loginName}
+                AND id = #{params.id}
     </select>
 
 
@@ -275,23 +269,27 @@
 
     <select id="findPageByCondition" resultMap="BaseResultMap">
         select * from biz_member_user
+
         <trim prefix="where" prefixOverrides="and|or">
-            <if test="companyName !=null">
+            <if test="companyName !=null and companyName != ''">
                 AND company_name like CONCAT('%',#{companyName},'%')
             </if>
-            <if test="nickName !=null">
+            <if test="nickName !=null and nickName != ''">
                 AND nick_name like CONCAT('%',#{nickName},'%')
             </if>
-            <if test="loginName !=null">
+            <if test="loginName !=null and loginName != ''">
                 AND login_name like CONCAT('%',#{loginName},'%')
             </if>
-            <if test="phoneNumber !=null">
+            <if test="phoneNumber !=null and phoneNumber != ''">
                 AND phone_number like CONCAT('%',#{phoneNumber},'%')
             </if>
-            <if test="approveStatus !=null">
+            <if test="approveStatus !=null and approveStatus != ''">
                 AND approve_status like CONCAT('%',#{approveStatus},'%')
             </if>
-
+            <if test="createBy != null and createBy != ''">
+            	and create_by = #{createBy}
+            </if>
+            AND del_flag = 0
         </trim>
     </select>
 

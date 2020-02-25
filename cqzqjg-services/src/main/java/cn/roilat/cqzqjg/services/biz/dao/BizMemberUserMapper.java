@@ -75,7 +75,7 @@ public interface BizMemberUserMapper {
      * @param map
      * @return
      */
-    BizMemberUser findByLoginNameAndId(@Param("params") Map<String,Object> map);
+    BizMemberUser findByLoginNameAndId(@Param("params") Map<String, Object> map);
 
     /**
      * 根据openId查询

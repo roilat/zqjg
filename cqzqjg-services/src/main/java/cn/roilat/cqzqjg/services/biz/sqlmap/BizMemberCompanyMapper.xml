@@ -216,9 +216,19 @@
         <include refid="Base_Column_List"/>
         from biz_member_company
         <trim prefix="where">
+        	del_flag = 0
             <if test="searchText !=null">
-                (company_name like CONCAT('%',#{searchText},'%') OR primary_contact_person like
+                and (company_name like CONCAT('%',#{searchText},'%') OR primary_contact_person like
                 CONCAT('%',#{searchText},'%'))
+            </if>
+            <if test="companyName != null and companyName != ''">
+            	and company_name like CONCAT('%',#{companyName},'%')
+            </if>
+            <if test="primaryContactPerson != null and primaryContactPerson != ''">
+            	and primary_contact_person like CONCAT('%',#{primaryContactPerson},'%')
+            </if>
+            <if test="createBy != null and createBy != ''">
+            	and create_by = #{createBy}
             </if>
         </trim>
     </select>

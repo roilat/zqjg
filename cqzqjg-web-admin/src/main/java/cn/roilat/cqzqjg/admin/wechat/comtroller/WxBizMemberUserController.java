@@ -5,13 +5,17 @@ import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.common.vo.UserBean;
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.core.page.PageRequest;
+import cn.roilat.cqzqjg.core.page.PageResult;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
+import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.VerifyReqVo;
 import cn.roilat.cqzqjg.services.system.sevice.SysDictService;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -31,6 +35,8 @@ public class WxBizMemberUserController {
 
     @Autowired
     private BizMemberUserService bizMemberUserService;
+	@Autowired
+	private BizMemberCompanyService bizMemberCompanyService;
     @Autowired
     private SysDictService sysDictService;
     /**
@@ -56,7 +62,7 @@ public class WxBizMemberUserController {
         if (StringUtils.isBlank(userBean.getLoginName())) {
             return HttpResult.error("用户名不能为空");
         }
-        if (StringUtils.isBlank(userBean.getAdminUser())) {
+        if (StringUtils.isBlank(userBean.getCreateBy())) {
             return HttpResult.error("创建人不能为空");
         }
         Map<String, Object> map = new HashMap();
@@ -83,7 +89,7 @@ public class WxBizMemberUserController {
         bizMemberUser.setPassword(password);
         bizMemberUser.setSalt(salt);
         bizMemberUser.setCreateTime(new Date());
-        bizMemberUser.setCreateBy(userBean.getAdminUser());
+        bizMemberUser.setCreateBy(userBean.getCreateBy());
         bizMemberUser.setNickName(userBean.getNickName());
         bizMemberUser.setAvatar(userBean.getAvatar());
         bizMemberUser.setPhoneNumber(userBean.getPhoneNumber());
@@ -108,6 +114,18 @@ public class WxBizMemberUserController {
     @PostMapping(value = "/delete")
     public HttpResult delete(@RequestBody List<BizMemberUser> records) {
         return HttpResult.ok(bizMemberUserService.delete(records));
+    }
+
+
+    /**
+     * 重置密码(手机端)
+     *
+     * @param records
+     * @return
+     */
+    @PostMapping(value = "/resetPwd")
+    public HttpResult resetPwdByIdMobile(@RequestBody List<Map<String, Object>> records) {
+        return bizMemberUserService.resetPwdById(records);
     }
 
 
@@ -182,13 +200,22 @@ public class WxBizMemberUserController {
             user.setOpenId(records.getOpenId());
         }
         if (null != records.getDelFlag()) {
-            // 是否删除 -1：已删除 0：正常
+            // 是否删除 1：已删除 0：正常
             user.setDelFlag(records.getDelFlag());
         }
         if (!StringUtils.isBlank(records.getAvatar())) {
             //微信id
             user.setAvatar(records.getAvatar());
         }
+        if (!StringUtils.isBlank(records.getLoginName())) {
+            //登录名称
+            user.setLoginName(records.getLoginName());
+        }
+        if (!StringUtils.isBlank(records.getPhoneNumber())) {
+            //电话号码
+            user.setPhoneNumber(records.getPhoneNumber());
+        }
+
         //更新时间
         user.setLastUpdateTime(new Date());
         return HttpResult.ok("更新成功", bizMemberUserService.save(user));
@@ -252,7 +279,16 @@ public class WxBizMemberUserController {
         return HttpResult.ok(bizMemberUserService.findById(id));
     }
 
-
+    /**
+     * 查询会员单位
+     * @param bizMemberCompanyReqVo
+     * @return
+     */    
+    @PreAuthorize("hasAuthority('biz:memberUser:add') OR hasAuthority('biz:memberUser:edit')")
+	@PostMapping(value="/searchCmpny")
+	public HttpResult search(@RequestBody BizMemberCompanyReqVo bizMemberCompanyReqVo) {
+		return HttpResult.ok(bizMemberCompanyService.findPageByName(bizMemberCompanyReqVo));
+	}
     public static void main(String[] args) {
         List<Map<String, Object>> records = new ArrayList<>();
         Map<String, Object> map1 = new HashMap<>();

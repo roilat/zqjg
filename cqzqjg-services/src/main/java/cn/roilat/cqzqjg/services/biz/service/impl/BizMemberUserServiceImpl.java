@@ -80,6 +80,7 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
 
     @Override
     public HttpResult resetPwdById(List<Map<String, Object>> params) {
+
         for (Map<String, Object> map : params) {
             //用户id
             Integer id = (Integer) map.get("id");
@@ -100,7 +101,9 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
             map.put("salt", salt);
             bizMemberUserMapper.resetPwdById(map);
         }
-        return HttpResult.ok("密码重置成功");
+        Map<String, String> respMap = new HashMap<>();
+        respMap.put("pwd", "Abc@123");
+        return HttpResult.ok("密码重置成功", respMap);
     }
 
     @Override
@@ -122,6 +125,9 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         if (null != bizMemberReqVo.getApproveStatus()) {
             map.put("approveStatus", bizMemberReqVo.getApproveStatus());
         }
+        if (null != bizMemberReqVo.getCreateBy()) {
+        	map.put("createBy", bizMemberReqVo.getCreateBy());
+        }
 
         PageResult pageResult = MybatisPageHelper.findPage(bizMemberReqVo, bizMemberUserMapper, "findPageByCondition", map);
         List<BizMemberUser> list = (List<BizMemberUser>) pageResult.getContent();
@@ -130,7 +136,6 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
             for (BizMemberUser bizMemberUser : list) {
                 BizMemberUserRespVo bizMemberUserRespVo = castVo(bizMemberUser);
                 respList.add(bizMemberUserRespVo);
-
             }
             pageResult.setContent(respList);
         }
@@ -186,7 +191,7 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
     }
 
     @Override
-    public BizMemberUser findByLoginNameAndId(Map<String,Object> map) {
+    public BizMemberUser findByLoginNameAndId(Map<String, Object> map) {
         return bizMemberUserMapper.findByLoginNameAndId(map);
     }
 

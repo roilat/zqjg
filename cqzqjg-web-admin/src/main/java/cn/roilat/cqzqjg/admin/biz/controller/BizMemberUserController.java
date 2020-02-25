@@ -1,22 +1,30 @@
 package cn.roilat.cqzqjg.admin.biz.controller;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import cn.roilat.cqzqjg.common.util.PasswordUtils;
 import cn.roilat.cqzqjg.common.utils.StringUtils;
 import cn.roilat.cqzqjg.common.vo.UserBean;
 import cn.roilat.cqzqjg.core.http.HttpResult;
 import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
+import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
+import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberReqVo;
 import cn.roilat.cqzqjg.services.biz.vo.VerifyReqVo;
 import cn.roilat.cqzqjg.services.system.sevice.SysDictService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * --------------------------- 会员单位e用户信息表 (BizMemberUserController)
@@ -29,6 +37,9 @@ public class BizMemberUserController {
 
     @Autowired
     private BizMemberUserService bizMemberUserService;
+    
+	@Autowired
+	private BizMemberCompanyService bizMemberCompanyService;
 
     @Autowired
     private SysDictService sysDictService;
@@ -56,7 +67,7 @@ public class BizMemberUserController {
         if (StringUtils.isBlank(userBean.getLoginName())) {
             return HttpResult.error("用户名不能为空");
         }
-        if (StringUtils.isBlank(userBean.getAdminUser())) {
+        if (StringUtils.isBlank(userBean.getCreateBy())) {
             return HttpResult.error("创建人不能为空");
         }
         Map<String, Object> map = new HashMap();
@@ -82,7 +93,7 @@ public class BizMemberUserController {
         bizMemberUser.setPassword(password);
         bizMemberUser.setSalt(salt);
         bizMemberUser.setCreateTime(new Date());
-        bizMemberUser.setCreateBy(userBean.getAdminUser());
+        bizMemberUser.setCreateBy(userBean.getCreateBy());
         bizMemberUser.setNickName(userBean.getNickName());
         bizMemberUser.setAvatar(userBean.getAvatar());
         bizMemberUser.setPhoneNumber(userBean.getPhoneNumber());
@@ -128,7 +139,7 @@ public class BizMemberUserController {
      * @param records
      * @return
      */
-    @PreAuthorize("hasAuthority('biz:memberUser:lock')")
+    @PreAuthorize("hasAuthority('biz:memberUser:edit')")
     @PostMapping(value = "/lockUserById")
     public HttpResult lockUserById(@RequestBody List<Map<String, Object>> records) {
         return bizMemberUserService.forbiddenUserById(records);
@@ -140,7 +151,7 @@ public class BizMemberUserController {
      * @param records
      * @return
      */
-    @PreAuthorize("hasAuthority('biz:memberUser:reset')")
+    @PreAuthorize("hasAuthority('biz:memberUser:edit')")
     @PostMapping(value = "/resetPwdById")
     public HttpResult resetPwdById(@RequestBody List<Map<String, Object>> records) {
         return bizMemberUserService.resetPwdById(records);
@@ -279,4 +290,15 @@ public class BizMemberUserController {
     public HttpResult findById(@RequestParam Long id) {
         return HttpResult.ok(bizMemberUserService.findById(id));
     }
+    
+    /**
+     * 查询会员单位
+     * @param bizMemberCompanyReqVo
+     * @return
+     */    
+    @PreAuthorize("hasAuthority('biz:memberUser:add') OR hasAuthority('biz:memberUser:edit')")
+	@PostMapping(value="/searchCmpny")
+	public HttpResult search(@RequestBody BizMemberCompanyReqVo bizMemberCompanyReqVo) {
+		return HttpResult.ok(bizMemberCompanyService.findPageByName(bizMemberCompanyReqVo));
+	}
 }

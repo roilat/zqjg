@@ -102,6 +102,15 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
         if (!StringUtils.isBlank(bizMemberCompanyReqVo.getSearchText())) {
             map.put("searchText", bizMemberCompanyReqVo.getSearchText());
         }
+        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getCreateBy())) {
+        	map.put("createBy", bizMemberCompanyReqVo.getCreateBy());
+        }
+        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getCompanyName())) {
+        	map.put("companyName", bizMemberCompanyReqVo.getCompanyName());
+        }
+        if (!StringUtils.isBlank(bizMemberCompanyReqVo.getPrimaryContactPerson())) {
+        	map.put("primaryContactPerson", bizMemberCompanyReqVo.getPrimaryContactPerson());
+        }
         PageResult pageResult = MybatisPageHelper.findPage(bizMemberCompanyReqVo, bizMemberCompanyMapper, "findPageByName", map);
         List<BizMemberCompany> list = (List<BizMemberCompany>) pageResult.getContent();
         List<BizMemberCompanyResp> respList = new ArrayList<>();
