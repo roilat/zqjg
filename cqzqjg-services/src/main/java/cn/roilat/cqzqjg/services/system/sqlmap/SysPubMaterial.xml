@@ -9,6 +9,7 @@
         <result column="url" jdbcType="VARCHAR" property="url"/>
         <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
@@ -16,7 +17,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, material_id, media_id, url, type, path, create_time, create_by, last_update_by, last_update_time
+    id, material_id, media_id, url, type, path,content, create_time, create_by, last_update_by, last_update_time
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -57,6 +58,9 @@
             <if test="path != null">
                 path,
             </if>
+            <if test="content != null">
+                content,
+            </if>
             <if test="createTime != null">
                 create_time,
             </if>
@@ -85,6 +89,9 @@
             </if>
             <if test="path != null">
                 #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
             </if>
             <if test="createBy != null">
                 #{createBy,jdbcType=BIGINT},
@@ -119,6 +126,9 @@
             </if>
             <if test="path != null">
                 path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                path = #{content,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},

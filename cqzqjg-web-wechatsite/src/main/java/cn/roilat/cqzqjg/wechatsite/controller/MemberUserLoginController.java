@@ -53,9 +53,9 @@ public class MemberUserLoginController {
 	private static final String WECHAT_PAGE_AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=123";
 	private static final String WECHAT_AUTHORIZE_TYPE_BASE = "snsapi_base";
 	private static final String WECHAT_AUTHORIZE_TYPE_USERINFO = "snsapi_userinfo";
-	@Value("${wechat.appId}")
+	@Value("${wx.mp.configs.appid}")
 	private String wechatAppId;
-	@Value("${wechat.secretKey}")
+	@Value("${wx.mp.configs.secret}")
 	private String wechatSecretKey;
 	@Value("${system.host}")
 	private String hostUrl;
