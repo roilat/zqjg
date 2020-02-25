@@ -40,9 +40,9 @@ import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
 @RequestMapping("my")
 public class MyPageController {
 	private Logger log = LoggerFactory.getLogger(getClass());
-	@Value("${wechat.appId}")
+	@Value("${wx.mp.configs.appid}")
 	private String wechatAppId;
-	@Value("${wechat.secretKey}")
+	@Value("${wx.mp.configs.secret}")
 	private String wechatSecretKey;
 
 	@Autowired
