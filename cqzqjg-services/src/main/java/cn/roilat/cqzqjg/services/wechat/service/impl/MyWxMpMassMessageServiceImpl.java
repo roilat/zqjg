@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class MyWxMpMassMessageServiceImpl implements MyWxMpMassMessageService {
-    private final WxMpService wxMpService;
+    private WxMpService wxMpService;
 
     @Override
     public WxMpMassSendResult massOpenIdsMessageSend(MyWxMpMassOpenIdsMessage message) throws WxErrorException {
