@@ -116,6 +116,7 @@ public class WxMpMaterialController {
                 //保存素材到数据库
                 sysPubMaterialService.save(sysPubMaterial);
                 httpResult.setMsg("上传素材到腾讯成功");
+                httpResult.setData(res);
             }
         } catch (WxErrorException e) {
             logger.error("上传素材到腾讯失败: " + e.getMessage());

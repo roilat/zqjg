@@ -1,6 +1,7 @@
 package cn.roilat.cqzqjg.services.wechat.service.impl;
 
 import cn.roilat.cqzqjg.services.wechat.model.MyWxMpMassOpenIdsMessage;
+import cn.roilat.cqzqjg.services.wechat.model.WxMpMassTagMessage;
 import cn.roilat.cqzqjg.services.wechat.service.MyWxMpMassMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,12 @@ public class MyWxMpMassMessageServiceImpl implements MyWxMpMassMessageService {
     @Override
     public WxMpMassSendResult massOpenIdsMessageSend(MyWxMpMassOpenIdsMessage message) throws WxErrorException {
         String responseContent = this.wxMpService.post(WxMpApiUrl.MassMessage.MESSAGE_MASS_SEND_URL, message.toJson());
+        return WxMpMassSendResult.fromJson(responseContent);
+    }
+
+    @Override
+    public WxMpMassSendResult massGroupMessageSend(WxMpMassTagMessage message) throws WxErrorException {
+        String responseContent = this.wxMpService.post(WxMpApiUrl.MassMessage.MESSAGE_MASS_SENDALL_URL, message.toJson());
         return WxMpMassSendResult.fromJson(responseContent);
     }
 }

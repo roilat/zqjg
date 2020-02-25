@@ -54,6 +54,7 @@ public class MyWxMpMassOpenIdsMessage implements Serializable {
         myWxMpMassOpenIdsMessage.mpnews.put("media_id", "UdKH6vEPHzI-u6qeboaat2h_dmUSs-Cy1M2GkRtIAOH-_Xs6uqSAB5ePIimbZICG");
         myWxMpMassOpenIdsMessage.setMsgtype("mpnews");
         System.out.println(JSON.toJSONString(myWxMpMassOpenIdsMessage));
+
     }
 
 }

@@ -1,6 +1,7 @@
 package cn.roilat.cqzqjg.services.wechat.service;
 
 import cn.roilat.cqzqjg.services.wechat.model.MyWxMpMassOpenIdsMessage;
+import cn.roilat.cqzqjg.services.wechat.model.WxMpMassTagMessage;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 
@@ -19,6 +20,14 @@ public interface MyWxMpMassMessageService {
      * </pre>
      */
     WxMpMassSendResult massOpenIdsMessageSend(MyWxMpMassOpenIdsMessage message) throws WxErrorException;
+
+    /**
+     * <pre>
+     * 按组发送消息
+     * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140549&token=&lang=zh_CN
+     * </pre>
+     */
+    WxMpMassSendResult massGroupMessageSend(WxMpMassTagMessage message) throws WxErrorException;
 
 
 }
