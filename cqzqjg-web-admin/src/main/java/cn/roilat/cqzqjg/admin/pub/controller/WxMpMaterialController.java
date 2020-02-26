@@ -232,7 +232,7 @@ public class WxMpMaterialController {
      * @param pageNum  素材的该偏移位
      * @param pageSize 返回素材的数量
      */
-    @GetMapping("/getMaterial/{offset}/{count}")
+    @GetMapping("/getMaterial/{pageNum}/{pageSize}")
     public HttpResult getMaterial(@PathVariable Integer
                                           pageNum, @PathVariable Integer pageSize) {
         List<SysPubMaterial> list = new ArrayList<>();
@@ -255,12 +255,13 @@ public class WxMpMaterialController {
             for (WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem wxMaterialFileBatchGetNewsItem : wxMpMaterialNewsBatchGetResult.getItems()) {
                 logger.info("mediaId: " + wxMaterialFileBatchGetNewsItem.getMediaId() +
                         " updateTime: " + wxMaterialFileBatchGetNewsItem.getUpdateTime() +
-                        "content:" + wxMaterialFileBatchGetNewsItem.getContent());
+                        " content:" + wxMaterialFileBatchGetNewsItem.getContent());
                 SysPubMaterial sysPubMaterial = new SysPubMaterial();
                 sysPubMaterial.setMediaId(wxMaterialFileBatchGetNewsItem.getMediaId());
                 sysPubMaterial.setMaterialId(String.valueOf(System.currentTimeMillis() + new Random().nextInt(1000)));
                 sysPubMaterial.setLastUpdateTime(new Date());
                 sysPubMaterial.setType(WxConsts.MassMsgType.MPNEWS);
+                sysPubMaterial.setContent(wxMaterialFileBatchGetNewsItem.getContent().toJson());
                 sysPubMaterialService.update(sysPubMaterial);
                 list.add(sysPubMaterialService.selectByMediaId(sysPubMaterial.getMediaId()));
             }
@@ -411,7 +412,7 @@ public class WxMpMaterialController {
             SysPubMaterial sysPubMaterial = new SysPubMaterial();
             sysPubMaterial.setType(WxConsts.MassMsgType.MPNEWS);
             sysPubMaterial.setMediaId(massUploadResult.getMediaId());
-            sysPubMaterial.setMaterialId(String.valueOf(System.currentTimeMillis()+ + new Random().nextInt(1000)));
+            sysPubMaterial.setMaterialId(String.valueOf(System.currentTimeMillis() + +new Random().nextInt(1000)));
             sysPubMaterial.setCreateTime(new Date());
             sysPubMaterial.setContent(wxMpMassNews.toJson());
             sysPubMaterialService.save(sysPubMaterial);
