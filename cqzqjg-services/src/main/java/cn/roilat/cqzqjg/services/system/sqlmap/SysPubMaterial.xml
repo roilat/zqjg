@@ -128,7 +128,7 @@
                 path = #{path,jdbcType=VARCHAR},
             </if>
             <if test="content != null">
-                path = #{content,jdbcType=VARCHAR},
+                content = #{content,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
