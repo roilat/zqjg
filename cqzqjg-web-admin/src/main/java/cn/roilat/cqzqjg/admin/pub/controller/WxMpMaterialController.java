@@ -43,6 +43,11 @@ public class WxMpMaterialController {
     @Value("${linux.public}")
     private String linuxImagesPath;
 
+    /**
+     * 未发送
+     */
+    private static final Integer SEND_FLAG_FALSE = 0;
+
     private static Logger logger = LoggerFactory.getLogger(WxMpMaterialController.class);
 
     /**
@@ -84,8 +89,12 @@ public class WxMpMaterialController {
     @PostMapping("/mediaImgUpload")
     public HttpResult mediaImgUpload(HttpServletRequest httpServletRequest) {
         HttpResult httpResult = new HttpResult();
+        //List<Map<String, Object>> respList = new ArrayList<>();
+        Map<String, Object> materialInfo = new HashMap<>(16);
+        materialInfo.put("src", "");
+
         try {
-            List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("uploadFile");
+            List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("file");
             String realPath;
             if (isOSLinux()) {
                 realPath = linuxImagesPath;
@@ -96,6 +105,20 @@ public class WxMpMaterialController {
             File dir = new File(realPath);
             if (!dir.isDirectory()) {
                 dir.mkdirs();
+            }
+            for (MultipartFile uploadFile : uploadFiles) {
+                //检查文件大小
+                //文件大小MB
+                double fileSize = uploadFile.getSize() / 1048576;
+                if (fileSize > 2) {
+                    logger.error("上传素材超过最大2MB");
+                    httpResult.setMsg("上传素材超过最大2MB");
+                    httpResult.setCode(500);
+                    materialInfo.put("src", "");
+                    materialInfo.put("title", "");
+                    httpResult.setData(materialInfo);
+                    return httpResult;
+                }
             }
             for (MultipartFile uploadFile : uploadFiles) {
                 String fileName = uploadFile.getOriginalFilename();
@@ -115,19 +138,27 @@ public class WxMpMaterialController {
                 sysPubMaterial.setPath(realPath + fileName);
                 //保存素材到数据库
                 sysPubMaterialService.save(sysPubMaterial);
-                httpResult.setMsg("上传素材到腾讯成功");
-                httpResult.setData(res);
+                materialInfo.put("src", res.getUrl());
+                materialInfo.put("title", fileName);
+                httpResult.setData(materialInfo);
+                //respList.add(materialInfo);
             }
         } catch (WxErrorException e) {
             logger.error("上传素材到腾讯失败: " + e.getMessage());
             httpResult.setMsg("上传素材到腾讯失败: " + e.getMessage());
+            httpResult.setCode(500);
         } catch (FileNotFoundException e) {
             logger.error("上传素材到本地失败: " + e.getMessage());
             httpResult.setMsg("上传素材到本地失败: " + e.getMessage());
+            httpResult.setCode(500);
         } catch (IOException e) {
             logger.error("上传素材到本地失败: " + e.getMessage());
             httpResult.setMsg("上传素材到本地失败: " + e.getMessage());
+            httpResult.setCode(500);
         }
+        httpResult.setCode(0);
+        httpResult.setMsg("图文消息内图片上传成功");
+        //httpResult.setData(respList);
         return httpResult;
 
     }
@@ -144,8 +175,16 @@ public class WxMpMaterialController {
     @PostMapping("/uploadtowx/{mediaType}/{uploadType}")
     public HttpResult uploadMaterialToWx(HttpServletRequest httpServletRequest, @PathVariable String mediaType, @PathVariable Integer uploadType) {
         HttpResult httpResult = new HttpResult();
+        List<Map<String, Object>> respList = new ArrayList<>();
+        Map<String, Object> materialInfo = new HashMap<>(16);
         try {
-            List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("uploadFile");
+            List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("file");
+            if (null == uploadFiles || uploadFiles.size() == 0) {
+                logger.error("上传素材为空");
+                httpResult.setMsg("上传素材为空");
+                httpResult.setCode(500);
+                return httpResult;
+            }
             String realPath;
             if (isOSLinux()) {
                 realPath = linuxImagesPath;
@@ -157,6 +196,18 @@ public class WxMpMaterialController {
             if (!dir.isDirectory()) {
                 dir.mkdirs();
             }
+
+            for (MultipartFile uploadFile : uploadFiles) {
+                //检查文件大小
+                double fileSize = uploadFile.getSize() / 1048576;
+                if (fileSize > 2) {
+                    logger.error("上传素材超过最大2MB");
+                    httpResult.setMsg("上传素材超过最大2MB");
+                    httpResult.setCode(200);
+                    return httpResult;
+                }
+            }
+
             for (MultipartFile uploadFile : uploadFiles) {
                 String fileName = uploadFile.getOriginalFilename();
                 String fileSuffix = fileName.substring(fileName.lastIndexOf("."), fileName.length());
@@ -173,18 +224,17 @@ public class WxMpMaterialController {
                 if (PERPETUAL.equals(uploadType)) {
                     //上传永久素材
                     WxMediaUploadResult res = wxMpService.getMaterialService().mediaUpload(mediaType, fileServer);
-                    Map<String, Object> materialInfo = new HashMap<>(16);
-                    materialInfo.put("media_id", res.getMediaId());
-                    materialInfo.put("length", fileServer.length());
                     materialInfo.put("filename", fileServer.getName());
                     logger.info("上传素材收到微信响应: " + res.toString());
                     if (WxConsts.MediaFileType.IMAGE.equals(mediaType) || WxConsts.MediaFileType.THUMB.equals(mediaType)) {
                         SysPubMaterial sysPubMaterial = new SysPubMaterial();
                         if (!StringUtils.isBlank(res.getMediaId())) {
                             sysPubMaterial.setMediaId(res.getMediaId());
+                            materialInfo.put("media_id", res.getMediaId());
                         }
                         if (!StringUtils.isBlank(res.getThumbMediaId())) {
                             sysPubMaterial.setMediaId(res.getThumbMediaId());
+                            materialInfo.put("media_id", res.getThumbMediaId());
                         }
                         String materialId = fileName.substring(0, fileName.indexOf(".")).replace("_", "");
                         sysPubMaterial.setMaterialId(materialId);
@@ -194,11 +244,15 @@ public class WxMpMaterialController {
                         sysPubMaterial.setPath(realPath + fileName);
                         //保存素材到数据库
                         sysPubMaterialService.save(sysPubMaterial);
+                        httpResult.setMsg("上传腾讯图片成功");
+                        respList.add(materialInfo);
+                        httpResult.setCode(200);
                     }
                 } else {
                     //上传临时素材到腾讯
                     WxMpMaterialUploadResult res = wxMpService.getMaterialService().materialFileUpload(mediaType, wxMaterial);
                     if (WxConsts.MediaFileType.THUMB.equals(mediaType)) {
+                        materialInfo.put("filename", fileServer.getName());
                         SysPubMaterial sysPubMaterial = new SysPubMaterial();
                         sysPubMaterial.setMediaId(res.getMediaId());
                         String materialId = fileName.substring(0, fileName.indexOf(".")).replace("_", "");
@@ -209,19 +263,26 @@ public class WxMpMaterialController {
                         sysPubMaterial.setPath(realPath + fileName);
                         //保存素材到数据库
                         sysPubMaterialService.save(sysPubMaterial);
+                        httpResult.setMsg("上传腾讯临时图片成功");
+                        materialInfo.put("media_id", res.getMediaId());
+                        respList.add(materialInfo);
                     }
                 }
-                httpResult.setMsg("上传素材到腾讯成功");
+                httpResult.setData(respList);
+                httpResult.setCode(200);
             }
         } catch (WxErrorException e) {
             logger.error("上传素材到腾讯失败: " + e.getMessage());
             httpResult.setMsg("上传素材到腾讯失败: " + e.getMessage());
+            httpResult.setCode(500);
         } catch (FileNotFoundException e) {
             logger.error("上传素材到本地失败: " + e.getMessage());
             httpResult.setMsg("上传素材到本地失败: " + e.getMessage());
+            httpResult.setCode(500);
         } catch (IOException e) {
             logger.error("上传素材到本地失败: " + e.getMessage());
             httpResult.setMsg("上传素材到本地失败: " + e.getMessage());
+            httpResult.setCode(500);
         }
         return httpResult;
     }
@@ -252,6 +313,7 @@ public class WxMpMaterialController {
             WxMpMaterialNewsBatchGetResult wxMpMaterialNewsBatchGetResult = wxMpService.getMaterialService().materialNewsBatchGet(offset, pageSize);
             logger.info("素材总数：" + wxMpMaterialNewsBatchGetResult.getTotalCount() + " 素材的该偏移位: " + wxMpMaterialNewsBatchGetResult.getItemCount());
             int totalPage = (wxMpMaterialNewsBatchGetResult.getTotalCount() + pageSize - 1) / pageSize;
+            List<SysPubMaterial> updateList = new ArrayList<>();
             for (WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem wxMaterialFileBatchGetNewsItem : wxMpMaterialNewsBatchGetResult.getItems()) {
                 logger.info("mediaId: " + wxMaterialFileBatchGetNewsItem.getMediaId() +
                         " updateTime: " + wxMaterialFileBatchGetNewsItem.getUpdateTime() +
@@ -263,8 +325,11 @@ public class WxMpMaterialController {
                 sysPubMaterial.setType(WxConsts.MassMsgType.MPNEWS);
                 sysPubMaterial.setContent(wxMaterialFileBatchGetNewsItem.getContent().toJson());
                 sysPubMaterialService.update(sysPubMaterial);
+                updateList.add(sysPubMaterial);
                 list.add(sysPubMaterialService.selectByMediaId(sysPubMaterial.getMediaId()));
             }
+            //批量更新数据
+
             pageResult.setPageNum(pageNum);
             pageResult.setPageSize(pageSize);
             pageResult.setTotalPages(totalPage);
@@ -400,8 +465,9 @@ public class WxMpMaterialController {
      * @return
      */
     @PostMapping("/materialNewsUpload")
-    public Object[][] materialNewsUpload(@RequestBody WxMpMassNews wxMpMassNews) {
+    public HttpResult materialNewsUpload(@RequestBody WxMpMassNews wxMpMassNews) {
         Object[][] messages = new Object[4][];
+        SysPubMaterial sysPubMaterial = new SysPubMaterial();
         try {
             logger.info("收到请求参数: " + wxMpMassNews.toJson());
             // 上传图文消息
@@ -409,17 +475,17 @@ public class WxMpMaterialController {
             logger.info("收到腾讯请求响应: " + massUploadResult.toString());
             messages[3] = new Object[]{WxConsts.MassMsgType.MPNEWS, massUploadResult.getMediaId()};
             //入库保存图文消息
-            SysPubMaterial sysPubMaterial = new SysPubMaterial();
             sysPubMaterial.setType(WxConsts.MassMsgType.MPNEWS);
             sysPubMaterial.setMediaId(massUploadResult.getMediaId());
             sysPubMaterial.setMaterialId(String.valueOf(System.currentTimeMillis() + +new Random().nextInt(1000)));
             sysPubMaterial.setCreateTime(new Date());
             sysPubMaterial.setContent(wxMpMassNews.toJson());
+            sysPubMaterial.setSendFlag(SEND_FLAG_FALSE);
             sysPubMaterialService.save(sysPubMaterial);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
-        return messages;
+        return HttpResult.ok("上传成功", sysPubMaterial);
     }
 
 

@@ -10,6 +10,7 @@
         <result column="type" jdbcType="VARCHAR" property="type"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="send_flag" jdbcType="INTEGER" property="sendFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
@@ -17,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, material_id, media_id, url, type, path,content, create_time, create_by, last_update_by, last_update_time
+    id, material_id, media_id, url, type, path,content,send_flag, create_time, create_by, last_update_by, last_update_time
   </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -32,6 +33,7 @@
         <include refid="Base_Column_List"/>
         from sys_pub_material
         where media_id = #{mediaId,jdbcType=VARCHAR}
+        order by id
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -60,6 +62,9 @@
             </if>
             <if test="content != null">
                 content,
+            </if>
+            <if test="sendFlag != null">
+                send_flag,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -93,8 +98,11 @@
             <if test="content != null">
                 #{content,jdbcType=VARCHAR},
             </if>
+            <if test="sendFlag != null">
+                #{sendFlag,jdbcType=INTEGER},
+            </if>
             <if test="createBy != null">
-                #{createBy,jdbcType=BIGINT},
+                #{createBy,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
@@ -129,6 +137,9 @@
             </if>
             <if test="content != null">
                 content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="sendFlag != null">
+                send_flag = #{content,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},

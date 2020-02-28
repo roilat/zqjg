@@ -9,7 +9,7 @@ import cn.roilat.cqzqjg.services.system.sevice.SysPubMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @program: zqjg
@@ -21,6 +21,11 @@ import java.util.List;
 public class SysPubMaterialServiceImpl implements SysPubMaterialService {
     @Autowired
     SysPubMaterialMapper sysPubMaterialMapper;
+
+    /**
+     * 未发送
+     */
+    private static final Integer SEND_FLAG_FALSE = 1;
 
 
     @Override
@@ -59,6 +64,9 @@ public class SysPubMaterialServiceImpl implements SysPubMaterialService {
             //为空新增一条数据
             String materialId = String.valueOf(System.currentTimeMillis());
             sysPubMaterial.setMaterialId(materialId);
+            sysPubMaterial.setCreateTime(new Date());
+            //发表标志0-未发送，1-发送
+            sysPubMaterial.setSendFlag(SEND_FLAG_FALSE);
             sysPubMaterialMapper.insert(sysPubMaterial);
         } else {
             //更新数据
