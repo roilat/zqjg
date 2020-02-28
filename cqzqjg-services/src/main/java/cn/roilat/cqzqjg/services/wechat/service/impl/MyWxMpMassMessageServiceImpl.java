@@ -9,6 +9,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class MyWxMpMassMessageServiceImpl implements MyWxMpMassMessageService {
+    @Autowired
     private WxMpService wxMpService;
+
 
     @Override
     public WxMpMassSendResult massOpenIdsMessageSend(MyWxMpMassOpenIdsMessage message) throws WxErrorException {

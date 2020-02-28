@@ -15,7 +15,7 @@ import java.util.Map;
 public class WxMpMassTagMessage implements Serializable {
     private static final long serialVersionUID = -6625914040986749286L;
 
-    private Map<String, Boolean> filter = new HashMap<>();
+    private Map<String, Object> filter = new HashMap<>();
 
     private Map<String, String> mpnews = new HashMap<>();
 
@@ -48,11 +48,11 @@ public class WxMpMassTagMessage implements Serializable {
         return serialVersionUID;
     }
 
-    public Map<String, Boolean> getFilter() {
+    public Map<String, Object> getFilter() {
         return filter;
     }
 
-    public void setFilter(Map<String, Boolean> filter) {
+    public void setFilter(Map<String, Object> filter) {
         this.filter = filter;
     }
 

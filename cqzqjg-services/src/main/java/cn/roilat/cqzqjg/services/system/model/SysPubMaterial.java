@@ -32,6 +32,19 @@ public class SysPubMaterial extends BaseModel {
      */
     private String content;
 
+    /**
+     * 是否发送0-未发送，1-已发送
+     */
+    private Integer sendFlag;
+
+    public Integer getSendFlag() {
+        return sendFlag;
+    }
+
+    public void setSendFlag(Integer sendFlag) {
+        this.sendFlag = sendFlag;
+    }
+
     public String getContent() {
         return content;
     }
