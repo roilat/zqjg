@@ -76,6 +76,21 @@ public class SysPubMaterialServiceImpl implements SysPubMaterialService {
     }
 
     @Override
+    public int updateBatch(List<SysPubMaterial> sysPubMaterials) {
+        List<SysPubMaterial> updateList = new ArrayList<>();
+        List<SysPubMaterial> insertList = new ArrayList<>();
+        //批量查询
+        List<String> queryList = new ArrayList<>();
+        for (SysPubMaterial sysPubMaterial : sysPubMaterials) {
+            queryList.add(sysPubMaterial.getMediaId());
+        }
+        Map<String, Object> userIdsParam = new HashMap<>();
+        userIdsParam.put("mediaIds", queryList);
+
+        return 0;
+    }
+
+    @Override
     public SysPubMaterial selectByMediaId(String mediaId) {
         return sysPubMaterialMapper.selectByMediaId(mediaId);
     }

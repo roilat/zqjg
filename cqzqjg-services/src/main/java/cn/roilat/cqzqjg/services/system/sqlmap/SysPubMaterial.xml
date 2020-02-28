@@ -33,7 +33,6 @@
         <include refid="Base_Column_List"/>
         from sys_pub_material
         where media_id = #{mediaId,jdbcType=VARCHAR}
-        order by id
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -3,6 +3,8 @@ package cn.roilat.cqzqjg.services.system.sevice;
 import cn.roilat.cqzqjg.core.service.CurdService;
 import cn.roilat.cqzqjg.services.system.model.SysPubMaterial;
 
+import java.util.List;
+
 /**
  * @program: zqjg
  * @description:
@@ -11,6 +13,8 @@ import cn.roilat.cqzqjg.services.system.model.SysPubMaterial;
  **/
 public interface SysPubMaterialService extends CurdService<SysPubMaterial> {
     int update(SysPubMaterial sysPubMaterial);
+
+    int updateBatch(List<SysPubMaterial> sysPubMaterials);
 
     SysPubMaterial selectByMediaId(String mediaId);
 
