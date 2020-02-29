@@ -222,7 +222,9 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         bizMemberUserRespVo.setDelFlag(bizMemberUser.getDelFlag());
         bizMemberUserRespVo.setPhoneNumber(bizMemberUser.getPhoneNumber());
         bizMemberUserRespVo.setCreateBy(bizMemberUser.getCreateBy());
+        bizMemberUserRespVo.setWechat(bizMemberUser.getWechat());
         bizMemberUserRespVo.setLastUpdateBy(bizMemberUser.getLastUpdateBy());
+        bizMemberUserRespVo.setPhoneNumber(bizMemberUser.getPhoneNumber());
         Date lastUpTime = bizMemberUser.getLastUpdateTime();
         if (null != lastUpTime) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

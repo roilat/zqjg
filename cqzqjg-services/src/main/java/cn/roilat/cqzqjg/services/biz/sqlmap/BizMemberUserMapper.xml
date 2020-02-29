@@ -268,7 +268,7 @@
   </select>
 
     <select id="findPageByCondition" resultMap="BaseResultMap">
-        select * from biz_member_user
+        select * from biz_member_user t
 
         <trim prefix="where" prefixOverrides="and|or">
             <if test="companyName !=null and companyName != ''">
@@ -283,17 +283,21 @@
             <if test="phoneNumber !=null and phoneNumber != ''">
                 AND phone_number like CONCAT('%',#{phoneNumber},'%')
             </if>
-            <if test="approveStatus !=null and approveStatus != ''">
+            <if test="approveStatus !=null">
                 AND approve_status like CONCAT('%',#{approveStatus},'%')
             </if>
             <if test="createBy != null and createBy != ''">
-            	and create_by = #{createBy}
+            	and exists( select 1 from biz_member_company t1 where t1.id=t.company_id and t1.create_by = #{createBy})
+            </if>
+            <if test="searchText != null and searchText != ''">
+            	AND (login_name like CONCAT('%',#{searchText},'%') OR nick_name like CONCAT('%',#{searchText},'%') OR phone_number like CONCAT('%',#{searchText},'%'))
             </if>
             <if test="searchText != null and searchText != ''">
             	AND (login_name like CONCAT('%',#{searchText},'%') OR nick_name like CONCAT('%',#{searchText},'%') OR phone_number like CONCAT('%',#{searchText},'%'))
             </if>
             AND del_flag = 0
         </trim>
+        order by last_update_time desc
     </select>
 
 </mapper>

@@ -19,6 +19,7 @@ public class UserBean {
 	private String openId;
 	private String userId;
 	private String createBy;
+	private String lastUpdateBy;
 	/**
 	 * 是否绑定微信
 	 */
@@ -147,6 +148,14 @@ public class UserBean {
 
 	public void setIfLocked(String ifLocked) {
 		this.ifLocked = ifLocked;
+	}
+
+	public String getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	public void setLastUpdateBy(String lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
 	}
 
 }
