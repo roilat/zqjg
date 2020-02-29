@@ -57,9 +57,9 @@ public class WxPortalController {
         }
 
         //测试号注销签名校验
-        /* if (wxService.checkSignature(timestamp, nonce, signature)) {
+         if (wxService.checkSignature(timestamp, nonce, signature)) {
             return echostr;
-        }*/
+        }
 
         return echostr;
         //return "非法请求";
@@ -96,9 +96,9 @@ public class WxPortalController {
         }
 
         //测试号注销签名校验
-        /*if (!wxService.checkSignature(timestamp, nonce, signature)) {
+        if (!wxService.checkSignature(timestamp, nonce, signature)) {
             throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
-        }*/
+        }
 
         String out = null;
         if (encType == null) {
