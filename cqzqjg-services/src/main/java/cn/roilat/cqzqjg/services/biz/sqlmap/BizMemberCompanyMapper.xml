@@ -231,6 +231,7 @@
             	and create_by = #{createBy}
             </if>
         </trim>
+        order by last_update_time desc
     </select>
 
 

@@ -10,6 +10,9 @@ server:
 
 #spring boot admin
 spring: 
+  servlet: 
+    multipart:
+      max-file-size: 10MB 
   mvc: 
     static-path-pattern: /admin-api/css/**,/admin-api/js/**,/admin-api/**/*.html,/admin-api/img/**,/admin-api/upload/**
   resources: 
@@ -55,6 +58,14 @@ wx:
         secret: 4935c773ff22ede941658685e61bb1c1
         token: 123456abc
         aesKey: 111
+
+system:
+   file:
+      saveRootPath: "D:/project/zhongqujigou/cqzq-ui-admin/static"
+      #一定要加/在最后
+      showPrePath: "/admin/upload/"
+   safe:
+      allowhost: "http://localhost:8090"
 
 windows:
   public: C://public//img//date//

@@ -51,15 +51,15 @@ public class WxBizMemberCompanyController {
         if (StringUtils.isBlank(record.getCompanyCode())) {
             return HttpResult.error("企业统一信用代码不能为空");
         }
-        if (null == record.getRegistrationDate()) {
-            return HttpResult.error("企业注册时间不能为空");
-        }
-        if (StringUtils.isBlank(record.getCompanyPhone())) {
-            return HttpResult.error("企业联系电话不能为空");
-        }
-        if (StringUtils.isBlank(record.getCompanyAddress())) {
-            return HttpResult.error("企业注册地址不能为空");
-        }
+//        if (null == record.getRegistrationDate()) {
+//            return HttpResult.error("企业注册时间不能为空");
+//        }
+//        if (StringUtils.isBlank(record.getCompanyPhone())) {
+//            return HttpResult.error("企业联系电话不能为空");
+//        }
+//        if (StringUtils.isBlank(record.getCompanyAddress())) {
+//            return HttpResult.error("企业注册地址不能为空");
+//        }
         if (StringUtils.isBlank(record.getCreateBy())) {
             return HttpResult.error("创建人不能为空");
         }
@@ -67,7 +67,7 @@ public class WxBizMemberCompanyController {
         map.put("companyName", record.getCompanyName());
         map.put("companyCode", record.getCompanyCode());
         List<BizMemberCompany> list = bizMemberCompanyService.findByCondition(map);
-        if (null != list && list.size() > 0) {
+        if (null != list && list.size() > 0  && !list.get(0).getId().equals(record.getId())) {
             return HttpResult.error("公司名或注册机构号重复");
         }
         Integer i = bizMemberCompanyService.save(record);
@@ -146,7 +146,7 @@ public class WxBizMemberCompanyController {
             map.put("companyCode", records.getCompanyCode());
         }
         List<BizMemberCompany> list = bizMemberCompanyService.findByCondition(map);
-        if (null != list && list.size() > 0) {
+        if (null != list && list.size() > 0 && !list.get(0).getId().equals(id)) {
             return HttpResult.error("公司名或注册机构号重复");
         }
         //更新时间

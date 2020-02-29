@@ -19,6 +19,7 @@ public class UserBean {
 	private String openId;
 	private String userId;
 	private String createBy;
+	private String lastUpdateBy;
 	/**
 	 * 是否绑定微信
 	 */
@@ -27,6 +28,7 @@ public class UserBean {
 	private String avatar;
 	// 微信号
 	private String wechat;
+	private String ifLocked;
 
 	public String getWechat() {
 		return wechat;
@@ -138,6 +140,22 @@ public class UserBean {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
+	}
+
+	public String getIfLocked() {
+		return ifLocked;
+	}
+
+	public void setIfLocked(String ifLocked) {
+		this.ifLocked = ifLocked;
+	}
+
+	public String getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	public void setLastUpdateBy(String lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
 	}
 
 }

@@ -30,6 +30,8 @@ public class BizMemberReqVo extends PageRequest {
 	 */
 	private String phoneNumber;
 
+	private String searchText;
+
 	/**
 	 * 审批状态(0待审核,1审核不通过2审核通过)
 	 */
@@ -82,6 +84,14 @@ public class BizMemberReqVo extends PageRequest {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
+	}
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
 	}
 
 }

@@ -141,7 +141,8 @@ public class BizMemberCompanyServiceImpl implements BizMemberCompanyService {
         bizMemberCompanyResp.setOwnershipPattern(bizMemberCompany.getOwnershipPattern());
         bizMemberCompanyResp.setCompanyPlace(bizMemberCompany.getCompanyPlace());
         bizMemberCompanyResp.setRegistrationAssets(bizMemberCompany.getRegistrationAssets());
-
+        bizMemberCompanyResp.setCreateBy(bizMemberCompany.getCreateBy());
+        bizMemberCompanyResp.setLastUpdateBy(bizMemberCompany.getLastUpdateBy());
         Date lastUpTime = bizMemberCompany.getLastUpdateTime();
         if (null != lastUpTime) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

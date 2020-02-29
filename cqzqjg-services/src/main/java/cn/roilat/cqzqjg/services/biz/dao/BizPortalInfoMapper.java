@@ -67,6 +67,6 @@ public interface BizPortalInfoMapper {
      *
      * @return
      */
-    List<BizPortalInfo> findPage();
+    List<BizPortalInfo> findPage(HashMap<String, Object> map);
 
 }

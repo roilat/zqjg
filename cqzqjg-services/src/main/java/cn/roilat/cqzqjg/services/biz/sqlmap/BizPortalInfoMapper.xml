@@ -167,7 +167,7 @@
     <select id="findHomePage" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM biz_portal_info
+        FROM biz_portal_info where del_flag='0'
         ORDER BY
         last_update_time ASC
     </select>
@@ -189,7 +189,10 @@
     <select id="findPage" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from biz_portal_info
+        from biz_portal_info where del_flag='0'
+        <if test="typeCode != null and typeCode!=''">
+            And type_code = #{typeCode,jdbcType=VARCHAR}
+        </if>
     </select>
 
 </mapper>

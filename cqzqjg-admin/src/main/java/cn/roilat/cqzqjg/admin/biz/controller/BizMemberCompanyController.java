@@ -160,7 +160,7 @@ public class BizMemberCompanyController {
 			map.put("companyCode", records.getCompanyCode());
 		}
 		List<BizMemberCompany> list = bizMemberCompanyService.findByCondition(map);
-		if (null != list && list.size() > 0) {
+		if (null != list && list.size() > 0 && !list.get(0).getId().equals(id)) {
 			return HttpResult.error("公司名或注册机构号重复");
 		}
 		//更新时间

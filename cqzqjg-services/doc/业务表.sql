@@ -94,7 +94,7 @@ create table BIZ_PORTAL_INFO
    title                varchar(50) comment '标题(category=1)',
    main_desc            varchar(100) comment '主要描述(category=1)',
    sub_desc             varchar(50) comment '子描述(category=1)',
-   picture_path         varchar(200) comment '图片路径',
+   picture_path         varchar(2000) comment '图片路径',
    content              varchar(500) comment '描述内容',
    create_by            national varchar(50) comment '创建人',
    create_time          datetime comment '创建时间',

@@ -121,6 +121,9 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         if (!StringUtils.isBlank(bizMemberReqVo.getPhoneNumber())) {
             map.put("phoneNumber", bizMemberReqVo.getPhoneNumber());
         }
+        if (!StringUtils.isBlank(bizMemberReqVo.getSearchText())) {
+        	map.put("searchText", bizMemberReqVo.getSearchText());
+        }
 
         if (null != bizMemberReqVo.getApproveStatus()) {
             map.put("approveStatus", bizMemberReqVo.getApproveStatus());
@@ -217,6 +220,10 @@ public class BizMemberUserServiceImpl implements BizMemberUserService {
         bizMemberUserRespVo.setApproveStatus(bizMemberUser.getApproveStatus());
         bizMemberUserRespVo.setIfLocked(bizMemberUser.getIfLocked());
         bizMemberUserRespVo.setDelFlag(bizMemberUser.getDelFlag());
+        bizMemberUserRespVo.setPhoneNumber(bizMemberUser.getPhoneNumber());
+        bizMemberUserRespVo.setCreateBy(bizMemberUser.getCreateBy());
+        bizMemberUserRespVo.setWechat(bizMemberUser.getWechat());
+        bizMemberUserRespVo.setLastUpdateBy(bizMemberUser.getLastUpdateBy());
         bizMemberUserRespVo.setPhoneNumber(bizMemberUser.getPhoneNumber());
         Date lastUpTime = bizMemberUser.getLastUpdateTime();
         if (null != lastUpTime) {
