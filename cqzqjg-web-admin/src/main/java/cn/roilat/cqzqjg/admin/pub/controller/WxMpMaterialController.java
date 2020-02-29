@@ -105,6 +105,12 @@ public class WxMpMaterialController {
 
         try {
             List<MultipartFile> uploadFiles = ((MultipartHttpServletRequest) httpServletRequest).getFiles("file");
+            if (null == uploadFiles || uploadFiles.size() == 0) {
+                logger.error("上传素材为空");
+                httpResult.setMsg("上传素材为空");
+                httpResult.setCode(RES_ERROR);
+                return httpResult;
+            }
             String realPath;
             if (isOSLinux()) {
                 realPath = linuxImagesPath;
@@ -304,6 +310,7 @@ public class WxMpMaterialController {
      * @param pageNum  素材的该偏移位
      * @param pageSize 返回素材的数量
      */
+    @Deprecated
     @GetMapping("/getMaterial/{pageNum}/{pageSize}")
     public HttpResult getMaterial(@PathVariable Integer
                                           pageNum, @PathVariable Integer pageSize) {
@@ -361,6 +368,7 @@ public class WxMpMaterialController {
      * @param pageNum  最大支持20条,微信限制
      * @param pageSize 当前页
      */
+    @Deprecated
     @GetMapping("/materialFileBatchGet/{type}/{pageNum}/{pageSize}")
     public HttpResult materialFileBatchGet(@PathVariable String type, @PathVariable Integer
             pageNum, @PathVariable Integer pageSize) {
@@ -415,6 +423,7 @@ public class WxMpMaterialController {
      * @param id
      * @return
      */
+    @Deprecated
     @GetMapping("/delMaterial/{id}")
     public HttpResult delMaterial(@PathVariable Long id) {
         HttpResult httpResult = new HttpResult();
@@ -454,6 +463,7 @@ public class WxMpMaterialController {
     /**
      * 获取素材数量（没用上，待删除）
      */
+    @Deprecated
     @GetMapping("/getmaterialcount")
     public void getMaterialCount() {
         WxMpMaterialCountResult wxMpMaterialCountResult = null;
@@ -505,6 +515,7 @@ public class WxMpMaterialController {
      * @param appid
      * @throws WxErrorException
      */
+    @Deprecated
     @GetMapping("/clearQuota/{appid}")
     public void clearQuota(@PathVariable String appid) throws WxErrorException {
         wxMpService.clearQuota(appid);
