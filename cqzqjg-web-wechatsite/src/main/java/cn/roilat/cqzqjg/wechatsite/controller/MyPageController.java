@@ -1,25 +1,5 @@
 package cn.roilat.cqzqjg.wechatsite.controller;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.alibaba.fastjson.JSONObject;
-
 import cn.roilat.cqzqjg.common.util.PasswordUtils;
 import cn.roilat.cqzqjg.common.util.WechatUtils;
 import cn.roilat.cqzqjg.common.utils.StringUtils;
@@ -29,6 +9,19 @@ import cn.roilat.cqzqjg.services.biz.model.BizMemberUser;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberCompanyService;
 import cn.roilat.cqzqjg.services.biz.service.BizMemberUserService;
 import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
+import com.alibaba.fastjson.JSONObject;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.config.WxMpConfigStorage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: zqjg
@@ -40,15 +33,24 @@ import cn.roilat.cqzqjg.services.biz.vo.BizMemberCompanyResp;
 @RequestMapping("my")
 public class MyPageController {
 	private Logger log = LoggerFactory.getLogger(getClass());
-	@Value("${wx.mp.configs.appid}")
-	private String wechatAppId;
-	@Value("${wx.mp.configs.secret}")
-	private String wechatSecretKey;
+//	@Value("${wx.mp.configs.appId}")
+//	private String wechatAppId;
+//	@Value("${wx.mp.configs.secret}")
+//	private String wechatSecretKey;
+
 
 	@Autowired
 	private BizMemberUserService bizMemberUserService;
 	@Autowired
 	private BizMemberCompanyService bizMemberCompanyService;
+
+	private final WxMpService wxMpService;
+
+	public MyPageController(WxMpService wxMpService) {
+		this.wxMpService = wxMpService;
+	}
+
+
 
 	@GetMapping(value = "/company/{id}")
 	public HttpResult companyDetail(@PathVariable Long id) throws IOException {
@@ -140,6 +142,9 @@ public class MyPageController {
 	 */
 	@RequestMapping(value = "/bindWechatLogin")
 	public HttpResult bindWechatLogin(HttpServletRequest request, HttpServletResponse response) {
+		WxMpConfigStorage wxMpConfigStorage = wxMpService.getWxMpConfigStorage();
+		String wechatAppId = wxMpConfigStorage.getAppId();
+		String wechatSecretKey = wxMpConfigStorage.getSecret();
 		String code = request.getParameter("code");
 		String userId = request.getParameter("userId");
 		Map<String, Object> map = new HashMap<String, Object>();
