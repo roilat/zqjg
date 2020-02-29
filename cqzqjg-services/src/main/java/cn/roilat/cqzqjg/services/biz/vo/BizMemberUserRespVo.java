@@ -63,7 +63,10 @@ public class BizMemberUserRespVo {
      * 电话号码
      */
     private String phoneNumber;
-
+	/** 更新人 */
+	private String lastUpdateBy;
+	/** 创建人 */
+	private String createBy;
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -175,4 +178,21 @@ public class BizMemberUserRespVo {
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
     }
+
+	public String getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	public void setLastUpdateBy(String lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+    
 }

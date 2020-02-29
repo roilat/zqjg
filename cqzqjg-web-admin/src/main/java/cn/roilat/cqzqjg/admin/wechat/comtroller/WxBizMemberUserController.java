@@ -93,6 +93,7 @@ public class WxBizMemberUserController {
         bizMemberUser.setNickName(userBean.getNickName());
         bizMemberUser.setAvatar(userBean.getAvatar());
         bizMemberUser.setPhoneNumber(userBean.getPhoneNumber());
+        bizMemberUser.setIfLocked(userBean.getIfLocked());
         //管理员新建用户默认不删除
         bizMemberUser.setDelFlag(0);
 

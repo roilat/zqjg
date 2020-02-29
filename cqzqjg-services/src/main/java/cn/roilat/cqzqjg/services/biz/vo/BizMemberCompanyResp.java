@@ -94,8 +94,29 @@ public class BizMemberCompanyResp {
      * 注册资本
      */
     private String registrationAssets;
+	/** 创建人 */
+	private String createBy;
+	/** 更新人 */
+	private String lastUpdateBy;
+	
+	
+    public String getCreateBy() {
+		return createBy;
+	}
 
-    public String getRegistrationAssets() {
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public String getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	public void setLastUpdateBy(String lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	public String getRegistrationAssets() {
         return registrationAssets;
     }
 

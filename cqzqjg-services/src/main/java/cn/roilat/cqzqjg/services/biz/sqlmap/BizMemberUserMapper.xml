@@ -289,6 +289,9 @@
             <if test="createBy != null and createBy != ''">
             	and create_by = #{createBy}
             </if>
+            <if test="searchText != null and searchText != ''">
+            	AND (login_name like CONCAT('%',#{searchText},'%') OR nick_name like CONCAT('%',#{searchText},'%') OR phone_number like CONCAT('%',#{searchText},'%'))
+            </if>
             AND del_flag = 0
         </trim>
     </select>

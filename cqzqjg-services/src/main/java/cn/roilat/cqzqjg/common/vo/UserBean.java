@@ -27,6 +27,7 @@ public class UserBean {
 	private String avatar;
 	// 微信号
 	private String wechat;
+	private String ifLocked;
 
 	public String getWechat() {
 		return wechat;
@@ -138,6 +139,14 @@ public class UserBean {
 
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
+	}
+
+	public String getIfLocked() {
+		return ifLocked;
+	}
+
+	public void setIfLocked(String ifLocked) {
+		this.ifLocked = ifLocked;
 	}
 
 }

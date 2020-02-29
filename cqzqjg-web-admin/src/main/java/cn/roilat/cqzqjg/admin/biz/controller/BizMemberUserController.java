@@ -248,7 +248,7 @@ public class BizMemberUserController {
      * @param bizMemberReqVo
      * @return
      */
-    @PreAuthorize("hasAuthority('biz:memberUser:view')")
+    @PreAuthorize("hasAuthority('biz:memberUser:view') OR hasAuthority('biz:memberCompany:assign')")
     @PostMapping(value = "/findPage")
     public HttpResult findPage(@RequestBody BizMemberReqVo bizMemberReqVo) {
         return HttpResult.ok("请求成功", bizMemberUserService.findPageResp(bizMemberReqVo));
